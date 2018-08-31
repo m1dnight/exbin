@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <title>ExBin</title>
-      <link rel="shortcut icon" href="<%= static_path(@conn, "/favicon.ico") %>" />
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>ExBin</title>
+        <link rel="shortcut icon" href="<%= static_path(@conn, "/favicon.ico") %>" />
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+            <a class="navbar-brand" href="#">
+            ExBin
+            <img src="<%= static_path(@conn, "/images/logo.png") %>" width="30" height="30" class="d-inline-block align-top" alt="">
+            </a>
+        </nav>
+        <!-- Page Content -->
+        <div class="container">
+            <%= render @view_module, @view_template, assigns %>
+        </div>
 
-      <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-   </head>
-   <body>
-      <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-      <a class="navbar-brand" href="#">
-        ExBin
-        <img src="<%= static_path(@conn, "/images/logo.png") %>" width="30" height="30" class="d-inline-block align-top" alt="">
-      </a>
-         
-      </nav>
-      <!-- Page Content -->
-      <div class="container">
-         <%= render @view_module, @view_template, assigns %>
-      </div>
-   </body>
-   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-   <!-- This is here because I don't know how to add it in brunch. -->
-   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.3.0/highlightjs-line-numbers.min.js"></script> -->
-
-   <script>
-    $(document).ready(function() {
-        $('code pre').each(function(i, block) {
-            console.log('highlighting' + block)
-            hljs.highlightBlock(block);
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Made by m1dnight, with Elixir.</span>
+            </div>
+        </footer>
+    </body>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <!-- This is here because I don't know how to add it in brunch. -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.3.0/highlightjs-line-numbers.min.js"></script> -->
+    <script>
+        $(document).ready(function() {
+            $('code pre').each(function(i, block) {
+                console.log('highlighting' + block)
+                hljs.highlightBlock(block);
+            });
         });
-    });
     </script>
 </html>
