@@ -1,9 +1,9 @@
 <div class="row h-75 mt-1 myrow" style="">
 <form>
-  <div class="form-group">
+  <div class="form-group text-area">
     <textarea class="form-control codebox" >test</textarea>
   </div>
-
+  <div class="form-group">
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
