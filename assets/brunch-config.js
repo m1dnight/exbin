@@ -42,6 +42,7 @@ exports.config = {
       },
       copycat: {
         "fonts" : ["static/fonts", "node_modules/font-awesome/fonts"],
+        "css" : ["node_modules/highlight.js/styles/atom-one-dark.css"],
         verbose : false, //shows each file that is copied to the destination directory
         onlyChanged: true //only copy a file if it's modified time has changed (only effective when using brunch watch)
       }
@@ -60,7 +61,8 @@ exports.config = {
           jQuery: 'jquery',
           Tether: 'tether',
           Popper: "popper.js",
-          bootstrap: 'bootstrap'
+          bootstrap: 'bootstrap',
+          hljs: 'highlight.js'
       }
   }
 };

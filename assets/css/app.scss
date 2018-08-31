@@ -5,3 +5,58 @@ $fa-font-path: "../fonts";
 
 // Bootstrap
 @import "bootstrap";
+
+html, body, .container {
+    height: 100%;
+
+  }
+
+  .codebox {
+    font-size: 1rem;
+  }
+  
+  @include media-breakpoint-up(sm) {
+    .codebox {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @include media-breakpoint-up(md) {
+    .codebox {
+      font-size: 1.4rem;
+    }
+  }
+  
+  @include media-breakpoint-up(lg) {
+    .codebox {
+      font-size: 1.6rem;
+    }
+  }
+
+.codebox {
+    width: 100%;
+    height: 100%;
+    background-color:#fff8ed;
+    border: 1px solid #f6e4cc;
+    font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+/* for block of numbers */
+td.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #CCC;
+    vertical-align: top;
+    padding-right: 7px;
+
+    /* your custom style here */
+    margin-right: 10px;
+    color: black;
+}
