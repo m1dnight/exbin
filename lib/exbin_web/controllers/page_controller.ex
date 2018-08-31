@@ -4,4 +4,16 @@ defmodule ExBinWeb.PageController do
   def index(conn, _params) do
     render conn, "index.html"
   end
+
+  def new(conn, _params) do
+    render conn, "new.html"
+  end
+
+  def create(conn, params) do
+    IO.inspect """
+    #{inspect conn}
+    #{inspect params}
+    """
+    render conn, "index.html"
+  end
 end

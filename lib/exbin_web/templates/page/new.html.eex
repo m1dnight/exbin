@@ -1,0 +1,10 @@
+<div class="row h-75 mt-1 myrow" style="">
+<form>
+  <div class="form-group">
+    <textarea class="form-control codebox" >test</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+<link rel="stylesheet" href="<%= static_path(@conn, "/css/atom-one-dark.css") %>">
