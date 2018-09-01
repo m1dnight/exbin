@@ -23,12 +23,6 @@
         <div class="container">
             <%= render @view_module, @view_template, assigns %>
         </div>
-
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted">Made by m1dnight, with Elixir.</span>
-            </div>
-        </footer>
     </body>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <!-- This is here because I don't know how to add it in brunch. -->
