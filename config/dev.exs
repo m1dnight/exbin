@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :exbin, Exbin.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "exbin_dev",
-  hostname: "localhost",
+  username: "exbin",
+  password: "exbin",
+  database: "exbin_db",
+  hostname: "192.168.1.146",
   pool_size: 10

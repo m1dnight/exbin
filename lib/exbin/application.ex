@@ -8,8 +8,10 @@ defmodule ExBin.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      # Start the Ecto repository
+      supervisor(Exbin.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(ExBinWeb.Endpoint, []),
+      supervisor(ExBinWeb.Endpoint, [])
       # Start your own worker by calling: ExBin.Worker.start_link(arg1, arg2, arg3)
       # worker(ExBin.Worker, [arg1, arg2, arg3]),
     ]
