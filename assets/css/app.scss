@@ -9,6 +9,7 @@ html,
 body,
     {
     height: 100%;
+    background: rgb(40, 44, 52);
 }
 
 // Creating new snippets // 
@@ -25,6 +26,7 @@ body,
 .codebox {
     // background-color: pink;
     border: 0px solid #f6e4cc;
+    background: rgb(40, 44, 52);
     outline: none;
     resize: none;
     font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
