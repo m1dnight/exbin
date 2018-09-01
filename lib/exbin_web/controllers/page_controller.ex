@@ -18,7 +18,8 @@ defmodule ExBinWeb.PageController do
 
     {:ok, snippet} = Repo.insert(changeset)
 
-    render conn, "show.html", snippet: snippet
+    redirect conn, to: "/#{snippet.id}"
+    # render conn, "show.html", snippet: snippet
   end
 
   def show(conn, %{"id" => id}) do

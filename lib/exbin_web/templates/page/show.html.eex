@@ -1,13 +1,8 @@
-<div class="row h-75 mt-5">
-  <form class="col-lg-12">
-    <code>
+<div class="row h-100 mt-5">
+    <code class="code-content">
       <pre>
 <%= @snippet.content %>
       </pre>
     </code>
-    <div class="row"></div>
-      <button type="submit" class="btn btn-primary text-center">Save</button>
-    </div>
-  </form>
 </div>
 <link rel="stylesheet" href="<%= static_path(@conn, "/css/atom-one-dark.css") %>">
