@@ -8,3 +8,12 @@ config :exbin, ExBinWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Configure your database
+config :exbin, Exbin.Repo,
+adapter: Ecto.Adapters.Postgres,
+username: "postgres",
+password: "postgres",
+database: "exbin_test",
+hostname: "localhost",
+pool: Ecto.Adapters.SQL.Sandbox
