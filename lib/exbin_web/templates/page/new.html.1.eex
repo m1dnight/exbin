@@ -1,7 +1,0 @@
-<div class="row h-75 mt-5">
-  <%= form_for @conn, page_path(@conn, :new), [as: :test], fn f -> %>
-    <%= textarea f, :for %>
-    <%= submit "Search" %>
-  <% end %>
-</div>
-<link rel="stylesheet" href="<%= static_path(@conn, "/css/atom-one-dark.css") %>">

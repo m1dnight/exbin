@@ -16,9 +16,10 @@ defmodule ExBinWeb.Router do
   scope "/", ExBinWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", PageController, :new
     get "/new", PageController, :new
     post "/new", PageController, :create
+    get "/:id", PageController, :show
   end
 
   # Other scopes may use custom stacks.
