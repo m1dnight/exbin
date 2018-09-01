@@ -49,7 +49,7 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :exbin, Exbin.Repo,
+config :exbin, ExBin.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "exbin",
   password: "exbin",

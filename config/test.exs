@@ -10,7 +10,7 @@ config :exbin, ExBinWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :exbin, Exbin.Repo,
+config :exbin, ExBin.Repo,
 adapter: Ecto.Adapters.Postgres,
 username: "postgres",
 password: "postgres",

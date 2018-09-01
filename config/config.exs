@@ -5,6 +5,10 @@
 # is restricted to this project.
 use Mix.Config
 
+# General application configuration
+config :exbin,
+  ecto_repos: [ExBin.Repo]
+
 # Configures the endpoint
 config :exbin, ExBinWeb.Endpoint,
   url: [host: "localhost"],

@@ -1,4 +1,4 @@
-defmodule Exbin.Repo do
+defmodule ExBin.Repo do
   use Ecto.Repo, otp_app: :exbin
 
   @doc """

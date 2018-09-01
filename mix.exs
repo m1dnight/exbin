@@ -1,4 +1,4 @@
-defmodule Exbin.Mixfile do
+defmodule ExBin.Mixfile do
   use Mix.Project
 
   def project do
