@@ -9,10 +9,9 @@ defmodule ExBinWeb.PageController do
     render conn, "new.html"
   end
 
-  def create(conn, params) do
-    IO.inspect """
-    #{inspect conn}
-    #{inspect params}
+  def create(conn, args = %{"snippet" => %{"snippet_content" => content}}) do
+    IO.puts """
+    #{inspect content}
     """
     render conn, "index.html"
   end
