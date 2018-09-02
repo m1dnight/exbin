@@ -5,7 +5,8 @@ MIX_ENV=prod
 mix deps.get --only prod
 
 cd assets 
-brunch build --production
+npm install --production
+node_modules/brunch/bin/brunch build --production
 cd ..
 
 mix phx.digest 
