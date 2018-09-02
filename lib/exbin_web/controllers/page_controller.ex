@@ -15,11 +15,10 @@ defmodule ExBinWeb.PageController do
     IO.inspect args
     changeset = Snippet.changeset(%Snippet{}, args)
 
-
+    IO.inspect changeset
     {:ok, snippet} = Repo.insert(changeset)
 
     redirect conn, to: "/#{snippet.id}"
-    # render conn, "show.html", snippet: snippet
   end
 
   def show(conn, %{"id" => id}) do
