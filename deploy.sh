@@ -10,7 +10,7 @@ mix compile
 
 cd assets 
 
-npm install --production
+npm install
 
 node_modules/brunch/bin/brunch build --production
 
@@ -20,10 +20,10 @@ mix phx.digest
 
 mix ecto.migrate 
 
-# git pull origin master 
-# mix deps.get
-# cd assets 
-# npm install 
-# node_modules/brunch/bin/brunch build 
-# cd ..
-# iex -S mix phoenix.server
+git pull origin master 
+mix deps.get
+cd assets 
+npm install 
+node_modules/brunch/bin/brunch build 
+cd ..
+iex -S mix phoenix.server
