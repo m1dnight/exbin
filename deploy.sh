@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MIX_ENV=prod
+export MIX_ENV=prod
 
 git pull origin master 
 
