@@ -11,13 +11,12 @@ defmodule ExBinWeb.PageController do
   end
 
   def create(conn, _args = %{"snippet" => args}) do
-    IO.inspect(args)
-    changeset = Snippet.changeset(%Snippet{}, args)
+    # changeset = Snippet.changeset(%Snippet{}, args)
 
-    IO.inspect(changeset)
-    {:ok, snippet} = Repo.insert(changeset)
-
-    redirect(conn, to: "/#{snippet.id}")
+    # {:ok, snippet} = Repo.insert(changeset)
+    snippet = %Snippet{:content => args["content"]}
+    #redirect(conn, to: "/#{snippet.id}")
+    render(conn, "show.html", snippet: snippet)
   end
 
   def show(conn, %{"id" => id}) do
