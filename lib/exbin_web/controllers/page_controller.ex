@@ -1,6 +1,7 @@
 defmodule ExBinWeb.PageController do
   use ExBinWeb, :controller
   alias ExBin.{Snippet, Repo}
+  import Ecto.Query
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -11,18 +12,16 @@ defmodule ExBinWeb.PageController do
   end
 
   def create(conn, _args = %{"snippet" => args}) do
-    changeset = Snippet.changeset(%Snippet{}, args)
-
-    {:ok, snippet} = Repo.insert(changeset)
-    redirect(conn, to: "/#{snippet.id}")
+    {:ok, snippet} = ExBin.Logic.Snippet.insert(args)
+    redirect(conn, to: "/#{snippet.name}")
   end
 
-  def show(conn, %{"id" => id}) do
-    case Repo.get(Snippet, id) do
+  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def show(conn, %{"name" => name}) do
+    case Repo.one(from(s in Snippet, where: s.name == ^name)) do
       nil ->
-        IO.puts "Rendering 404!"
         conn
-        |>put_view(ExBinWeb.ErrorView)
+        |> put_view(ExBinWeb.ErrorView)
         |> render("404.html")
 
       snippet ->

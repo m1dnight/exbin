@@ -1,5 +1,9 @@
 # ExBin
 
+## Todo
+
+ - A unique key is generated every creation, but there is a theoretical chance that key `k` is generated for snippet `a`, and that they are concurrently posted and snippet `b` generates the same random key `k`. Each key is checked for existence in the datbase before using it, though. So the chance is really super small. But it exists.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`

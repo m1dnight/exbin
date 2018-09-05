@@ -4,7 +4,9 @@ defmodule ExBin.Snippet do
   alias ExBin.Snippet
 
   schema "snippets" do
-    field :content, :string, default: "" # empty default to create empty snippets.
+    field(:name, :string)
+    # empty default to create empty snippets.
+    field(:content, :string, default: "")
     timestamps()
   end
 
@@ -13,7 +15,8 @@ defmodule ExBin.Snippet do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:content])
-    |> validate_required([])
+    |> cast(params, [:content, :name])
+    |> validate_required([:name])
+    |> unique_constraint(:name)
   end
 end
