@@ -8,7 +8,7 @@
       <title>ExBin</title>
       <link rel="shortcut icon" href="<%= static_path(@conn, "/favicon.ico") %>" />
       <!-- Bootstrap core CSS -->
-
+      <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
    </head>
    <body>
       <!-- Navigation -->
@@ -55,11 +55,19 @@
          </div>
       </nav>
       <!-- Page Content -->
-      <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
       <div class="container-fluid h-100">
          <%= render @view_module, @view_template, assigns %>
       </div>
-      <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
    </body>
-
+   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+   <!-- This is here because I don't know how to add it in brunch. -->
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.3.0/highlightjs-line-numbers.min.js"></script> -->
+   <script>
+      $(document).ready(function() {
+          $('code pre').each(function(i, block) {
+              console.log('highlighting' + block)
+              hljs.highlightBlock(block);
+          });
+      });
+   </script>
 </html>

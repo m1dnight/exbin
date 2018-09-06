@@ -54,6 +54,6 @@ config :exbin, ExBin.Repo,
   username: "exbin",
   password: "exbin",
   database: "exbin_db",
-#  hostname: "192.168.1.146",
-  hostname: "10.240.78.230",
+  hostname: "192.168.1.146",
+  #hostname: "10.240.78.230",
   pool_size: 10
