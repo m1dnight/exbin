@@ -25,6 +25,9 @@
                <li class="nav-item active">
                 <%= link raw(~s'New'), to: page_path(@conn, :new), class: "nav-link"  %>
                </li>
+               <li class="nav-item active">
+                <%= link raw(~s'About'), to: page_path(@conn, :about), class: "nav-link"  %>
+               </li>               
                <!-- Disabled -->
                <!-- 
                <li class="nav-item active">

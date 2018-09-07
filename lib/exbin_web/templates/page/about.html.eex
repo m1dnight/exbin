@@ -1,0 +1,13 @@
+
+<div class="container">
+    <div class="rowmt-2">
+        <div class="col-12">
+            <h1><a id="ExBin_0"></a>ExBin</h1>
+            <p>ExBin is a pastebin clone written in Elixir/Phoenix. You can find the source code <a href="https://github.com/m1dnight/exbin">here on github</a>.</p>
+            <h2><a id="Privacy_4"></a>Privacy</h2>
+            <p>None of the pastes are listed anywhere publicly. If you create a paste it will be only visible for the people you show the link to. Each link is generated with a horesebatterystaple kind of identifier, so it’s not impossible to guess an identifier.</p>
+            <h2><a id="Duration_8"></a>Duration</h2>
+            <p>Pastes are stored indefinitely. This might change in the future, though. ExBin is still new.</p>
+        </div>
+    </div>
+</div>

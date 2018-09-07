@@ -19,6 +19,7 @@ defmodule ExBinWeb.Router do
 
     get("/", PageController, :new)
     get("/new", PageController, :new)
+    get("/about", PageController, :about)
     post("/new", PageController, :create)
     get("/:name", PageController, :show)
   end
