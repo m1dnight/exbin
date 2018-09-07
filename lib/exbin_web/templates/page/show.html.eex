@@ -1,10 +1,13 @@
-<div class="row h-100 mt-0">
-    <code class="code-content">
-      <pre>
-<%= @snippet.content %>
-      </pre>
-    </code>
+<div class="container-fluid h-100">
+    <div class="row h-100 mt-0">
+        <code class="code-content">
+        <pre>
+    <%= @snippet.content %>
+        </pre>
+        </code>
+    </div>
 </div>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.3.0/highlightjs-line-numbers.min.js"></script>
 <link rel="stylesheet" href="<%= static_path(@conn, "/css/atom-one-dark.css") %>">
 
