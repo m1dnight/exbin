@@ -3,7 +3,7 @@ defmodule ExBin.Repo.Migrations.LargeText do
 
   def change do
     alter table(:snippets) do
-      modify :content, :text
+      modify(:content, :text)
     end
   end
 end

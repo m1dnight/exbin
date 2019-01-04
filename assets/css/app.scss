@@ -66,6 +66,15 @@ form {
     width: 100%;
 }
 
+.status-bar {
+    color: white;
+    background-color: rgb(40, 44, 52);
+    border-color: rgb(19, 20, 22); }
+    .status-bar hr {
+      border-top-color: rgb(19, 20, 22); }
+    .status-bar .alert-link {
+      color: rgb(19, 20, 22); }
+
 
 // Number highlights
 

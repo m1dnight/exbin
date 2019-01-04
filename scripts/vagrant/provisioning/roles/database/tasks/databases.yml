@@ -1,0 +1,27 @@
+- name: Ensure database created
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}"
+
+- name: Ensure database created
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}_test"
+
+- name: Ensure user has access
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    db: "{{ db_name }}"
+    name: "{{ db_user }}"
+    priv: "ALL"
+
+- name: Ensure user has access
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    db: "{{ db_name }}_test"
+    name: "{{ db_user }}"
+    priv: "ALL"    

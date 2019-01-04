@@ -1,0 +1,10 @@
+
+- name: Add key for Postgres repo
+  become: yes
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+
+- name: Add Postgres repo to sources list
+  become: yes
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
+

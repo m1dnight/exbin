@@ -11,8 +11,14 @@ config :exbin, ExBinWeb.Endpoint,
   debug_errors: false,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    node: [
+      "node_modules/brunch/bin/brunch",
+      "watch",
+      "--stdin",
+      cd: Path.expand("../assets", __DIR__)
+    ]
+  ]
 
 # ## SSL Support
 #
@@ -53,7 +59,6 @@ config :exbin, ExBin.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "exbin",
   password: "exbin",
-  database: "exbin_db",
-  #hostname: "192.168.1.146",
-  hostname: "10.240.78.230",
+  database: "exbin",
+  hostname: "localhost",
   pool_size: 10

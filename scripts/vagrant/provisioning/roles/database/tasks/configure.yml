@@ -1,0 +1,25 @@
+- name: Allow md5 login.
+  become: yes 
+  blockinfile:
+    dest: "/etc/postgresql/10/main/pg_hba.conf"
+    block: |
+      host    all             all             0.0.0.0/0                md5
+      host    replication     replicant       0.0.0.0/0                md5
+
+- name: Allow remote connections
+  become: yes 
+  lineinfile:
+    path: "/etc/postgresql/10/main/postgresql.conf"
+    regexp: '^#listen_addresses'
+    insertafter: '^#listen_addresses'
+    line: "listen_addresses = '*'"
+
+- name: Restart postgres
+  become: yes
+  service:
+    name: postgresql
+    state: restarted
+
+- name: Ensure the PostgreSQL service is running
+  become: yes
+  service: name=postgresql state=started enabled=yes    

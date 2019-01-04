@@ -7,6 +7,7 @@ defmodule ExBin.Snippet do
     field(:name, :string)
     # empty default to create empty snippets.
     field(:content, :string, default: "")
+    field(:viewcount, :integer, default: 0)
     timestamps()
   end
 
@@ -15,7 +16,7 @@ defmodule ExBin.Snippet do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:content, :name])
+    |> cast(params, [:content, :name, :viewcount])
     |> validate_required([:name])
     |> unique_constraint(:name)
   end

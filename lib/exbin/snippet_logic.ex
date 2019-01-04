@@ -6,7 +6,7 @@ defmodule ExBin.Logic.Snippet do
   defp generate_name() do
     name = HorseStapleBattery.generate_compound([:verb, :noun])
 
-    case Repo.one(from s in Snippet, where: s.name == ^name) do
+    case Repo.one(from(s in Snippet, where: s.name == ^name)) do
       nil ->
         name
 
@@ -37,5 +37,13 @@ defmodule ExBin.Logic.Snippet do
       {{:ok, snippet}, _} ->
         {:ok, snippet}
     end
+  end
+
+  def update_viewcount(snippet, delta \\ 1) do
+    Repo.transaction(fn ->
+      s = Repo.get!(Snippet, snippet.id)
+      s = Snippet.changeset(s, %{viewcount: s.viewcount + delta})
+      Repo.update!(s)
+    end)
   end
 end

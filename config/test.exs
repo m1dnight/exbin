@@ -11,9 +11,9 @@ config :logger, level: :warn
 
 # Configure your database
 config :exbin, ExBin.Repo,
-adapter: Ecto.Adapters.Postgres,
-username: "postgres",
-password: "postgres",
-database: "exbin_test",
-hostname: "localhost",
-pool: Ecto.Adapters.SQL.Sandbox
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "exbin_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox

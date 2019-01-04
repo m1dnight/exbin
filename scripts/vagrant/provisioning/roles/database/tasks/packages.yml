@@ -1,0 +1,19 @@
+- name: Ensure bash, OpenSSl, and libssl are the latest versions
+  become: yes
+  apt:
+    pkg:
+      - bash
+      - openssl
+      - libssl-dev
+      - libssl-doc
+    state: present
+
+- name: Install PostgreSQL
+  become: yes
+  apt:
+    pkg:
+      - postgresql-10
+      - postgresql-contrib
+      - libpq-dev
+      - python-psycopg2
+  tags: packages

@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$script = <<-SCRIPT
+date > /etc/vagrant_provisioned_at
+SCRIPT
+
+
+Vagrant.configure("2") do |config|
+
+  # Database 
+  config.vm.define "database" do |config|
+    config.vm.box = "ubuntu/bionic64"
+    config.vm.network "private_network", type: "dhcp"
+    config.vm.provision "shell", inline: $script
+    config.vm.hostname = "database"
+
+    config.vm.network :forwarded_port, guest: 5432, host: 5432
+
+    config.vm.provider :virtualbox do |vb| 
+      vb.name = "database"
+    end
+  end
+
+  # Ansible
+  config.vm.provision "ansible" do |ansible|
+    ansible.compatibility_mode  = "2.0"
+    ansible.verbose = "v"
+    ansible.playbook = "provisioning/playbook.yml"
+    ansible.groups = {
+      "databases" => ["database"]
+    }
+  end
+end

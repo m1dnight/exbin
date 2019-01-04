@@ -16,7 +16,7 @@ exports.config = {
   },
 
   conventions: {
-      assets: /^(static)/
+      assets: /^(static)/  
   },
 
   // Phoenix paths configuration
