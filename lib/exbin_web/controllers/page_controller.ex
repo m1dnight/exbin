@@ -20,7 +20,6 @@ defmodule ExBinWeb.PageController do
     redirect(conn, to: "/#{snippet.name}")
   end
 
-  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"name" => name}) do
     case Repo.one(from(s in Snippet, where: s.name == ^name)) do
       nil ->
@@ -31,6 +30,19 @@ defmodule ExBinWeb.PageController do
       snippet ->
         {:ok, snippet} = ExBin.Logic.Snippet.update_viewcount(snippet)
         render(conn, "show.html", snippet: snippet)
+    end
+  end
+
+  def raw(conn, %{"name" => name}) do
+    case Repo.one(from(s in Snippet, where: s.name == ^name)) do
+      nil ->
+        conn
+        |> put_view(ExBinWeb.ErrorView)
+        |> render("404.html")
+
+      snippet ->
+        {:ok, snippet} = ExBin.Logic.Snippet.update_viewcount(snippet)
+        text(conn, snippet.content)
     end
   end
 end
