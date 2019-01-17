@@ -15,6 +15,11 @@ defmodule ExBinWeb.PageController do
     render(conn, "about.html")
   end
 
+  def list(conn, _params) do
+    snippets = ExBin.Logic.Snippet.list_snippets()
+    render(conn, "list.html", snippets: snippets)
+  end
+
   def create(conn, _args = %{"snippet" => args}) do
     {:ok, snippet} = ExBin.Logic.Snippet.insert(args)
     redirect(conn, to: "/#{snippet.name}")

@@ -3,6 +3,10 @@ defmodule ExBin.Logic.Snippet do
   alias ExBin.{Snippet, Repo}
   import Ecto.Query
 
+  def list_snippets() do
+    Repo.all(Snippet)
+  end
+
   defp generate_name() do
     name = HorseStapleBattery.generate_compound([:verb, :noun])
 
@@ -45,5 +49,19 @@ defmodule ExBin.Logic.Snippet do
       s = Snippet.changeset(s, %{viewcount: s.viewcount + delta})
       Repo.update!(s)
     end)
+  end
+
+  def human_readable_date(snippet) do
+    import DateTime
+
+    case diff(snippet.inserted_at, utc_now(), :second) do
+      x when x < 86400 ->
+        "Today"
+      x ->
+        d = snippet.inserted_at
+        s = "#{d.day}/#{d.month} #{d.hour}:#{d.minute}"
+        s
+    end
+
   end
 end

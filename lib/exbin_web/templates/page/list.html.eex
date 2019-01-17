@@ -1,0 +1,59 @@
+<%# <div class="container-fluid h-100">
+    <div class="row mt-0">
+        <code class="code-content-no-syntax">
+        <pre>
+foo
+bar
+baz
+        </pre>
+        </code>
+    </div>
+    <div class="row mt-0">
+        <code class="code-content-no-syntax">
+        <pre>
+foo
+bar
+baz
+        </pre>
+        </code>
+    </div>
+    <div class="row mt-0">
+        <code class="code-content-no-syntax">
+        <pre>
+foo
+bar
+baz
+        </pre>
+        </code>
+    </div>
+</div> %>
+
+
+
+<div class="container-fluid pb-10">
+   <div class="container mb-100">
+      <div class="list-group mt-15">
+         <!-- One Item -->
+         <%= for snippet <- @snippets do %>
+         <a href="<%= page_path(@conn, :show, snippet.name ) %>" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+               <h5 class="mb-1"></h5>
+               <small><%= ExBin.Logic.Snippet.human_readable_date(snippet) %></small>
+            </div>
+            <div class="row mt-0">
+               <code class="code-content-no-syntax">
+                  <pre>
+<%= snippet.content |> String.split("\n") |> Enum.take(3) |> Enum.join("\n")  %>
+            </pre>
+               </code>
+            </div>
+         </a>
+         <% end %>
+      </div>
+   </div>
+</div>
+
+
+
+
+

@@ -8,7 +8,7 @@ defmodule ExBin.Snippet do
     # empty default to create empty snippets.
     field(:content, :string, default: "")
     field(:viewcount, :integer, default: 0)
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc """
@@ -20,4 +20,5 @@ defmodule ExBin.Snippet do
     |> validate_required([:name])
     |> unique_constraint(:name)
   end
+
 end

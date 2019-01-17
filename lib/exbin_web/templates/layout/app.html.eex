@@ -27,6 +27,9 @@
                </li>
                <li class="nav-item active">
                 <%= link raw(~s'About'), to: page_path(@conn, :about), class: "nav-link"  %>
+               </li> 
+               <li class="nav-item active">
+                <%= link raw(~s'Public'), to: page_path(@conn, :list), class: "nav-link"  %>
                </li>    
             </ul>    
             <%= if assigns[:snippet] do %>

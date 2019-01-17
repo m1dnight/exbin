@@ -18,6 +18,7 @@ defmodule ExBinWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :new)
+    get("/list", PageController, :list)
     get("/new", PageController, :new)
     get("/about", PageController, :about)
     post("/new", PageController, :create)
