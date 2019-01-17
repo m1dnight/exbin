@@ -32,9 +32,9 @@ baz
 
 <div class="container-fluid pb-10">
    <div class="container mb-100">
-      <div class="list-group mt-15">
-         <!-- One Item -->
          <%= for snippet <- @snippets do %>
+      <div class="list-group mt-3">
+         <!-- One Item -->
          <a href="<%= page_path(@conn, :show, snippet.name ) %>" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                <h5 class="mb-1"></h5>
@@ -48,8 +48,8 @@ baz
                </code>
             </div>
          </a>
-         <% end %>
       </div>
+         <% end %>
    </div>
 </div>
 
