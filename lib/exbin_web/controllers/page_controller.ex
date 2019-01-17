@@ -16,7 +16,7 @@ defmodule ExBinWeb.PageController do
   end
 
   def list(conn, _params) do
-    snippets = ExBin.Logic.Snippet.list_snippets()
+    snippets = ExBin.Logic.Snippet.public_snippets()
     render(conn, "list.html", snippets: snippets)
   end
 

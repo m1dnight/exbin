@@ -7,6 +7,11 @@ defmodule ExBin.Logic.Snippet do
     Repo.all(Snippet)
   end
 
+  def public_snippets() do
+    (from s in Snippet, where: s.private == false)
+    |> Repo.all()
+  end
+
   defp generate_name() do
     name = HorseStapleBattery.generate_compound([:verb, :noun])
 
