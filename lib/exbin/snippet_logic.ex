@@ -59,7 +59,7 @@ defmodule ExBin.Logic.Snippet do
   def human_readable_date(snippet) do
     import DateTime
 
-    case diff(snippet.inserted_at, utc_now(), :second) do
+    case abs(diff(snippet.inserted_at, utc_now(), :second)) do
       x when x < 86400 ->
         "Today"
       x ->
