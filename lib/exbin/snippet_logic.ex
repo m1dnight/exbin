@@ -8,7 +8,7 @@ defmodule ExBin.Logic.Snippet do
   end
 
   def public_snippets() do
-    (from s in Snippet, where: s.private == false, order_by: s.inserted_at)
+    (from s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])
     |> Repo.all()
   end
 
