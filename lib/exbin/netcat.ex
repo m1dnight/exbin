@@ -10,7 +10,7 @@ defmodule ExBin.Netcat do
   end
 
   def init([ip, port]) do
-    opts = [:binary, packet: :line, active: false, reuseaddr: true, ip: ip, exit_on_close: false]
+    opts = [:binary, packet: 0, active: false, reuseaddr: true, ip: ip, exit_on_close: false]
 
     return_value =
       case :gen_tcp.listen(port, opts) do
