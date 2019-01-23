@@ -46,11 +46,9 @@ defmodule ExBin.Netcat do
   defp do_receive(socket, bytes) do
     case :gen_tcp.recv(socket, 0) do
       {:ok, data} ->
-        Logger.debug("IN: #{inspect(data)}")
         do_receive(socket, bytes <> data)
 
       {:error, e} ->
-        IO.inspect(e)
         {:ok, bytes}
     end
   end
