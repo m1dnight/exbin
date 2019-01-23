@@ -8,6 +8,9 @@
                 <p>If you create a paste it will be only visible for the people you show the link to. Each link is generated with a horesebatterystaple kind of identifier, so it’s not impossible to guess an identifier. Note that you can make a paste public, which will make it appear publicly. The pastes are hidden by default, unless you opt-in to publishing it publicly.</p>
                 <h2><a id="Duration_8"></a>Duration</h2>
                 <p>Pastes are stored indefinitely. This might change in the future, though. ExBin is still new.</p>
+                <h2><a id="Netcat_16"></a>Netcat</h2>
+                <p>Exbin also support netcatting a textfile. Suppose you are configuring some server and you quickly want to get data out to your other workstation. You can pipe the file to exbin, and manually type over an easy-to-read URL. For example <code>cat myfile.txt | nc exbin.call-cc.be 9999</code> will return a URL to your console which you can type over. All these pastes are private, of course!
+                </p>             
             </div>
         </div>
     </div>
