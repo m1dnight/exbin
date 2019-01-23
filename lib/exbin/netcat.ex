@@ -38,9 +38,8 @@ defmodule ExBin.Netcat do
 
   defp serve(client_socket) do
     {:ok, data} = do_receive(client_socket, <<>>)
-    # {:ok, snippet} = ExBin.Logic.Snippet.insert(%{"content" => data, "private" => "true"})
-    # :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}")
-    :gen_tcp.send(client_socket, "bye")
+    {:ok, snippet} = ExBin.Logic.Snippet.insert(%{"content" => data, "private" => "true"})
+    :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}")
     :gen_tcp.close(client_socket)
   end
 
