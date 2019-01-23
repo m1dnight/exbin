@@ -10,7 +10,7 @@ defmodule ExBin.Netcat do
   end
 
   def init([ip, port]) do
-    opts = [:binary, packet: :line, active: false, reuseaddr: true, ip: ip, exit_on_close: false]
+    opts = [:binary, packet: 0, active: false, reuseaddr: true, ip: ip, exit_on_close: false]
 
     return_value =
       case :gen_tcp.listen(port, opts) do
@@ -38,8 +38,10 @@ defmodule ExBin.Netcat do
 
   defp serve(client_socket) do
     {:ok, data} = do_receive(client_socket, <<>>)
-    {:ok, snippet} = ExBin.Logic.Snippet.insert(%{"content" => data, "private" => "true"})
-    :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}")
+    # {:ok, snippet} = ExBin.Logic.Snippet.insert(%{"content" => data, "private" => "true"})
+    # :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}")
+    :gen_tcp.send(client_socket, "bye")
+    :gen_tcp.close(client_socket)
   end
 
   defp do_receive(socket, bytes) do
