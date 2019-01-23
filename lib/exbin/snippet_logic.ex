@@ -8,7 +8,7 @@ defmodule ExBin.Logic.Snippet do
   end
 
   def public_snippets() do
-    (from s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])
+    from(s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])
     |> Repo.all()
   end
 
@@ -27,7 +27,9 @@ defmodule ExBin.Logic.Snippet do
   @doc """
   Will indefinitely try to insert a snippet.
   """
+  # %{"content" => "text", "private" => "false"}
   def insert(args) do
+    IO.inspect(args)
     try_insert(args, 10)
   end
 
@@ -62,11 +64,11 @@ defmodule ExBin.Logic.Snippet do
     case abs(diff(snippet.inserted_at, utc_now(), :second)) do
       x when x < 86400 ->
         "Today"
+
       x ->
         d = snippet.inserted_at
         s = "#{d.day}/#{d.month} #{d.hour}:#{d.minute}"
         s
     end
-
   end
 end

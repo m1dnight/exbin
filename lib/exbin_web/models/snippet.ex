@@ -21,5 +21,4 @@ defmodule ExBin.Snippet do
     |> validate_required([:name])
     |> unique_constraint(:name)
   end
-
 end

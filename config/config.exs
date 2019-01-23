@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+config :exbin, :tcp_port, (System.get_env("TCP_PORT") || "9999") |> String.to_integer()
+config :exbin, :tcp_ip, (System.get_env("TCP_IP") || "127.0.0.1") |> to_charlist() |> :inet.parse_address() |> elem(1)
 # General application configuration
 config :exbin,
   ecto_repos: [ExBin.Repo]
