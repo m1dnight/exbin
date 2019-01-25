@@ -41,7 +41,9 @@ defmodule ExBin.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:horsestaplebattery, "~> 0.1.0"}
+      {:horsestaplebattery, "~> 0.1.0"},
+      {:timex, "~> 3.5.0"},
+      {:faker_elixir_octopus, "~> 1.0", only: :dev}
     ]
   end
 

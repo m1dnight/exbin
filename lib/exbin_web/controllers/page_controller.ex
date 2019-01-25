@@ -20,7 +20,15 @@ defmodule ExBinWeb.PageController do
     render(conn, "list.html", snippets: snippets)
   end
 
+  def stats(conn, _params) do
+    public_count = ExBin.Logic.Snippet.count_public()
+    private_count = ExBin.Logic.Snippet.count_private()
+    stats = ExBin.Logic.Snippet.stats_activity()
+    render(conn, "stats.html", stats: %{public_count: public_count, private_count: private_count, counts: stats})
+  end
+
   def create(conn, _args = %{"snippet" => args}) do
+    IO.inspect(args)
     {:ok, snippet} = ExBin.Logic.Snippet.insert(args)
     redirect(conn, to: "/#{snippet.name}")
   end
