@@ -1,10 +1,11 @@
-/* This file is for your main application css. */
-
 // FontAwesome stuff
 $fa-font-path: "../fonts";
 @import "font-awesome";
-// Bootstrap
+
 @import "bootstrap";
+
+
+// General page setup.
 html,
 body,
     {
@@ -12,10 +13,6 @@ body,
     background: rgb(40, 44, 52);
     color: #D2D7D3;
 }
-
-
-
-// Creating new snippets // 
 
 .container {
     height: -o-calc(100% - 48px - 2rem);
@@ -29,6 +26,8 @@ body,
 .list-group-item {
     background-color: #D2D7D3;
 }
+
+// New snippet page 
 .codebox {
     border: 0px solid #f6e4cc;
     color: #D2D7D3;
@@ -60,7 +59,6 @@ form {
 // Showing snippets 
 
 .code-content {
-    // background-color: pink;
     border: 0px solid #f6e4cc;
     outline: none;
     resize: none;
@@ -72,7 +70,6 @@ form {
 }
 
 .code-content-no-syntax {
-    // background-color: pink;
     border: 0px solid #f6e4cc;
     outline: none;
     resize: none;
@@ -93,7 +90,6 @@ form {
 
 // Number highlights
 
-/* for block of numbers */
 td.hljs-ln-numbers {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -108,10 +104,8 @@ td.hljs-ln-numbers {
     vertical-align: top;
     padding-right: 10px;
 
-    /* your custom style here */
 }
 
-/* for block of code */
 td.hljs-ln-code {
     padding-left: 10px;
 }
