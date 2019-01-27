@@ -16,20 +16,20 @@ defmodule ExBinWeb.PageController do
   end
 
   def list(conn, _params) do
-    snippets = ExBin.Logic.Snippet.public_snippets()
+    snippets = ExBin.Domain.list_public_snippets()
     render(conn, "list.html", snippets: snippets)
   end
 
   def stats(conn, _params) do
-    public_count = ExBin.Logic.Snippet.count_public()
-    private_count = ExBin.Logic.Snippet.count_private()
-    stats = ExBin.Logic.Snippet.stats_activity()
+    public_count = ExBin.Domain.count_public_snippets()
+    private_count = ExBin.Domain.count_private_snippets()
+    stats = ExBin.Domain.Statistics.stats_activity()
     render(conn, "stats.html", stats: %{public_count: public_count, private_count: private_count, counts: stats})
   end
 
   def create(conn, _args = %{"snippet" => args}) do
     IO.inspect(args)
-    {:ok, snippet} = ExBin.Logic.Snippet.insert(args)
+    {:ok, snippet} = ExBin.Domain.insert(args)
     redirect(conn, to: "/#{snippet.name}")
   end
 
@@ -41,7 +41,7 @@ defmodule ExBinWeb.PageController do
         |> render("404.html")
 
       snippet ->
-        {:ok, snippet} = ExBin.Logic.Snippet.update_viewcount(snippet)
+        {:ok, snippet} = ExBin.Domain.update_viewcount(snippet)
         render(conn, "show.html", snippet: snippet)
     end
   end
@@ -54,7 +54,7 @@ defmodule ExBinWeb.PageController do
         |> render("404.html")
 
       snippet ->
-        {:ok, snippet} = ExBin.Logic.Snippet.update_viewcount(snippet)
+        {:ok, snippet} = ExBin.Domain.update_viewcount(snippet)
         text(conn, snippet.content)
     end
   end

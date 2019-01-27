@@ -1,40 +1,5 @@
-defmodule ExBin.Logic.Snippet do
-  use ExBinWeb, :controller
+defmodule ExBin.Domain.Statistics do
   alias ExBin.{Snippet, Repo}
-  import Ecto.Query
-
-  def list_snippets() do
-    Repo.all(Snippet)
-  end
-
-  def public_snippets() do
-    from(s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])
-    |> Repo.all()
-  end
-
-  def count_public() do
-    Repo.one(from(s in Snippet, where: s.private == false, select: count(s.id)))
-  end
-
-  def count_private() do
-    Repo.one(from(s in Snippet, where: s.private == true, select: count(s.id)))
-  end
-
-  defp generate_name() do
-    name = HorseStapleBattery.generate_compound([:verb, :noun])
-
-    case Repo.one(from(s in Snippet, where: s.name == ^name)) do
-      nil ->
-        name
-
-      _ ->
-        generate_name()
-    end
-  end
-
-  defp newest_snippet() do
-    Repo.one(first(from(s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])))
-  end
 
   def stats_activity() do
     # Compute the date a year ago. Only take stats for 1 year.
@@ -87,40 +52,6 @@ defmodule ExBin.Logic.Snippet do
       |> (fn s -> "[" <> s <> "]" end).()
 
     {months_string, values_string}
-  end
-
-  @doc """
-  Will indefinitely try to insert a snippet.
-  """
-  # %{"content" => "text", "private" => "false"}
-  def insert(args) do
-    IO.inspect(args)
-    try_insert(args, 10)
-  end
-
-  defp try_insert(args, attempt) do
-    name = generate_name()
-    args = Map.merge(args, %{"name" => name})
-    changeset = Snippet.changeset(%Snippet{}, args)
-
-    case {Repo.insert(changeset), attempt} do
-      {{:error, _e}, 0} ->
-        {:error, "failed to insert snippet"}
-
-      {{:error, _e}, _n} ->
-        try_insert(args, attempt - 1)
-
-      {{:ok, snippet}, _} ->
-        {:ok, snippet}
-    end
-  end
-
-  def update_viewcount(snippet, delta \\ 1) do
-    Repo.transaction(fn ->
-      s = Repo.get!(Snippet, snippet.id)
-      s = Snippet.changeset(s, %{viewcount: s.viewcount + delta})
-      Repo.update!(s)
-    end)
   end
 
   def human_readable_date(snippet) do

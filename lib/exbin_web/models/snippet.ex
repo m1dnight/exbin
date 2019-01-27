@@ -1,7 +1,6 @@
 defmodule ExBin.Snippet do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExBin.Snippet
 
   schema "snippets" do
     field(:name, :string)

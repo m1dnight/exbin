@@ -1,4 +1,9 @@
 defmodule TestData do
+
+  def random_boolean() do
+    :rand.uniform() > 0.5
+
+  end
   @seconds_per_day 60 * 60 * 24
   defp now_in_seconds do
     :calendar.local_time() |> :calendar.datetime_to_gregorian_seconds()
@@ -63,7 +68,7 @@ end
     id: id,
     inserted_at: TestData.backward(1..1000),
     name: "#{id}",
-    private: false,
+    private: TestData.random_boolean(),
     updated_at: TestData.backward(1..1000),
     viewcount: 2
   }

@@ -38,7 +38,7 @@ baz
          <a href="<%= page_path(@conn, :show, snippet.name ) %>" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                <h5 class="mb-1"></h5>
-               <small><%= ExBin.Logic.Snippet.human_readable_date(snippet) %></small>
+               <small><%= ExBin.Domain.Statistics.human_readable_date(snippet) %></small>
             </div>
             <div class="row mt-0">
                <code class="code-content-no-syntax">
