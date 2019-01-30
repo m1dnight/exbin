@@ -39,6 +39,14 @@ defmodule ExBin.Domain do
   #
 
   @doc """
+  Gets a snippet by its human readable name.
+  """
+  def get_by_name(name) do
+    from(s in Snippet, where: s.name == ^name)
+    |> Repo.one()
+  end
+
+  @doc """
   Grabs the newest snippet from the database.
   """
   def last_snippet() do

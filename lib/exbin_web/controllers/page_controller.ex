@@ -3,23 +3,38 @@ defmodule ExBinWeb.PageController do
   alias ExBin.{Snippet, Repo}
   import Ecto.Query
 
+  @doc """
+  The index page, the first page the user sees.
+  """
   def index(conn, _params) do
     render(conn, "index.html")
   end
 
+  @doc """
+  The new snippet page. Where the user can enter code.
+  """
   def new(conn, _params) do
     render(conn, "new.html")
   end
 
+  @doc """
+  Static page with about exbin content.
+  """
   def about(conn, _params) do
     render(conn, "about.html")
   end
 
+  @doc """
+  Shows a list of all the public snippets, ordered from new to old.
+  """
   def list(conn, _params) do
     snippets = ExBin.Domain.list_public_snippets()
     render(conn, "list.html", snippets: snippets)
   end
 
+  @doc """
+  Shows a few statistics about exbin. E.g., pastes/hour and stuff like that.
+  """
   def stats(conn, _params) do
     public_count = ExBin.Domain.count_public_snippets()
     private_count = ExBin.Domain.count_private_snippets()
@@ -27,14 +42,19 @@ defmodule ExBinWeb.PageController do
     render(conn, "stats.html", stats: %{public_count: public_count, private_count: private_count, counts: stats})
   end
 
+  @doc """
+  POST end of creating a paste.
+  """
   def create(conn, _args = %{"snippet" => args}) do
-    IO.inspect(args)
     {:ok, snippet} = ExBin.Domain.insert(args)
     redirect(conn, to: "/#{snippet.name}")
   end
 
+  @doc """
+  Shows a paste to the user. Every hit increments the viewcount of each paste as well.
+  """
   def show(conn, %{"name" => name}) do
-    case Repo.one(from(s in Snippet, where: s.name == ^name)) do
+    case ExBin.Domain.get_by_name(name) do
       nil ->
         conn
         |> put_view(ExBinWeb.ErrorView)
@@ -46,8 +66,11 @@ defmodule ExBinWeb.PageController do
     end
   end
 
+  @doc """
+  Shows the raw version of a snippet, no markup no nothing.
+  """
   def raw(conn, %{"name" => name}) do
-    case Repo.one(from(s in Snippet, where: s.name == ^name)) do
+    case ExBin.Domain.get_by_name(name) do
       nil ->
         conn
         |> put_view(ExBinWeb.ErrorView)
