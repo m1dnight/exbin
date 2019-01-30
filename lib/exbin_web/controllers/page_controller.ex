@@ -30,7 +30,12 @@ defmodule ExBinWeb.PageController do
     public_count = ExBin.Domain.count_public_snippets()
     private_count = ExBin.Domain.count_private_snippets()
     stats = ExBin.Domain.Statistics.stats_activity()
-    render(conn, "stats.html", stats: %{public_count: public_count, private_count: private_count, counts: stats})
+    avg_length = ExBin.Domain.Statistics.average_length()
+    total = ExBin.Domain.Statistics.count_snippets()
+
+    render(conn, "stats.html",
+      stats: %{public_count: public_count, private_count: private_count, counts: stats, avg_length: avg_length, total: total}
+    )
   end
 
   @doc """

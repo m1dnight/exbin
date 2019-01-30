@@ -1,17 +1,45 @@
 <div class="container-fluid">
     <div class="container">
-        <div class="row">
-            <%= elem(@stats.counts, 0) %>
-            <%= elem(@stats.counts, 1) %>
+        <!-- Graphs -->
+        <div class="row mb-5">
             <div class="col-lg-6 col-sm-12">
-                <canvas id="perday_line" width="10px" height="10px"></canvas>
+                <canvas id="perday_line"></canvas>
             </div>
 
             <div class="col-lg-6 col-sm-12">
-                <canvas id="privatepublic_pie" width="1000px" height="1000px"></canvas>
+                <canvas id="privatepublic_pie"></canvas>
             </div>
         </div>
+        <!-- Numbers -->
+        <div class="row mb-5">   
 
+            <div class="col-lg-4">
+                <div class="card">
+                <div class="card-body text-center">
+                    <p class="card-text">Public Snippets</p>
+                    <h5 class="card-text"><%= @stats.public_count%></h5>
+                </div>
+                </div>
+            </div>      
+
+            <div class="col-lg-4">
+                <div class="card">
+                <div class="card-body text-center">
+                    <p class="card-text">Private Snippets</p>
+                    <h5 class="card-text"><%= @stats.private_count%></h5>
+                </div>
+                </div>
+            </div>    
+
+            <div class="col-lg-4">
+                <div class="card">
+                <div class="card-body text-center">
+                    <p class="card-text">Average Length</p>
+                    <h5 class="card-text"><%= @stats.avg_length%> characters</h5>
+                </div>
+                </div>
+            </div>                          
+        </div>
     </div>
 </div>
 
@@ -21,32 +49,32 @@
     // Pie Chart Private/Public paste count //
     //////////////////////////////////////////
 
-    // var ctx = document.getElementById("privatepublic_pie").getContext('2d');
-    // var myPieChart = new Chart(ctx, {
-    //     type: 'pie',
-    //     options: {
-    //         responsive: true,
-    //     },
-    //     data:
-    //     {
-    //         datasets: [{
-    //             //                data: [<%= @stats.private_count %>, <%= @stats.public_count %>],
-    //             data: [3, 5],
-    //             backgroundColor: [
-    //                 'rgba(10, 10, 10, 0.2)',
-    //                 'rgba(255, 0, 255, 0.2)'
-    //             ],
-    //             borderColor: [
-    //                 'rgba(10, 10, 10, 1)',
-    //                 'rgba(255, 0, 255, 1)'
-    //             ],
-    //             borderWidth: 0
-    //         }],
+    var ctx = document.getElementById("privatepublic_pie").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        options: {
+            responsive: true,
+        },
+        data:
+        {
+            datasets: [{
+                //                data: [<%= @stats.private_count %>, <%= @stats.public_count %>],
+                data: [3, 5],
+                backgroundColor: [
+                    'rgba(10, 10, 10, 0.2)',
+                    'rgba(255, 0, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(10, 10, 10, 1)',
+                    'rgba(255, 0, 255, 1)'
+                ],
+                borderWidth: 0
+            }],
 
-    //         // These labels appear in the legend and in the tooltips when hovering different arcs
-    //         labels: ['Private', 'Public']
-    //     }
-    // });
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ['Private', 'Public']
+        }
+    });
 
     ///////////////////////////////
     // Pastes per day line graph //
@@ -61,31 +89,22 @@
                 {
 					backgroundColor: 'rgba(255, 0, 255, 0.2)',
 					borderColor: 'rgba(255, 0, 255, 0.2)',
-                    label: "My Data",
+                    label: "Pastes per month",
                     data: <%= {:safe, elem(@stats.counts, 1) }%>
                 }
             ]
         },
-        // data: {
-        //     datasets: [{
-        //         label: 'Scatter Dataset',
-        //         data: [{
-        //             x: -10,
-        //             y: 0
-        //         }, {
-        //             x: 0,
-        //             y: 10
-        //         }, {
-        //             x: 10,
-        //             y: 5
-        //         }, {
-        //             x: 101,
-        //             y: 5
-        //         }]
-        //     }]
-        // },
         options: {
-
+            scales: {
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                        return value;
+                    }
+                }
+            }]
+        }
         }
     });
 </script>

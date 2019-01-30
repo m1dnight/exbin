@@ -78,13 +78,6 @@ defmodule ExBin.Domain do
   end
 
   @doc """
-  Count all the snippets.
-  """
-  def count_snippets() do
-    Repo.one(from(s in Snippet, select: count(s.id)))
-  end
-
-  @doc """
   Count all the private snippets.
   """
   def count_private_snippets() do

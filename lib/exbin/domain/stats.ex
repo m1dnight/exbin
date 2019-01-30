@@ -1,6 +1,32 @@
 defmodule ExBin.Domain.Statistics do
   alias ExBin.{Snippet, Repo}
+  import Ecto.Query
 
+  @doc """
+  Computes the average length of a snippet.
+  """
+  def average_length() do
+    lengths =
+      Repo.all(Snippet)
+      |> Stream.map(fn snippet ->
+        snippet.content
+      end)
+      |> Stream.map(&String.length/1)
+      |> Enum.to_list()
+
+    Enum.sum(lengths) / Enum.count(lengths)
+  end
+
+  @doc """
+  Count all the snippets.
+  """
+  def count_snippets() do
+    Repo.one(from(s in Snippet, select: count(s.id)))
+  end
+
+  @doc """
+  Groups snippets created per month and returns the totals per month for a year.
+  """
   def stats_activity() do
     # Compute the date a year ago. Only take stats for 1 year.
     today = DateTime.utc_now()
@@ -54,6 +80,10 @@ defmodule ExBin.Domain.Statistics do
     {months_string, values_string}
   end
 
+  @doc """
+  Turns a datetime object into a human readable data.
+  Today if the date is not less than 24 hours ago.
+  """
   def human_readable_date(snippet) do
     import DateTime
 

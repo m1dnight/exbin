@@ -5,6 +5,25 @@ $fa-font-path: "../fonts";
 @import "bootstrap";
 
 
+// Statistics 
+
+
+    
+
+.card {
+    background-color: #4e2357;
+    border: 0px;
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+
+}
+
+.card-header {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    background-color: transparent;
+}
 // General page setup.
 html,
 body,
