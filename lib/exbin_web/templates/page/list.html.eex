@@ -1,38 +1,6 @@
-<%# <div class="container-fluid h-100">
-    <div class="row mt-0">
-        <code class="code-content-no-syntax">
-        <pre>
-foo
-bar
-baz
-        </pre>
-        </code>
-    </div>
-    <div class="row mt-0">
-        <code class="code-content-no-syntax">
-        <pre>
-foo
-bar
-baz
-        </pre>
-        </code>
-    </div>
-    <div class="row mt-0">
-        <code class="code-content-no-syntax">
-        <pre>
-foo
-bar
-baz
-        </pre>
-        </code>
-    </div>
-</div> %>
-
-
-
 <div class="container-fluid pb-10">
    <div class="container mb-100">
-         <%= for snippet <- @snippets do %>
+      <%= for snippet <- @snippets do %>
       <div class="list-group mt-3">
          <!-- One Item -->
          <a href="<%= page_path(@conn, :show, snippet.name ) %>" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -48,12 +16,8 @@ baz
                </code>
             </div>
          </a>
+         <!-- /One Item -->
       </div>
-         <% end %>
+      <% end %>
    </div>
 </div>
-
-
-
-
-

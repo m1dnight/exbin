@@ -30,7 +30,7 @@ defmodule ExBin.Domain do
 
       # Insert.
       changeset = Snippet.changeset(%Snippet{}, args)
-      Repo.insert(changeset)
+      Repo.insert!(changeset)
     end)
   end
 

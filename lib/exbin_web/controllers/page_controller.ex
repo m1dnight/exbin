@@ -1,14 +1,5 @@
 defmodule ExBinWeb.PageController do
   use ExBinWeb, :controller
-  alias ExBin.{Snippet, Repo}
-  import Ecto.Query
-
-  @doc """
-  The index page, the first page the user sees.
-  """
-  def index(conn, _params) do
-    render(conn, "index.html")
-  end
 
   @doc """
   The new snippet page. Where the user can enter code.
