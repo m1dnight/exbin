@@ -58,8 +58,7 @@
         data:
         {
             datasets: [{
-                //                data: [<%= @stats.private_count %>, <%= @stats.public_count %>],
-                data: [3, 5],
+                data: [<%= @stats.private_count %>, <%= @stats.public_count %>],
                 backgroundColor: [
                     'rgba(10, 10, 10, 0.2)',
                     'rgba(255, 0, 255, 0.2)'
