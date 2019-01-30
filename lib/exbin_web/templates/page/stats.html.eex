@@ -35,7 +35,7 @@
                 <div class="card">
                 <div class="card-body text-center">
                     <p class="card-text">Average Length</p>
-                    <h5 class="card-text"><%= @stats.avg_length%> characters</h5>
+                    <h5 class="card-text"><%= @stats.avg_length |> Float.round(2) %> characters</h5>
                 </div>
                 </div>
             </div>                          
