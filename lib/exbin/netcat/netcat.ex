@@ -38,7 +38,7 @@ defmodule ExBin.Netcat do
 
   defp serve(client_socket) do
     data = do_rcv(client_socket, <<>>)
-    Logger.warn("Received #{byte_size(data)} bytes.")
+    Logger.debug("Received #{byte_size(data)} bytes.")
 
     {:ok, snippet} = ExBin.Domain.insert(%{"content" => data, "private" => "true"})
     :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}\n")
