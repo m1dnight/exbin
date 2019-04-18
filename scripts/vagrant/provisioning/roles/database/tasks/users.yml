@@ -4,4 +4,5 @@
   postgresql_user: 
     name: "{{ db_user }}"
     password: "{{ db_pass }}"
+    encrypted: true
     role_attr_flags: "SUPERUSER,CREATEROLE,CREATEDB,REPLICATION,LOGIN"
