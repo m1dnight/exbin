@@ -43,7 +43,8 @@ defmodule ExBin.Mixfile do
       {:cowboy, "~> 1.0"},
       {:horsestaplebattery, "~> 0.1.0"},
       {:timex, "~> 3.5.0"},
-      {:faker_elixir_octopus, "~> 1.0", only: :dev}
+      {:faker_elixir_octopus, "~> 1.0", only: :dev},
+      {:elixilorem, "~> 0.0.1", only: :dev}
     ]
   end
 

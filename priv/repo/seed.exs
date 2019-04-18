@@ -63,7 +63,7 @@ end
 1..1000
 |> Stream.map(fn id ->
   snip = %ExBin.Snippet{
-    content: "this is public",
+    content: Elixilorem.paragraph,
     id: id,
     inserted_at: TestData.backward(1..1000),
     name: "#{id}",
