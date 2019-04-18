@@ -10,7 +10,7 @@ defmodule ExBin.Netcat do
   end
 
   def init([ip, port]) do
-    opts = [:binary, packet: 0, active: false, reuseaddr: true, ip: ip, exit_on_close: false]
+    opts = [:binary, packet: :raw, active: false, reuseaddr: true, ip: ip, exit_on_close: false]
 
     return_value =
       case :gen_tcp.listen(port, opts) do
@@ -37,15 +37,25 @@ defmodule ExBin.Netcat do
   end
 
   defp serve(client_socket) do
-    case :gen_tcp.recv(client_socket, 0) do
-      {:ok, bytes} ->
-        {:ok, snippet} = ExBin.Domain.insert(%{"content" => bytes, "private" => "true"})
-        :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}\n")
+    data = do_rcv(client_socket, <<>>)
+    Logger.warn("Received #{byte_size(data)} bytes.")
 
-      {:error, e} ->
-        Logger.error("Error on socket: #{inspect(e)}")
-    end
+    {:ok, snippet} = ExBin.Domain.insert(%{"content" => data, "private" => "true"})
+    :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}\n")
 
     :gen_tcp.close(client_socket)
+  end
+
+  defp do_rcv(socket, bytes) do
+    case :gen_tcp.recv(socket, 0, 5) do
+      {:ok, fresh_bytes} ->
+        do_rcv(socket, bytes <> fresh_bytes)
+
+      {:error, :closed} ->
+        bytes
+
+      {:error, e} ->
+        bytes
+    end
   end
 end
