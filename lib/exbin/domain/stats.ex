@@ -14,7 +14,11 @@ defmodule ExBin.Domain.Statistics do
       |> Stream.map(&String.length/1)
       |> Enum.to_list()
 
-    Enum.sum(lengths) / Enum.count(lengths)
+    if lengths == [] do
+      0
+    else
+      Enum.sum(lengths) / Enum.count(lengths)
+    end
   end
 
   @doc """
