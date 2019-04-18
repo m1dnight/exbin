@@ -15,7 +15,7 @@ defmodule ExBin.Domain.Statistics do
       |> Enum.to_list()
 
     if lengths == [] do
-      0
+      0.0
     else
       Enum.sum(lengths) / Enum.count(lengths)
     end
