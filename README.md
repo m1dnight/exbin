@@ -15,6 +15,22 @@ I work on this project from time to time, so the development pace is slow. If yo
 ## Todo
 
  - Tests?
+## Develop 
+
+```
+git clone https://github.com/m1dnight/exbin.git
+cd exbin
+mix deps.get
+mix compile
+cd assets 
+npm install
+node_modules/brunch/bin/brunch build
+cd ..
+./scripts/db.sh # Creates a docker database.
+mix ecto.create 
+mix ecto.migrate
+mix phx.server
+```
 
 ## Deploy
 
