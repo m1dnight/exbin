@@ -1,5 +1,0 @@
----
-# vars file for database
-db_user: exbin
-db_name: exbin
-db_pass: exbin
