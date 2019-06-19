@@ -17,9 +17,10 @@ docker run --rm                        \
            --net=exbinnet              \
            -e POSTGRESS_PASSWORD=exbin \
            -p 5432:5432                \
+           -v /tmp/pg:/var/lib/postgresql/data \
            postgres
 
-sleep 2 
+sleep 10 
 
 docker run --rm                        \
            --name pg-tmp               \
@@ -59,7 +60,7 @@ docker run -d                            \
            -e DB_PASS='exbin'            \
            -e DB_HOST='exbindb.exbinnet' \
            -e DB_NAME='exbindb'          \
-           -e EXTERNAL_URL='localhost'   \
+           -e EXTERNAL_URL='localhost'   \ 
            -e TCP_PORT='9999'            \
            -e TCP_IP='127.0.0.1'         \
            -e PORT=4000                  \
