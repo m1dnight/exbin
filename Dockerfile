@@ -22,4 +22,5 @@ RUN mix deps.get --only prod &&                          \
     cd ..  &&                                            \
     mix phx.digest
 
-ENTRYPOINT ["mix"]
+# ENTRYPOINT ["mix"]
+ENTRYPOINT ["/bin/bash"]

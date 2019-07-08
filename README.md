@@ -14,6 +14,18 @@ I work on this project from time to time, so the development pace is slow. If yo
 
 ## Todo
 
+## Docker 
+
+To run this entire thing in Docker  from scratch, you need to first build the image.
+
+```
+cd exbin/
+git archive --format=tar.gz -o exbin.tar.gz  master
+docker build -t myexbin .
+```
+
+Next, you need a database server. 
+
  - Tests?
 ## Develop 
 

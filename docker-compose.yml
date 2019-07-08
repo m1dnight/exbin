@@ -1,0 +1,16 @@
+version: '2'
+services:
+  exbin:
+    build: .
+    image: m1dnight/exbin:latest
+    ports:
+      - "4000:4000"
+    environment: 
+      - DB_USER='exbin'            
+      - DB_PASS='exbin'            
+      - DB_HOST='exbindb.exbinnet' 
+      - DB_NAME='exbindb'          
+      - EXTERNAL_URL='localhost'    
+      - TCP_PORT='9999'            
+      - TCP_IP='127.0.0.1'         
+      - PORT=4000                  
