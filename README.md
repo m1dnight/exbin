@@ -16,10 +16,20 @@ I work on this project from time to time, so the development pace is slow. If yo
 
 ## Docker 
 
-To run this entire thing in Docker  from scratch just go with docker-compose:
+First of all, create an `.env` file in the folder of the `docker-compose.yml` file and change the contents to your liking.
 
 ```
-HTTP_PORT=4001 DB_NAME=exbindb DB_PASS=supersecretpassword DB_USER=postgres DB_HOST=localhost docker-compose up -d
+TCP_PORT=9999
+HTTP_PORT=4001
+DB_NAME=exbindb
+DB_PASS=supersecretpassword
+DB_USER=postgres
+```
+
+To run this entire thing in Docker:
+
+```
+docker-compose up -d
 ```
 
 At this point you should be able to navigate to the site at `http://localhost:4001`.
