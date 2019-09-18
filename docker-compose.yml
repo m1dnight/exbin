@@ -1,16 +1,35 @@
-version: '2'
+version: '2.1'
+
+volumes:
+  files:
+    driver: local
+  mysql:
+    driver: local
+  backup:
+    driver: local
+
+
 services:
   exbin:
-    build: .
     image: m1dnight/exbin:latest
+    restart: always
     ports:
-      - "4000:4000"
-    environment: 
-      - DB_USER='exbin'            
-      - DB_PASS='exbin'            
-      - DB_HOST='exbindb.exbinnet' 
-      - DB_NAME='exbindb'          
-      - EXTERNAL_URL='localhost'    
-      - TCP_PORT='9999'            
-      - TCP_IP='127.0.0.1'         
-      - PORT=4000                  
+      - ${HTTP_PORT}:${HTTP_PORT}
+    depends_on:
+      - db
+    environment:
+      - PORT=${HTTP_PORT} 
+      - DB_NAME=exbindb
+      - DB_PASS=supersecretpassword
+      - DB_USER=postgres
+      - DB_HOST=db
+
+  db:
+      image: postgres:10-alpine
+      environment:
+          - POSTGRES_DB=exbindb
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=supersecretpassword
+      ports:
+          - "5432:5432"      
+              

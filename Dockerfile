@@ -9,7 +9,7 @@ RUN mix local.hex --force &&                                  \
     apt-get install -y -q nodejs
 
 # Add the source code. 
-ADD exbin.tar.gz/ /app
+ADD . /app
 
 # Build the application.
 ENV MIX_ENV=prod
@@ -23,4 +23,6 @@ RUN mix deps.get --only prod &&                          \
     mix phx.digest
 
 # ENTRYPOINT ["mix"]
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["mix", "phx.server"]
+
+# -e DB_NAME=exbindb -e DB_PASS=supersecretpassword -e DB_USER=postgres -e DB_HOST=localhost

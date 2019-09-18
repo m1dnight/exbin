@@ -30,8 +30,8 @@ config :phoenix, :stacktrace_depth, 20
 
 config :exbin, ExBin.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "exbin",
-  password: "exbin",
-  database: "exbin",
-  hostname: "localhost",
+  username: (System.get_env("DB_USER") || "user"),
+  password: (System.get_env("DB_PASS") || "pass"),
+  database: (System.get_env("DB_NAME") || "exbindb"),
+  hostname: (System.get_env("DB_HOST") || "localhost"),
   pool_size: 10
