@@ -16,17 +16,15 @@ I work on this project from time to time, so the development pace is slow. If yo
 
 ## Docker 
 
-To run this entire thing in Docker  from scratch, you need to first build the image.
+To run this entire thing in Docker  from scratch just go with docker-compose:
 
 ```
-cd exbin/
-git archive --format=tar.gz -o exbin.tar.gz  master
-docker build -t myexbin .
+HTTP_PORT=4001 DB_NAME=exbindb DB_PASS=supersecretpassword DB_USER=postgres DB_HOST=localhost docker-compose up -d
 ```
 
-Next, you need a database server. 
+At this point you should be able to navigate to the site at `http://localhost:4001`.
 
- - Tests?
+
 ## Develop 
 
 ```

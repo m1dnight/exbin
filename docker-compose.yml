@@ -14,11 +14,13 @@ services:
     image: m1dnight/exbin:latest
     restart: always
     ports:
-      - ${HTTP_PORT}:${HTTP_PORT}
+      - 0.0.0.0:${HTTP_PORT}:${HTTP_PORT}
+      - 0.0.0.0:${TCP_PORT}:${TCP_PORT}
     depends_on:
       - db
     environment:
       - PORT=${HTTP_PORT} 
+      - TCP_PORT=${TCP_PORT} 
       - DB_NAME=exbindb
       - DB_PASS=supersecretpassword
       - DB_USER=postgres

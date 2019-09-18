@@ -23,6 +23,6 @@ RUN mix deps.get --only prod &&                          \
     mix phx.digest
 
 # ENTRYPOINT ["mix"]
-ENTRYPOINT ["mix", "phx.server"]
+ENTRYPOINT ["./startup.sh"]
 
 # -e DB_NAME=exbindb -e DB_PASS=supersecretpassword -e DB_USER=postgres -e DB_HOST=localhost
