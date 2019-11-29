@@ -13,7 +13,7 @@
         <!-- Numbers -->
         <div class="row mb-5">   
 
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card">
                 <div class="card-body text-center">
                     <p class="card-text">Public Snippets</p>
@@ -22,7 +22,7 @@
                 </div>
             </div>      
 
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card">
                 <div class="card-body text-center">
                     <p class="card-text">Private Snippets</p>
@@ -31,11 +31,20 @@
                 </div>
             </div>    
 
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card">
                 <div class="card-body text-center">
                     <p class="card-text">Average Length</p>
                     <h5 class="card-text"><%= @stats.avg_length |> Float.round(2) %> characters</h5>
+                </div>
+                </div>
+            </div>     
+
+            <div class="col-lg-3">
+                <div class="card">
+                <div class="card-body text-center">
+                    <p class="card-text">Average Views</p>
+                    <h5 class="card-text"><%= @stats.avg_views |> Float.round(2) %></h5>
                 </div>
                 </div>
             </div>                          

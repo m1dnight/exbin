@@ -85,6 +85,14 @@ defmodule ExBin.Domain.Statistics do
   end
 
   @doc """
+  Compute the average views per snippet.
+  """
+  def compute_average_views() do
+    Repo.one(from(s in Snippet, select: avg(s.viewcount)))
+    |> Decimal.to_float()
+  end
+
+  @doc """
   Turns a datetime object into a human readable data.
   Today if the date is not less than 24 hours ago.
   """
