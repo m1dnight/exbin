@@ -65,6 +65,8 @@ defmodule ExBin.Domain.Statistics do
         dt = Timex.to_datetime({{y, m, 1}, {0, 0, 0}}, "Etc/UTC")
         {dt, {{m, y}, c}}
       end)
+      |> Enum.map(fn x -> IO.inspect x ; x end)
+      |> Enum.filter(fn x -> not Kernel.match?( {{:error, _}, _}, x) end)
       |> Enum.sort_by(fn {dt, _} -> dt end, &Timex.before?/2)
       |> Enum.map(fn {_, v} -> v end)
       |> Enum.map(fn {{m, y}, c} -> {{Timex.month_name(m), y}, c} end)
