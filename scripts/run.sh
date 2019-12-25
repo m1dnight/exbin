@@ -3,11 +3,12 @@
 # Start network 
 ################################################################################
 
+docker rm -f exbindb 
+docker rm -f pg-tmp
+
 docker network rm exbinnet 
 docker network create exbinnet 
 
-docker rm -f exbindb 
-docker rm -f pg-tmp
 
 # Run the database 
 ################################################################################
