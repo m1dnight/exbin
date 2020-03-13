@@ -1,5 +1,6 @@
 defmodule ExBinWeb.PageController do
   use ExBinWeb, :controller
+  require Logger
 
   @doc """
   The new snippet page. Where the user can enter code.
@@ -54,6 +55,15 @@ defmodule ExBinWeb.PageController do
   def create(conn, _args = %{"snippet" => args}) do
     {:ok, snippet} = ExBin.Domain.insert(args)
     redirect(conn, to: "/#{snippet.name}")
+  end
+
+  @doc """
+  POST search query for public snippets.
+  """
+  def search(conn, _args = %{"query" => %{"content" => query}}) do
+    res = ExBin.Domain.search(query)
+    Logger.debug("#{Enum.count(res)} results for query #{query}")
+    render(conn, "list.html", snippets: res)
   end
 
   @doc """

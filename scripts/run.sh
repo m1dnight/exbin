@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# To connect to the live db use this:
+# docker run --rm --name pg-tmp --net=exbinnet -e PGPASSWORD=exbin postgres psql -h exbindb -U exbin
 # Start network 
 ################################################################################
 
@@ -38,6 +40,7 @@ docker run --rm                        \
            -e PGPASSWORD=exbin         \
            postgres                    \
            psql -h exbindb -U postgres -c "CREATE DATABASE exbindb OWNER exbin;"
+
 
 # # Run ExBin 
 # ################################################################################

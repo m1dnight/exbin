@@ -35,8 +35,16 @@
                   <%= link raw(~s'Statistics'), to: page_path(@conn, :stats), class: "nav-link"  %>
                </li>
             </ul>
+
+            <%= form_for @conn, page_path(@conn, :search), [as: :query, class: "form-inline", style: "width: unset;"], fn f -> %>
+               <%= text_input f, :content, class: "form-control mr-sm-2" , autofocus: false%> 
+               <%= submit "Submit", class: "btn btn-primary my-2 my-sm-0" %>
+            </div>
+            <% end %>
+
             <%= if assigns[:snippet] do %>
             <ul class="navbar-nav">
+               
                <li class="nav-item active mr-05">
                   <%= link raw(~s'<i class="fa fa-code"></i> Raw'), to: page_path(@conn, :raw, @snippet.name), class: "nav-link"  %>
                </li>

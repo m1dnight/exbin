@@ -3,6 +3,19 @@ defmodule ExBin.Domain do
   import Ecto.Query
 
   #
+  # ### Search
+  #
+
+  def search(query) do
+    sanitized = LikeInjection.like_sanitize(query)
+
+    query = "%#{sanitized}%"
+
+    from(s in Snippet, where: like(s.content, ^query))
+    |> Repo.all()
+  end
+
+  #
   # ### Update
   #
 
