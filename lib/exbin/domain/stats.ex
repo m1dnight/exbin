@@ -65,8 +65,11 @@ defmodule ExBin.Domain.Statistics do
         dt = Timex.to_datetime({{y, m, 1}, {0, 0, 0}}, "Etc/UTC")
         {dt, {{m, y}, c}}
       end)
-      |> Enum.map(fn x -> IO.inspect x ; x end)
-      |> Enum.filter(fn x -> not Kernel.match?( {{:error, _}, _}, x) end)
+      |> Enum.map(fn x ->
+        IO.inspect(x)
+        x
+      end)
+      |> Enum.filter(fn x -> not Kernel.match?({{:error, _}, _}, x) end)
       |> Enum.sort_by(fn {dt, _} -> dt end, &Timex.before?/2)
       |> Enum.map(fn {_, v} -> v end)
       |> Enum.map(fn {{m, y}, c} -> {{Timex.month_name(m), y}, c} end)
@@ -90,8 +93,13 @@ defmodule ExBin.Domain.Statistics do
   Compute the average views per snippet.
   """
   def compute_average_views() do
-    Repo.one(from(s in Snippet, select: avg(s.viewcount)))
-    |> Decimal.to_float()
+    result = Repo.one(from(s in Snippet, select: avg(s.viewcount)))
+
+    if result do
+      Decimal.to_float(result)
+    else
+      0.0
+    end
   end
 
   @doc """
