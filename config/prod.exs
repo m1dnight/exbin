@@ -13,12 +13,12 @@ config :exbin, ExBinWeb.Endpoint, secret_key_base: "TVMx0s2diEXeLKEJ0NF34BttjGVo
 # Configure your database
 config :exbin, ExBin.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: (System.get_env("DB_USER") || "user"),
-  password: (System.get_env("DB_PASS") || "pass"),
-  database: (System.get_env("DB_NAME") || "exbindb"),
-  hostname: (System.get_env("DB_HOST") || "localhost"),
+  username: System.get_env("DB_USER") || "user",
+  password: System.get_env("DB_PASS") || "pass",
+  database: System.get_env("DB_NAME") || "exbindb",
+  hostname: System.get_env("DB_HOST") || "localhost",
   pool_size: 10
 
 config :exbin, ExBinWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: (System.get_env("EXTERNAL_URL") || "localhost"), port: 80]
+  url: [host: System.get_env("EXTERNAL_URL") || "localhost", port: 80]
