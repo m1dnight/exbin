@@ -1,6 +1,7 @@
 defmodule ExBin.Domain do
   alias ExBin.{Snippet, Repo}
   import Ecto.Query
+  require Logger
 
   #
   # ### Search
@@ -8,10 +9,12 @@ defmodule ExBin.Domain do
 
   def search(query) do
     sanitized = LikeInjection.like_sanitize(query)
+    Logger.debug("Query: #{query}, sanitied: #{sanitized}")
+    parameter = "%#{sanitized}%"
 
-    query = "%#{sanitized}%"
+    Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
 
-    from(s in Snippet, where: like(s.content, ^query))
+    from(s in Snippet, where: like(s.content, ^parameter) and s.private == false, order_by: [desc: s.inserted_at])
     |> Repo.all()
   end
 

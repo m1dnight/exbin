@@ -12,7 +12,7 @@ defmodule LikeInjection do
   # backslash to each metacharacter. Because String#gsub does its own round of
   # interpolation on its second argument, we have to double escape backslashes
   # in this String.
-  @escape ?\
+  @escape ?\\
 
   # Public: Escape characters that have special meaning within the `LIKE` clause
   # of a SQL query.

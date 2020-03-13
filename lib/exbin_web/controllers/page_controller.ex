@@ -62,7 +62,7 @@ defmodule ExBinWeb.PageController do
   """
   def search(conn, _args = %{"query" => %{"content" => query}}) do
     res = ExBin.Domain.search(query)
-    Logger.debug("#{Enum.count(res)} results for query #{query}")
+    Logger.debug("#{Enum.count(res)} results for query `#{query}`")
     render(conn, "list.html", snippets: res)
   end
 
