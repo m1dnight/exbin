@@ -46,7 +46,7 @@ cd assets
 npm install
 node_modules/brunch/bin/brunch build
 cd ..
-./scripts/db.sh # Creates a docker database.
+./scripts/run.sh # Creates a docker database.
 mix ecto.create 
 mix ecto.migrate
 mix phx.server

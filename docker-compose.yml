@@ -1,14 +1,5 @@
 version: '2.1'
 
-volumes:
-  files:
-    driver: local
-  mysql:
-    driver: local
-  backup:
-    driver: local
-
-
 services:
   exbin:
     image: m1dnight/exbin:latest
@@ -19,19 +10,19 @@ services:
     depends_on:
       - db
     environment:
-      - PORT=${HTTP_PORT} 
-      - TCP_PORT=${TCP_PORT} 
-      - DB_NAME=${DB_NAME}
-      - DB_PASS=${DB_PASS}
-      - DB_USER=${DB_USER}
+      - PORT=${HTTP_PORT}
+      - TCP_PORT=${TCP_PORT}
+      - DB_NAME=exbindb
+      - DB_PASS=supersecretpassword
+      - DB_USER=postgres
       - DB_HOST=db
 
   db:
       image: postgres:10-alpine
+      restart: always
       environment:
-          - POSTGRES_DB=${DB_NAME}
-          - POSTGRES_USER=${DB_USER}
-          - POSTGRES_PASSWORD=${DB_PASS}
+          - POSTGRES_DB=exbindb
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=supersecretpassword
       ports:
-          - "5432:5432"      
-              
+          - "5432:5432"
