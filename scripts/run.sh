@@ -21,7 +21,7 @@ docker run --rm                        \
            -d                          \
            --name exbindb              \
            --net=exbinnet              \
-           -e POSTGRESS_PASSWORD=exbin \
+           -e POSTGRESS_PASSWORD=postgres \
            -p 5432:5432                \
            -v /tmp/pg:/var/lib/postgresql/data \
            postgres
@@ -31,13 +31,13 @@ sleep 10
 docker run --rm                        \
            --name pg-tmp               \
            --net=exbinnet              \
-           -e PGPASSWORD=exbin         \
+           -e PGPASSWORD=postgres         \
            postgres                    \
            psql -h exbindb -U postgres -c "CREATE USER exbin WITH PASSWORD 'exbin' CREATEDB;"
 docker run --rm                        \
            --name pg-tmp               \
            --net=exbinnet              \
-           -e PGPASSWORD=exbin         \
+           -e PGPASSWORD=postgres         \
            postgres                    \
            psql -h exbindb -U postgres -c "CREATE DATABASE exbindb OWNER exbin;"
 
