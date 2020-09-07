@@ -11,7 +11,7 @@
     "font-awesome": "^4.7.0",
     "highlight.js": "^9.17.1",
     "highlightjs-line-numbers.js": "^2.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "node-sass": "^4.13.1",
     "phoenix": "^1.4.11",
     "phoenix_html": "^2.13.2",
