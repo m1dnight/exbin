@@ -2,7 +2,7 @@ defmodule ExBinWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ExBinWeb.RoomChannel
+  channel "sync:*", ExBinWeb.SyncChannel
 
   ## Transports
   transport(:websocket, Phoenix.Transports.WebSocket)

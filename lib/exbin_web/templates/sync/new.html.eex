@@ -1,6 +1,6 @@
 <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
 
-
+ <button id="btn" onclick="myFunction()">Click me</button>
 <div class="container-fluid h-100 p-0 m-0">
    <div id="myEditor" class="row h-100 w-100 m-0">
    </div>
@@ -19,4 +19,9 @@ YUI().use(
         editor.editor.setShowPrintMargin(false);
     }
 );
+function myFunction() {
+  document.getElementById("btn").innerHTML = "Hello World";
+  Foo.bar();
+}
+
 </script>
