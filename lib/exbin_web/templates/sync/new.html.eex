@@ -15,9 +15,8 @@ YUI().use(
             boundingBox: '#myEditor',
             mode: 'scheme',
         }).render();
+        editor.editor.setTheme("ace/theme/chaos");
+        editor.editor.setShowPrintMargin(false);
     }
 );
-console.log("Editing theme")
-var editor = ace.edit("myEditor");
-editor.setTheme("ace/theme/chaos");
 </script>
