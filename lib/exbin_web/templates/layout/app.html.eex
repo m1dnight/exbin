@@ -34,6 +34,9 @@
                <li class="nav-item active">
                   <%= link raw(~s'Statistics'), to: page_path(@conn, :stats), class: "nav-link"  %>
                </li>
+               <li class="nav-item active">
+                  <%= link raw(~s'Synced'), to: sync_path(@conn, :new), class: "nav-link"  %>
+               </li>
             </ul>
             <%= if assigns[:snippet] do %>
             <ul class="navbar-nav">
