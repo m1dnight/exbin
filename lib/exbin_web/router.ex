@@ -13,6 +13,12 @@ defmodule ExBinWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  scope "/api", ExBinWeb do
+    pipe_through :api
+
+    post "/snippet", PageController, :new_from_api
+  end
+
   scope "/", ExBinWeb do
     # Use the default browser stack
     pipe_through(:browser)
