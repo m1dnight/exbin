@@ -24,6 +24,8 @@ defmodule ExBinWeb.Router do
     get("/stats", PageController, :stats)
     post("/new", PageController, :create)
     post("/search", PageController, :search)
+    get("/sync", SyncController, :new)
+    get("/sync/:id", SyncController, :show)
     get("/raw/:name", PageController, :raw)
     get("/:name", PageController, :show)
   end

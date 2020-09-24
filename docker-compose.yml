@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   exbin:
-    image: m1dnight/exbin:latest
+    image: m1dnight/exbin:sync
     restart: always
     ports:
       - 0.0.0.0:${HTTP_PORT}:${HTTP_PORT}
@@ -16,6 +16,7 @@ services:
       - DB_PASS=supersecretpassword
       - DB_USER=postgres
       - DB_HOST=db
+      - EXTERNAL_URL=exbin.call-cc.be
 
   db:
       image: postgres:10-alpine

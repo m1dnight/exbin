@@ -62,7 +62,7 @@ exports.config = {
           Tether: 'tether',
           Popper: "popper.js",
           bootstrap: 'bootstrap',
-          hljs: 'highlight.js'
+          hljs: 'highlight.js',
       }
   }
 };

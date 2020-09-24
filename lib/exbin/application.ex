@@ -10,7 +10,9 @@ defmodule ExBin.Application do
       # Start the endpoint when the application starts
       supervisor(ExBinWeb.Endpoint, []),
       # Start the netcat endpoint
-      worker(ExBin.Netcat, [])
+      worker(ExBin.Netcat, []),
+      # The cache for synced pads.
+      worker(ExBin.PadCache, [])
     ]
 
     opts = [strategy: :one_for_one, name: ExBin.Supervisor]

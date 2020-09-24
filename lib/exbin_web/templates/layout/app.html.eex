@@ -34,6 +34,9 @@
                <li class="nav-item active">
                   <%= link raw(~s'Statistics'), to: page_path(@conn, :stats), class: "nav-link"  %>
                </li>
+               <li class="nav-item active">
+                  <%= link raw(~s'Synced'), to: sync_path(@conn, :new), class: "nav-link"  %>
+               </li>
             </ul>
             <%= if assigns[:snippet] do %>
             <ul class="navbar-nav">
@@ -61,6 +64,7 @@
       <!-- Page Content -->
       <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+      <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
       <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
       <%= render @view_module, @view_template, assigns %>
    </body>
