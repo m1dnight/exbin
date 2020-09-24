@@ -7,15 +7,10 @@ $fa-font-path: "../fonts";
 // Synced menu 
 #syncmenu {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    background-color: rgba(0, 0, 0, 0.2);
+    width: 5rem;
     right: 0px;
     top: 100px;
     z-index: 1000;
-    border-radius: 15px 0px 0px 15px;
-    border-color:gray;
-    border: solid 1px;
   }
 
 // Statistics 

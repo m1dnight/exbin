@@ -8,10 +8,38 @@ let socket = new Socket("/socket", {
   }
 })
 
-document.addEventListener("DOMContentLoaded", function(event) {
+
+
+document.addEventListener("DOMContentLoaded", function (event) {
+  // Save button 
+
+  var saveButton = document.getElementById("save");
+  saveButton.addEventListener("click", function () {
+      // Get the content.
+      var editor = ace.edit("myEditor");
+      var content = editor.getValue()
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({ "content": content });
+
+      var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+      };
+
+      fetch("/api/snippet", requestOptions)
+          .then(response => response.text())
+          .then(result => 
+            window.location.href = result)
+          .catch(error => console.log('error', error));
+  })
   var element = document.getElementById("myEditor");
   //If it isn't "undefined" and it isn't "null", then it exists.
-  if (typeof(element) != 'undefined' && element != null) {
+  if (typeof (element) != 'undefined' && element != null) {
       ////////////////////////////////////////////////////////////////////////////
       // Setup socket
       var padId = document.getElementById("padId").getAttribute("value");
@@ -22,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var socket_change = false;
       YUI().use(
           'aui-ace-editor',
-          function(Y) {
+          function (Y) {
               var editor = new Y.AceEditor({
                   boundingBox: '#myEditor',
                   mode: 'scheme',
@@ -32,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               editor.setTheme("ace/theme/chaos");
               editor.setShowPrintMargin(false);
 
-              editor.session.on('change', function(delta) {
+              editor.session.on('change', function (delta) {
                   console.log("Change callback triggered! From socket: ", socket_change)
                   if (socket_change) {
 
