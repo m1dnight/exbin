@@ -13,16 +13,17 @@ defmodule ExBinWeb.SyncChannel do
   end
 
   def handle_in("state", params, socket) do
-    IO.puts(IO.ANSI.red() <> "Received state *#{inspect params}* for #{inspect socket.assigns.pad_id}" <> IO.ANSI.reset())
+    IO.puts(IO.ANSI.red() <> "Received state *#{inspect(params)}* for #{inspect(socket.assigns.pad_id)}" <> IO.ANSI.reset())
     ExBin.PadCache.store(socket.assigns.pad_id, params)
     {:reply, :ok, socket}
   end
 
   def handle_info(:on_join, socket) do
-    IO.puts IO.ANSI.red <> "Sending initial state for #{inspect socket.assigns.pad_id}"
+    IO.puts(IO.ANSI.red() <> "Sending initial state for #{inspect(socket.assigns.pad_id)}")
     state = ExBin.PadCache.fetch(socket.assigns.pad_id)
-    IO.puts IO.ANSI.red <> "STate: #{inspect state}"
-    case  state do
+    IO.puts(IO.ANSI.red() <> "STate: #{inspect(state)}")
+
+    case state do
       nil ->
         {:noreply, socket}
 
