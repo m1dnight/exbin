@@ -16,6 +16,7 @@ services:
       - DB_PASS=supersecretpassword
       - DB_USER=postgres
       - DB_HOST=db
+      -EXTERNAL_URL=exbin.call-cc.be
 
   db:
       image: postgres:10-alpine
