@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   if (typeof (element) != 'undefined' && element != null) {
     ////////////////////////////////////////////////////////////////////////////
     // Setup socket
-    padId = document.getElementById("padId").getAttribute("value");
+    var padId = document.getElementById("padId").getAttribute("value");
 
 
     let channel = socket.channel(`sync:${padId}`, {})
@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
           .receive("error", resp => {
             console.log("Unable to join", resp)
           })
+
       }
     );
 

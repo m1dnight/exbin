@@ -34,7 +34,7 @@ defmodule ExBin.PadCache do
   #############
 
   def handle_call({:store, content, name}, _from, state) do
-    if byte_size(content) > 2500 do
+    if byte_size(content) < 2500 do
       {:reply, :ok, %{state | pads: Map.put(state.pads, name, content)}}
     else
       {:reply, :ok, state}
