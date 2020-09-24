@@ -18,26 +18,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
     ////////////////////////////////////////////////////////////////////////////
     // Setup socket
     padId = document.getElementById("padId").getAttribute("value");
-    console.log(`Pad ID: '${padId}' connecting to socket!`);
 
-    socket.connect()
 
-    // Now that you are connected, you can join channels with a topic:
     let channel = socket.channel(`sync:${padId}`, {})
-    channel.join()
-      .receive("ok", resp => {
-        console.log("Joined successfully", resp)
-      })
-      .receive("error", resp => {
-        console.log("Unable to join", resp)
-      })
-
 
     channel.on("change", (resp) => {
       console.log("Incoming change", resp);
       var editor = ace.edit("myEditor");
       let arr = new Array(resp.data);
       editor.getSession().getDocument().applyDeltas(arr);
+    })
+
+    channel.on("init", (resp) => {
+      console.log("Incoming init", resp);
+
+      var editor = ace.edit("myEditor");
+      editor.setValue(resp.state);
     })
 
     ////////////////////////////////////////////////////////////////////////////
@@ -58,10 +54,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
           if (editor.curOp && editor.curOp.command.name) {
             console.log("Pushing change!")
             channel.push("change", delta);
+            channel.push("state", editor.getValue())
           }
         })
+
+        // Join the channel here, otherwise we might join and get state before the editor is loaded.
+        socket.connect()
+        channel.join()
+          .receive("ok", resp => {
+            console.log("Joined successfully", resp)
+          })
+          .receive("error", resp => {
+            console.log("Unable to join", resp)
+          })
       }
     );
+
+
+
+
   }
 });
 

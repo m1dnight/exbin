@@ -1,3 +1,5 @@
+
+<script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
 <input type="hidden" id="padId" name="padId" value="<%= @uuid %>">
 
 <div class="container-fluid h-100 p-0 m-0">
