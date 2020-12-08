@@ -1,11 +1,11 @@
-FROM elixir:1.8.2
+FROM elixir:1.11.2
 LABEL maintainer "Christophe De Troyer <christophe@call-cc.be>"
 
 # Install  Hex, Rebar, and Phoenix.
 RUN mix local.hex --force &&                                  \
     mix local.rebar --force &&                                \
     mix archive.install hex phx_new 1.4.8 --force &&          \
-    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
     apt-get install -y -q nodejs
 
 # Add the source code. 
