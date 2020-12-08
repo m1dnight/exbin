@@ -37,14 +37,15 @@ defmodule ExBin.Mixfile do
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.10"},
+      {:phoenix_html, "~> 2.13.4"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:horsestaplebattery, "~> 0.1.0"},
       {:timex, "~> 3.5.0"},
       {:faker_elixir_octopus, "~> 1.0", only: :dev},
-      {:elixilorem, "~> 0.0.1", only: :dev}
+      {:elixilorem, "~> 0.0.1", only: :dev},
+      {:plug_cowboy, "~> 1.0"}
     ]
   end
 

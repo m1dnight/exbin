@@ -6,23 +6,23 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "brunch": "^2.0.0",
+    "bootstrap": "^4.5.3",
+    "brunch": "^3.0.0",
     "font-awesome": "^4.7.0",
-    "highlight.js": "^9.17.1",
-    "highlightjs-line-numbers.js": "^2.7.0",
-    "jquery": "^3.5.0",
-    "node-sass": "^4.13.1",
-    "phoenix": "^1.4.11",
-    "phoenix_html": "^2.13.2",
-    "popper.js": "^1.16.0",
+    "highlight.js": "^9.18.5",
+    "highlightjs-line-numbers.js": "^2.8.0",
+    "jquery": "^3.5.1",
+    "node-sass": "^5.0.0",
+    "phoenix": "^1.5.7",
+    "phoenix_html": "^2.14.2",
+    "popper.js": "^1.16.1",
     "tether": "^1.4.7"
   },
   "devDependencies": {
     "babel-brunch": "^7.0.1",
     "clean-css-brunch": "3.0.0",
     "copycat-brunch": "^1.1.1",
-    "sass-brunch": "^2.10.8",
+    "sass-brunch": "^3.0.0",
     "uglify-js-brunch": "2.10.0"
   }
 }
