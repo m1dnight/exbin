@@ -9,7 +9,7 @@
     "bootstrap": "^4.5.3",
     "brunch": "^2.0.0",
     "font-awesome": "^4.7.0",
-    "highlight.js": "^9.18.5",
+    "highlight.js": "^10.4.1",
     "highlightjs-line-numbers.js": "^2.8.0",
     "jquery": "^3.5.1",
     "node-sass": "^5.0.0",
