@@ -9,6 +9,7 @@
       <meta name="author" content="Christophe De Troyer">
       <title>ExBin</title>
       <link rel="shortcut icon" href="<%= static_path(@conn, "/favicon.ico") %>" />
+      <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
    </head>
    <body>
       <!-- Navigation -->
@@ -65,7 +66,6 @@
       <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
       <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
-      <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
       <%= render @view_module, @view_template, assigns %>
    </body>
 </html>
