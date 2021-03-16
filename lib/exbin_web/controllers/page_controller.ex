@@ -77,6 +77,7 @@ defmodule ExBinWeb.PageController do
     render(conn, "list.html", snippets: res)
   end
 
+  @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   @doc """
   Shows a paste to the user. Every hit increments the viewcount of each paste as well.
   """
@@ -90,6 +91,22 @@ defmodule ExBinWeb.PageController do
       snippet ->
         {:ok, snippet} = ExBin.Domain.update_viewcount(snippet)
         render(conn, "show.html", snippet: snippet)
+    end
+  end
+
+  @doc """
+  Shows a paste to the user in reader view. Every hit increments the viewcount of each paste as well.
+  """
+  def reader(conn, %{"name" => name}) do
+    case ExBin.Domain.get_by_name(name) do
+      nil ->
+        conn
+        |> put_view(ExBinWeb.ErrorView)
+        |> render("404.html")
+
+      snippet ->
+        {:ok, snippet} = ExBin.Domain.update_viewcount(snippet)
+        render(conn, "reader.html", snippet: snippet)
     end
   end
 

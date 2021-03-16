@@ -1,0 +1,13 @@
+<div class="container-fluid h-100">
+   <div class="container reader">
+      <div class="row mt-2">
+         <div class="col-12">
+         <code class="code-content">
+            <pre class="reader-pre">
+               <%= readerify(@snippet.content) %>
+            </pre>
+         </code>
+         </div>
+      </div>
+   </div>
+</div>

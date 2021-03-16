@@ -4,23 +4,39 @@ $fa-font-path: "../fonts";
 
 @import "bootstrap";
 
-// Synced menu 
+// Reader page.
+.reader {
+    max-width: 80ch !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reader-pre {
+    color: #d2d7d3;
+    font-family: arial,helvetica, serif;
+    font-size: 140%; // set to smaller by pre.
+}
+pre {
+    white-space: pre-wrap;
+    // word-wrap: break-word;
+    // display: inline-block;
+}
+// Synced menu
 #syncmenu {
     position: absolute;
     width: 5rem;
     right: 0px;
     top: 100px;
     z-index: 1000;
-  }
+}
 
-// Statistics 
+// Statistics
 .card {
     background-color: #4e2357;
     border: 0px;
     margin: 0 auto; /* Added */
     float: none; /* Added */
     margin-bottom: 10px; /* Added */
-
 }
 
 .card-header {
@@ -30,11 +46,10 @@ $fa-font-path: "../fonts";
 }
 // General page setup.
 html,
-body,
-    {
+body {
     height: 100%;
     background: rgb(40, 44, 52);
-    color: #D2D7D3;
+    color: #d2d7d3;
 }
 
 .container {
@@ -47,17 +62,18 @@ body,
 }
 
 .list-group-item {
-    background-color: #D2D7D3;
+    background-color: #d2d7d3;
 }
 
-// New snippet page 
+// New snippet page
 .codebox {
     border: 0px solid #f6e4cc;
-    color: #D2D7D3;
+    color: #d2d7d3;
     background: rgb(40, 44, 52);
     outline: none;
     resize: none;
-    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+        Courier New, monospace;
     min-height: 100%;
     height: 100%;
     min-width: 100%;
@@ -79,13 +95,14 @@ form {
     text-align: center;
 }
 
-// Showing snippets 
+// Showing snippets
 
 .code-content {
     border: 0px solid #f6e4cc;
     outline: none;
     resize: none;
-    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+        Courier New, monospace;
     min-height: 100%;
     height: 100%;
     min-width: 100%;
@@ -96,7 +113,8 @@ form {
     border: 0px solid #f6e4cc;
     outline: none;
     resize: none;
-    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+        Courier New, monospace;
     min-width: 100%;
     width: 100%;
 }
@@ -104,12 +122,14 @@ form {
 .status-bar {
     color: white;
     background-color: rgb(40, 44, 52);
-    border-color: rgb(19, 20, 22); }
-    .status-bar hr {
-      border-top-color: rgb(19, 20, 22); }
-    .status-bar .alert-link {
-      color: rgb(19, 20, 22); }
-
+    border-color: rgb(19, 20, 22);
+}
+.status-bar hr {
+    border-top-color: rgb(19, 20, 22);
+}
+.status-bar .alert-link {
+    color: rgb(19, 20, 22);
+}
 
 // Number highlights
 
@@ -123,10 +143,9 @@ td.hljs-ln-numbers {
 
     text-align: center;
     color: #ccc;
-    border-right: 1px solid #CCC;
+    border-right: 1px solid #ccc;
     vertical-align: top;
     padding-right: 10px;
-
 }
 
 td.hljs-ln-code {
