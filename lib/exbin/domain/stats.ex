@@ -103,6 +103,15 @@ defmodule ExBin.Domain.Statistics do
   end
 
   @doc """
+  Returns the most popular snippet by viewcount.
+  Returns nil if no snippet is found.
+  """
+  def most_popular() do
+      from(from(s in Snippet, where: s.private == false, order_by: [desc: :viewcount], limit: 1))
+      |> Repo.one()
+  end
+
+  @doc """
   Turns a datetime object into a human readable data.
   Today if the date is not less than 24 hours ago.
   """

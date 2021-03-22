@@ -44,6 +44,7 @@ defmodule ExBinWeb.PageController do
     avg_length = ExBin.Domain.Statistics.average_length()
     avg_views = ExBin.Domain.Statistics.compute_average_views()
     total = ExBin.Domain.Statistics.count_snippets()
+    most_popular = ExBin.Domain.Statistics.most_popular()
 
     IO.inspect(avg_views)
 
@@ -54,7 +55,8 @@ defmodule ExBinWeb.PageController do
         private_count: private_count,
         counts: stats,
         avg_length: avg_length,
-        total: total
+        total: total,
+        most_popular: most_popular
       }
     )
   end
