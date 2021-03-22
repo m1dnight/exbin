@@ -15,7 +15,9 @@ config :exbin, ExBinWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "QTUmA1QFHVBkDuPSs30uWtJns/XEhCRNxrrIEzGrp9KyOQ4eGNp6AS7fgIIxTxXi",
   render_errors: [view: ExBinWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: ExBin.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: ExBin.PubSub, adapter: Phoenix.PubSub.PG2],
+  # 5 MB
+  max_byte_size: String.to_integer(System.get_env("MAX_BYTES") || "1048576")
 
 # Configures Elixir's Logger
 config :logger, :console,
