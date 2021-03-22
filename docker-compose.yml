@@ -12,6 +12,7 @@ services:
     environment:
       - PORT=${HTTP_PORT}
       - TCP_PORT=${TCP_PORT}
+      - TCP_IP=${TCP_IP}
       - DB_NAME=exbindb
       - DB_PASS=supersecretpassword
       - DB_USER=postgres
