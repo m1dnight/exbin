@@ -39,7 +39,6 @@ defmodule ExBin.PadCache do
     else
       {:reply, :ok, state}
     end
-
   end
 
   def handle_call({:fetch, name}, _from, state) do

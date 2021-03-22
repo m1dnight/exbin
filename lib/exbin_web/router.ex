@@ -14,9 +14,9 @@ defmodule ExBinWeb.Router do
   end
 
   scope "/api", ExBinWeb do
-    pipe_through :api
+    pipe_through(:api)
 
-    post "/snippet", PageController, :new_from_api
+    post("/snippet", PageController, :new_from_api)
   end
 
   scope "/", ExBinWeb do

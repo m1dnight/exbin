@@ -37,12 +37,13 @@ defmodule ExBin.Netcat do
   end
 
   defp serve(client_socket) do
-		limit = Application.get_env(:exbin, ExBinWeb.Endpoint)[:max_byte_size]
-		data = do_rcv(client_socket, <<>>, limit)
+    limit = Application.get_env(:exbin, ExBinWeb.Endpoint)[:max_byte_size]
+    data = do_rcv(client_socket, <<>>, limit)
 
     case data do
       nil ->
         :gen_tcp.send(client_socket, "File larger than #{limit} bytes.\n")
+
       bytes ->
         Logger.debug("Received #{byte_size(data)} bytes.")
         {:ok, snippet} = ExBin.Domain.insert(%{"content" => data, "private" => "true"})
@@ -52,22 +53,22 @@ defmodule ExBin.Netcat do
     :gen_tcp.close(client_socket)
   end
 
-	defp do_rcv(_socket, _bytes, count) when count <= 0 do
-		nil
-	end
+  defp do_rcv(_socket, _bytes, count) when count <= 0 do
+    nil
+  end
 
-	defp do_rcv(socket, bytes, count) do
-		case :gen_tcp.recv(socket, 0, 5000) do
-			{:ok, fresh_bytes} ->
-				do_rcv(socket, bytes <> fresh_bytes, count - byte_size(fresh_bytes))
+  defp do_rcv(socket, bytes, count) do
+    case :gen_tcp.recv(socket, 0, 5000) do
+      {:ok, fresh_bytes} ->
+        do_rcv(socket, bytes <> fresh_bytes, count - byte_size(fresh_bytes))
 
-			{:error, :closed} ->
-				IO.puts("Socket closed at the client side.")
-				bytes
+      {:error, :closed} ->
+        IO.puts("Socket closed at the client side.")
+        bytes
 
-			{:error, e} ->
-				IO.puts("An error while receiving bytes: #{inspect(e)}")
-				bytes
-		end
-	end
+      {:error, e} ->
+        IO.puts("An error while receiving bytes: #{inspect(e)}")
+        bytes
+    end
+  end
 end

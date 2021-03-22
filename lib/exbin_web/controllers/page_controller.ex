@@ -3,8 +3,8 @@ defmodule ExBinWeb.PageController do
   require Logger
 
   def new_from_api(conn, %{"content" => content}) do
-    IO.puts "New post:"
-    IO.inspect %{"content" => content}
+    IO.puts("New post:")
+    IO.inspect(%{"content" => content})
     args = %{"content" => content, "private" => "false"}
     {:ok, snippet} = ExBin.Domain.insert(args)
     url = ExBinWeb.Router.Helpers.page_url(ExBinWeb.Endpoint, :show, snippet.name)
