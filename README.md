@@ -10,7 +10,9 @@ I work on this project from time to time, so the development pace is slow. If yo
  * List of all public pastes 
  * Use `nc` to pipe text and get the URL. 
    (e.g., `cat file.txt | nc exbin.call-cc.be 9999`)
- * Raw view of snippets.
+ * "Raw View" where text is presented as is, ideally to share code for copy and pasting.
+ * Syntax highlighted view.
+ * "Reader View" where text is presented in a more readable manner. Better suited to share prose text.
 
 ## Todo
 
