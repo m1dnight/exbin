@@ -6,18 +6,13 @@ defmodule ExBin.Domain.Statistics do
   Computes the average length of a snippet.
   """
   def average_length() do
-    lengths =
-      Repo.all(Snippet)
-      |> Stream.map(fn snippet ->
-        snippet.content
-      end)
-      |> Stream.map(&String.length/1)
-      |> Enum.to_list()
-
-    if lengths == [] do
-      0.0
+    if count_snippets() > 0 do
+      subq = from s in Snippet, select: %{len: fragment("length(?)", s.content)}
+      q = from s in subquery(subq), select: %{avg: fragment("avg(len)")}
+      [%{avg: avg}] = Repo.all(q)
+      Decimal.to_float(avg)
     else
-      Enum.sum(lengths) / Enum.count(lengths)
+      0.0
     end
   end
 
