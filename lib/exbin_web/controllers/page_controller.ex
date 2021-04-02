@@ -2,10 +2,8 @@ defmodule ExBinWeb.PageController do
   use ExBinWeb, :controller
   require Logger
 
-  def new_from_api(conn, %{"content" => content}) do
-    IO.puts("New post:")
-    IO.inspect(%{"content" => content})
-    args = %{"content" => content, "private" => "false"}
+  def new_from_api(conn, %{"content" => content, "private" => priv}) do
+    args = %{"content" => content, "private" => priv}
     {:ok, snippet} = ExBin.Domain.insert(args)
     url = ExBinWeb.Router.Helpers.page_url(ExBinWeb.Endpoint, :show, snippet.name)
     text(conn, url)
