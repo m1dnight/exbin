@@ -17,12 +17,12 @@ docker network create exbinnet
 
 docker rm -f exbindb
 
-docker run --rm                        \
-           -d                          \
-           --name exbindb              \
-           --net=exbinnet              \
-           -e POSTGRESS_PASSWORD=postgres \
-           -p 5432:5432                \
+docker run --rm                                \
+           -d                                  \
+           --name exbindb                      \
+           --net=exbinnet                      \
+           -e POSTGRES_PASSWORD="postgres"     \
+           -p 5432:5432                        \
            -v /tmp/pg:/var/lib/postgresql/data \
            postgres
 
