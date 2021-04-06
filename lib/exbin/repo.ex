@@ -1,5 +1,7 @@
 defmodule ExBin.Repo do
-  use Ecto.Repo, otp_app: :exbin
+  use Ecto.Repo,
+    otp_app: :exbin,
+    adapter: Ecto.Adapters.Postgres
 
   def init(_, opts) do
     {:ok, Keyword.put(opts, :url, System.get_env("DATABASE_URL"))}

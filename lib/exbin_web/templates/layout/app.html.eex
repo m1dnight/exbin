@@ -69,6 +69,6 @@
       <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.js"></script>
       <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
-      <%= render @view_module, @view_template, assigns %>
+      <%= @inner_content %>
    </body>
 </html>

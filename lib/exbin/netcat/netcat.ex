@@ -2,7 +2,7 @@ defmodule ExBin.Netcat do
   use GenServer
   require Logger
 
-  def start_link() do
+  def start_link([]) do
     ip = Application.get_env(:exbin, :tcp_ip)
     port = Application.get_env(:exbin, :tcp_port)
     Logger.info("TCP Server listening on #{inspect(ip)}:#{inspect(port)}")
@@ -44,7 +44,7 @@ defmodule ExBin.Netcat do
       nil ->
         :gen_tcp.send(client_socket, "File larger than #{limit} bytes.\n")
 
-      bytes ->
+      data ->
         Logger.debug("Received #{byte_size(data)} bytes.")
         {:ok, snippet} = ExBin.Domain.insert(%{"content" => data, "private" => "true"})
         :gen_tcp.send(client_socket, "#{ExBinWeb.Endpoint.url()}/raw/#{snippet.name}\n")

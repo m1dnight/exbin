@@ -2,17 +2,15 @@ defmodule ExBin.Application do
   use Application
 
   def start(_type, _args) do
-    import Supervisor.Spec
-
     children = [
       # Start the Ecto repository
-      supervisor(ExBin.Repo, []),
+      ExBin.Repo,
       # Start the endpoint when the application starts
-      supervisor(ExBinWeb.Endpoint, []),
+      ExBinWeb.Endpoint,
       # Start the netcat endpoint
-      worker(ExBin.Netcat, []),
+      ExBin.Netcat,
       # The cache for synced pads.
-      worker(ExBin.PadCache, [])
+      ExBin.PadCache
     ]
 
     opts = [strategy: :one_for_one, name: ExBin.Supervisor]

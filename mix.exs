@@ -33,19 +33,20 @@ defmodule ExBin.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.4"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix, "~> 1.5.7"},
+      {:phoenix_ecto, "~> 4.1"},
+      {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.13.4"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:cowboy, "~> 2.8.0"},
       {:horsestaplebattery, "~> 0.1.0"},
-      {:timex, "~> 3.5.0"},
+      {:timex, "~> 3.7.5"},
       {:faker_elixir_octopus, "~> 1.0", only: :dev},
       {:elixilorem, "~> 0.0.1", only: :dev},
-      {:plug_cowboy, "~> 1.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:jason, "~> 1.0"},
     ]
   end
 

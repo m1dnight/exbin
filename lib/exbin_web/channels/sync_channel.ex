@@ -2,7 +2,7 @@ defmodule ExBinWeb.SyncChannel do
   use ExBinWeb, :channel
 
   def join("sync:" <> syncid, _params, socket) do
-    send(self, :on_join)
+    send(self(), :on_join)
     {:ok, assign(socket, :pad_id, syncid)}
   end
 

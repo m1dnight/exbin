@@ -4,7 +4,7 @@ LABEL maintainer "Christophe De Troyer <christophe@call-cc.be>"
 # Install  Hex, Rebar, and Phoenix.
 RUN mix local.hex --force &&                                  \
     mix local.rebar --force &&                                \
-    mix archive.install hex phx_new 1.4.8 --force &&          \
+    mix archive.install hex phx_new 1.5.8 --force &&          \
     curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
     apt-get install -y -q nodejs
 

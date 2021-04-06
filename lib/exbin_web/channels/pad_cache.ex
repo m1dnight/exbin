@@ -9,7 +9,7 @@ defmodule ExBin.PadCache do
 
   defstruct pads: %{}
 
-  def start_link() do
+  def start_link([]) do
     GenServer.start_link(__MODULE__, %PadCache{}, name: __MODULE__)
   end
 
@@ -45,14 +45,14 @@ defmodule ExBin.PadCache do
     {:reply, Map.get(state.pads, name, nil), state}
   end
 
-  def handle_cast(:dump, state) do
-    IO.inspect(state, pretty: true)
-    {:noreply, state}
-  end
-
   def handle_call(m, from, state) do
     Logger.debug("Call #{inspect(m)} from #{inspect(from)} with state #{inspect(state)}")
     {:reply, :response, state}
+  end
+
+  def handle_cast(:dump, state) do
+    IO.inspect(state, pretty: true)
+    {:noreply, state}
   end
 
   ###########

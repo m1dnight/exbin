@@ -54,7 +54,11 @@
                 <div class="card h-100">
                 <div class="card-body text-center">
                     <p class="card-text">Most Popular</p>
-                    <a href="<%= page_path(@conn, :show, @stats.most_popular.name ) %>"><h5 class="card-text"><%=  @stats.most_popular.name %></h5></a>
+                    <%= if @stats.most_popular do %>
+                        <a href="<%= page_path(@conn, :show, @stats.most_popular.name ) %>"><h5 class="card-text"><%=  @stats.most_popular.name %></h5></a>
+                    <% else  %>
+                        <a><h5 class="card-text">None</h5></a>
+                    <% end %>
                 </div>
                 </div>
             </div>
