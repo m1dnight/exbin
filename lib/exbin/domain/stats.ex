@@ -7,9 +7,12 @@ defmodule ExBin.Domain.Statistics do
   """
   def average_length() do
     if count_snippets() > 0 do
-      subq = from s in Snippet, select: %{len: fragment("length(?)", s.content)}
-      q = from s in subquery(subq), select: %{avg: fragment("avg(len)")}
-      [%{avg: avg}] = Repo.all(q)
+      query =
+        from s in Snippet,
+          select: %{len: fragment("avg(length(?))", s.content)}
+
+
+      %{len: avg} = Repo.one(query)
       Decimal.to_float(avg)
     else
       0.0
@@ -102,8 +105,8 @@ defmodule ExBin.Domain.Statistics do
   Returns nil if no snippet is found.
   """
   def most_popular() do
-      from(from(s in Snippet, where: s.private == false, order_by: [desc: :viewcount], limit: 1))
-      |> Repo.one()
+    from(from(s in Snippet, where: s.private == false, order_by: [desc: :viewcount], limit: 1))
+    |> Repo.one()
   end
 
   @doc """
