@@ -108,13 +108,13 @@
     var scatterChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: <%= {:safe, elem(@stats.counts, 0)} %>,
+            labels: <%= {:safe, @stats.counts |> month_labels} %>,
             datasets: [
                 {
 					backgroundColor: 'rgba(255, 0, 255, 0.2)',
 					borderColor: 'rgba(255, 0, 255, 0.2)',
                     label: "Pastes per month",
-                    data: <%= {:safe, elem(@stats.counts, 1) }%>
+                    data: <%= {:safe, @stats.counts |> count_labels }%>
                 }
             ]
         },
@@ -122,10 +122,8 @@
             scales: {
             yAxes: [{
                 ticks: {
-                    // Include a dollar sign in the ticks
-                    callback: function(value, index, values) {
-                        return value;
-                    }
+                    beginAtZero: true,
+                    stepSize: 1
                 }
             }]
         }
