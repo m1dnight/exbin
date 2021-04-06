@@ -15,8 +15,6 @@ defmodule ExBinWeb.PageView do
   end
 
   def month_labels(dataset) do
-    IO.inspect(dataset, label: "ds")
-
     dataset
     |> Enum.map(&elem(&1, 0))
     |> Enum.map(&month_label/1)
@@ -30,5 +28,9 @@ defmodule ExBinWeb.PageView do
     |> Enum.map(&elem(&1, 1))
     |> Enum.join(",")
     |> (fn s -> "[" <> s <> "]" end).()
+  end
+
+  def human_readable_date(snippet) do
+    Timex.format!(snippet.inserted_at, "{D}/{0M}/{YYYY}")
   end
 end

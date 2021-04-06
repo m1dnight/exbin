@@ -51,7 +51,6 @@ defmodule ExBin.PadCache do
   end
 
   def handle_cast(:dump, state) do
-    IO.inspect(state, pretty: true)
     {:noreply, state}
   end
 

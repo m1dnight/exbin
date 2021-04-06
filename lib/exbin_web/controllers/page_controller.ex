@@ -44,8 +44,6 @@ defmodule ExBinWeb.PageController do
     total = ExBin.Domain.Statistics.count_snippets()
     most_popular = ExBin.Domain.Statistics.most_popular()
 
-    IO.inspect(avg_views)
-
     render(conn, "stats.html",
       stats: %{
         avg_views: avg_views,
@@ -63,7 +61,6 @@ defmodule ExBinWeb.PageController do
   POST end of creating a paste.
   """
   def create(conn, _args = %{"snippet" => args}) do
-    IO.inspect(args)
     {:ok, snippet} = ExBin.Domain.insert(args)
     redirect(conn, to: "/#{snippet.name}")
   end
