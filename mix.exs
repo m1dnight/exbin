@@ -46,7 +46,8 @@ defmodule ExBin.Mixfile do
       {:faker_elixir_octopus, "~> 1.0", only: :dev},
       {:elixilorem, "~> 0.0.1", only: :dev},
       {:plug_cowboy, "~> 2.0"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:con_cache, "~> 1.0"}
     ]
   end
 

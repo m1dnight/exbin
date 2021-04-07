@@ -23,6 +23,7 @@ defmodule ExBin.Domain do
   #
 
   def update_viewcount(snippet, delta \\ 1) do
+    # Note that this will not update every time because of the caching on the snippets!
     Repo.transaction(fn ->
       s = Repo.get!(Snippet, snippet.id)
       s = Snippet.changeset(s, %{viewcount: s.viewcount + delta})
@@ -55,11 +56,21 @@ defmodule ExBin.Domain do
   #
 
   @doc """
+  Checks if the snippet is in the cache, if so returns it.
+  If not, gets it from the repo and caches it.
+  """
+  defp snippet_from_cache_or_repo(name) do
+    ConCache.get_or_store(:snippet_cache, name, fn ->
+      from(s in Snippet, where: s.name == ^name)
+      |> Repo.one()
+    end)
+  end
+
+  @doc """
   Gets a snippet by its human readable name.
   """
   def get_by_name(name) do
-    from(s in Snippet, where: s.name == ^name)
-    |> Repo.one()
+    snippet_from_cache_or_repo(name)
   end
 
   @doc """
