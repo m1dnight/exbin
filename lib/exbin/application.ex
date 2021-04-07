@@ -12,21 +12,27 @@ defmodule ExBin.Application do
       # The cache for synced pads.
       ExBin.PadCache,
       # Cache for snippets
-      {ConCache,
-       [
-         name: :snippet_cache,
-         ttl_check_interval: :timer.minutes(1),
-         global_ttl: :timer.hours(2),
-         touch_on_read: true
-       ]},
-       # Cache for statistics
-       {ConCache,
-        [
-          name: :stats_cache,
-          ttl_check_interval: :timer.minutes(1),
-          global_ttl: :timer.minutes(10),
-          touch_on_read: false
-        ]}
+      Supervisor.child_spec(
+        {ConCache,
+         [
+           name: :snippet_cache,
+           ttl_check_interval: :timer.minutes(1),
+           global_ttl: :timer.hours(2),
+           touch_on_read: true
+         ]},
+        id: :snippet_cache
+      ),
+      # Cache for statistics
+      Supervisor.child_spec(
+        {ConCache,
+         [
+           name: :stats_cache,
+           ttl_check_interval: :timer.minutes(1),
+           global_ttl: :timer.minutes(10),
+           touch_on_read: false
+         ]},
+        id: :stats_cache
+      )
     ]
 
     opts = [strategy: :one_for_one, name: ExBin.Supervisor]

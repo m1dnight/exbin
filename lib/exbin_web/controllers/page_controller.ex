@@ -29,25 +29,28 @@ defmodule ExBinWeb.PageController do
   Shows a few statistics about exbin. E.g., pastes/hour and stuff like that.
   """
   def stats(conn, _params) do
-    public_count = ExBin.Domain.count_public_snippets()
-    private_count = ExBin.Domain.count_private_snippets()
-    stats = ExBin.Domain.Statistics.stats_activity()
-    avg_length = ExBin.Domain.Statistics.average_length()
-    avg_views = ExBin.Domain.Statistics.compute_average_views()
-    total = ExBin.Domain.Statistics.count_snippets()
-    most_popular = ExBin.Domain.Statistics.most_popular()
+    stats =
+      ConCache.get_or_store(:stats_cache, :summary, fn ->
+        public_count = ExBin.Domain.count_public_snippets()
+        private_count = ExBin.Domain.count_private_snippets()
+        stats = ExBin.Domain.Statistics.stats_activity()
+        avg_length = ExBin.Domain.Statistics.average_length()
+        avg_views = ExBin.Domain.Statistics.compute_average_views()
+        total = ExBin.Domain.Statistics.count_snippets()
+        most_popular = ExBin.Domain.Statistics.most_popular()
 
-    render(conn, "stats.html",
-      stats: %{
-        avg_views: avg_views,
-        public_count: public_count,
-        private_count: private_count,
-        counts: stats,
-        avg_length: avg_length,
-        total: total,
-        most_popular: most_popular
-      }
-    )
+        %{
+          avg_views: avg_views,
+          public_count: public_count,
+          private_count: private_count,
+          counts: stats,
+          avg_length: avg_length,
+          total: total,
+          most_popular: most_popular
+        }
+      end)
+
+    render(conn, "stats.html", stats: stats)
   end
 
   @doc """
@@ -72,7 +75,8 @@ defmodule ExBinWeb.PageController do
   Shows a paste to the user. Every hit increments the viewcount of each paste as well.
   """
   def show(conn, %{"name" => name}) do
-    IO.puts "Getting snippet by name `#{name}`"
+    IO.puts("Getting snippet by name `#{name}`")
+
     case ExBin.Domain.get_by_name(name) do
       nil ->
         conn
