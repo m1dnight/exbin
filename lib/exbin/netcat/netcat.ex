@@ -15,7 +15,7 @@ defmodule ExBin.Netcat do
     return_value =
       case :gen_tcp.listen(port, opts) do
         {:ok, listen_socket} ->
-          {:ok, %{listener: listen_socket}}
+          {:ok, %{listener: listen_socket, history: %{}}}
 
         {:error, reason} ->
           {:stop, reason}
@@ -29,14 +29,32 @@ defmodule ExBin.Netcat do
     {:noreply, state}
   end
 
-  def handle_cast(:accept, %{listener: listen_socket} = state) do
-    {:ok, client} = :gen_tcp.accept(listen_socket)
-    Task.async(fn -> serve(client) end)
-    GenServer.cast(self(), :accept)
-    {:noreply, state}
+  def handle_cast(:accept, %{listener: s, history: h} = state) do
+
+    # ACcept on the socket for the next connection.
+    {:ok, client} = :gen_tcp.accept(s)
+
+    # Register the client, and ensure it's not spamming.
+    {:ok, {client_ip, _port}} = :inet.peername(client)
+
+    # Check when the client was last seen.
+    last_seen = Map.get(h, client_ip, DateTime.from_gregorian_seconds(0))
+
+    if DateTime.diff(DateTime.utc_now(), last_seen) > 10 do
+      Task.async(fn -> serve(client) end)
+      state = %{listener: s, history: Map.put(h, client_ip, DateTime.utc_now())}
+      GenServer.cast(self(), :accept)
+      {:noreply, state}
+    else
+      :gen_tcp.send(client, "You are rated limited. Try again later.")
+      :gen_tcp.close(client)
+      GenServer.cast(self(), :accept)
+      {:noreply, state}
+    end
   end
 
   defp serve(client_socket) do
+    IO.inspect(client_socket, label: "serving")
     limit = Application.get_env(:exbin, ExBinWeb.Endpoint)[:max_byte_size]
     data = do_rcv(client_socket, <<>>, limit)
 
