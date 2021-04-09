@@ -18,7 +18,7 @@ services:
       - DB_USER=postgres
       - DB_HOST=db
       - EXTERNAL_URL=exbin.call-cc.be
-      - MAX_BYTES=${MAX_BYTES}
+      - MAX_BYTES=${MAX_BYTES}      
 
   db:
       image: postgres:10-alpine
