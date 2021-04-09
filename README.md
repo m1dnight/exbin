@@ -22,10 +22,12 @@ First of all, create an `.env` file in the folder of the `docker-compose.yml` fi
 
 ```
 TCP_PORT=9999
+TCP_IP=0.0.0.0
 HTTP_PORT=4001
 DB_NAME=exbindb
 DB_PASS=supersecretpassword
 DB_USER=postgres
+MAX_BYTES=5242880
 ```
 
 To run this entire thing in Docker:
