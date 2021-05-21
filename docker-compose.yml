@@ -3,7 +3,7 @@ version: '2.1'
 services:
   exbin:
     image: m1dnight/exbin:latest
-    restart: always
+    restart: unless-stopped
     ports:
       - 0.0.0.0:${HTTP_PORT}:${HTTP_PORT}
       - 0.0.0.0:${TCP_PORT}:${TCP_PORT}
@@ -22,7 +22,7 @@ services:
 
   db:
       image: postgres:10-alpine
-      restart: always
+      restart: unless-stopped
       environment:
           - POSTGRES_DB=exbindb
           - POSTGRES_USER=postgres
