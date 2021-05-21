@@ -1,4 +1,4 @@
-DOCKER_TAG := latest
+DOCKER_TAG := $(shell grep 'version:' mix.exs | sed -e 's/.*version: "\(.*\)",/\1/')
 DOCKER_IMG := m1dnight/exbin
 
 .PHONY: build
