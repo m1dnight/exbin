@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   exbin:
-    image: m1dnight/exbin:latest
+    image: m1dnight/exbin:0.0.1
     restart: unless-stopped
     ports:
       - 0.0.0.0:${HTTP_PORT}:${HTTP_PORT}
@@ -27,5 +27,7 @@ services:
           - POSTGRES_DB=exbindb
           - POSTGRES_USER=postgres
           - POSTGRES_PASSWORD=supersecretpassword
+      volumes: 
+          - ${EXBIN_DATA}:/var/lib/postgresql/data
       ports:
           - "5432:5432"
