@@ -91,9 +91,16 @@ defmodule ExBin.Domain do
   @doc """
   List all public snippets.
   """
-  def list_public_snippets() do
-    from(s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])
-    |> Repo.all()
+  def list_public_snippets(limit \\ nil) do
+    case limit do
+      nil ->
+        from(s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at])
+        |> Repo.all()
+
+      n ->
+        from(s in Snippet, where: s.private == false, order_by: [desc: s.inserted_at], limit: ^n)
+        |> Repo.all()
+    end
   end
 
   @doc """

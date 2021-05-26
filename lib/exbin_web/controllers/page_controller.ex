@@ -21,7 +21,15 @@ defmodule ExBinWeb.PageController do
   Shows a list of all the public snippets, ordered from new to old.
   """
   def list(conn, _params) do
-    snippets = ExBin.Domain.list_public_snippets()
+    snippets =
+      case Application.get_env(:exbin, :maximum_snippets_in_list) do
+        nil ->
+          ExBin.Domain.list_public_snippets()
+
+        n ->
+          ExBin.Domain.list_public_snippets(n)
+      end
+
     render(conn, "list.html", snippets: snippets)
   end
 

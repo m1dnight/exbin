@@ -20,6 +20,7 @@ services:
       - EXTERNAL_URL=exbin.call-cc.be
       - MAX_BYTES=${MAX_BYTES}     
       - DEFAULT_VIEW=${DEFAULT_VIEW}
+      - PUBLIST_LIMIT=${PUBLIST_LIMIT}
 
   db:
       image: postgres:10-alpine
