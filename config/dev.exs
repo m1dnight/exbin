@@ -1,5 +1,7 @@
 use Mix.Config
 
+config :exbin, :brand, (System.get_env("BRAND") || "ExBin (dev)")
+
 config :exbin, ExBinWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT") || "4001")],
   debug_errors: false,

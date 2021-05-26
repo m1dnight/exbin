@@ -21,6 +21,10 @@ services:
       - MAX_BYTES=${MAX_BYTES}     
       - DEFAULT_VIEW=${DEFAULT_VIEW}
       - PUBLIST_LIMIT=${PUBLIST_LIMIT}
+      - LOGO_FILENAME=${LOGO_FILENAME}
+      - BRAND=${BRAND}
+    volumes:
+      - ${LOGO_PATH}:/app/priv/static/images/${LOGO_FILENAME}
 
   db:
       image: postgres:10-alpine

@@ -1,5 +1,7 @@
 use Mix.Config
 
+config :exbin, :brand, (System.get_env("BRAND") || "ExBin")
+
 config :exbin, ExBinWeb.Endpoint,
   load_from_system_env: true,
   url: [
