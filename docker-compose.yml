@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   exbin:
-    image: m1dnight/exbin:0.0.1
+    image: m1dnight/exbin:latest
     restart: unless-stopped
     ports:
       - 0.0.0.0:${HTTP_PORT}:${HTTP_PORT}
@@ -18,7 +18,8 @@ services:
       - DB_USER=postgres
       - DB_HOST=db
       - EXTERNAL_URL=exbin.call-cc.be
-      - MAX_BYTES=${MAX_BYTES}      
+      - MAX_BYTES=${MAX_BYTES}     
+      - DEFAULT_VIEW=${DEFAULT_VIEW}
 
   db:
       image: postgres:10-alpine
