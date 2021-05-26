@@ -27,7 +27,9 @@ HTTP_PORT=4001
 DB_NAME=exbindb
 DB_PASS=supersecretpassword
 DB_USER=postgres
-MAX_BYTES=5242880
+MAX_BYTES=1024
+EXBIN_DATA=./postgres-data 
+DEFAULT_VIEW=reader
 ```
 
 To run this entire thing in Docker:
@@ -77,6 +79,7 @@ mix ecto.migrate
 
 Run:
 
+Keep in mind that there are other environment variables you can set. See above, or the `.env.example` file.
 ```
 MIX_ENV=prod TCP_PORT=6666 TCP_IP=0.0.0.0 mix phx.server
 ```
