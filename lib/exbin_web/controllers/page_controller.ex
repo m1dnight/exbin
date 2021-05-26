@@ -75,8 +75,26 @@ defmodule ExBinWeb.PageController do
   Shows a paste to the user. Every hit increments the viewcount of each paste as well.
   """
   def show(conn, %{"name" => name}) do
-    IO.puts("Getting snippet by name `#{name}`")
+    case Application.get_env(:exbin, :default_view) do
+      "code" ->
+        redirect(conn, to: "/code/#{name}")
 
+      "reader" ->
+        redirect(conn, to: "/reader/#{name}")
+
+      "raw" ->
+        redirect(conn, to: "/raw/#{name}")
+
+      other ->
+        Logger.warn("#{other} is not a valid default view. Defaulting to code view.")
+        redirect(conn, to: "/code/#{name}")
+    end
+  end
+
+  @doc """
+  Shows a paste to the user in code view. Every hit increments the viewcount of each paste as well.
+  """
+  def code(conn, %{"name" => name}) do
     case ExBin.Domain.get_by_name(name) do
       nil ->
         conn

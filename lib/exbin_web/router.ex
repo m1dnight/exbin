@@ -34,6 +34,7 @@ defmodule ExBinWeb.Router do
     get("/sync/:id", SyncController, :show)
     get("/raw/:name", PageController, :raw)
     get("/reader/:name", PageController, :reader)
+    get("/code/:name", PageController, :code)
     get("/:name", PageController, :show)
   end
 
