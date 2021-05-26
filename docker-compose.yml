@@ -5,12 +5,12 @@ services:
     image: m1dnight/exbin:latest
     restart: unless-stopped
     ports:
-      - 0.0.0.0:${HTTP_PORT}:${HTTP_PORT}
+      - 0.0.0.0:${PORT}:${PORT}
       - 0.0.0.0:${TCP_PORT}:${TCP_PORT}
     depends_on:
       - db
     environment:
-      - PORT=${HTTP_PORT}
+      - PORT=${PORT}
       - TCP_PORT=${TCP_PORT}
       - TCP_IP=${TCP_IP}
       - DB_NAME=exbindb

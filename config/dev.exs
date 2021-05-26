@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :exbin, ExBinWeb.Endpoint,
-  http: [port: 4001],
+  http: [port: String.to_integer(System.get_env("PORT") || "4001")],
   debug_errors: false,
   code_reloader: true,
   check_origin: false,

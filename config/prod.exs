@@ -2,7 +2,10 @@ use Mix.Config
 
 config :exbin, ExBinWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
+  url: [
+    host: "example.com",
+    port: String.to_integer(System.get_env("PORT") || "4001")
+  ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -21,4 +24,7 @@ config :exbin, ExBin.Repo,
 
 config :exbin, ExBinWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: System.get_env("EXTERNAL_URL") || "localhost", port: 80]
+  url: [
+    host: System.get_env("EXTERNAL_URL") || "localhost",
+    port: String.to_integer(System.get_env("PORT") || "4001")
+  ]
