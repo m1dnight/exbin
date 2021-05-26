@@ -91,7 +91,7 @@ MIX_ENV=prod TCP_PORT=6666 TCP_IP=0.0.0.0 mix phx.server
 |-----------------	|-----------------------------------------------------------------------------------------------------------------	|----------------------------	|-------------	|
 | `TCP_PORT`      	| TCP port for the socket to listen to for raw data.                                                              	| Number                     	| `9999`      	|
 | `TCP_IP`        	| Interface to bind to.                                                                                           	| Interface                  	| `127.0.0.1` 	|
-| `PORT`     	| Port the web app should listen to.                                                                              	| Number                     	| `4001`      	|
+| `PORT`          	| Port the web app should listen to.                                                                              	| Number                     	| `4001`      	|
 | `DB_NAME`       	| Name of the database.                                                                                           	| String                     	| `exbindb`   	|
 | `DB_PASS`       	| Password to the database.                                                                                       	| String                     	| `pass`      	|
 | `DB_USER`       	| Username to the database.                                                                                       	| String                     	| `user`      	|
