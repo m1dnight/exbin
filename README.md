@@ -30,6 +30,7 @@ DB_USER=postgres
 MAX_BYTES=1024
 EXBIN_DATA=./postgres-data 
 DEFAULT_VIEW=reader
+PUBLIST_LIMIT=100
 ```
 
 To run this entire thing in Docker:
@@ -83,3 +84,18 @@ Keep in mind that there are other environment variables you can set. See above, 
 ```
 MIX_ENV=prod TCP_PORT=6666 TCP_IP=0.0.0.0 mix phx.server
 ```
+
+# Env vars
+
+| Variable        	| Description                                                                                                     	| Values                     	| Default     	|
+|-----------------	|-----------------------------------------------------------------------------------------------------------------	|----------------------------	|-------------	|
+| `TCP_PORT`      	| TCP port for the socket to listen to for raw data.                                                              	| Number                     	| `9999`      	|
+| `TCP_IP`        	| Interface to bind to.                                                                                           	| Interface                  	| `127.0.0.1` 	|
+| `HTTP_PORT`     	| Port the web app should listen to.                                                                              	| Number                     	| `4001`      	|
+| `DB_NAME`       	| Name of the database.                                                                                           	| String                     	| `exbindb`   	|
+| `DB_PASS`       	| Password to the database.                                                                                       	| String                     	| `pass`      	|
+| `DB_USER`       	| Username to the database.                                                                                       	| String                     	| `user`      	|
+| `MAX_BYTES`     	| Maximum size of text that can be dumped to the TCP socket. When the size is exceeded the connection is dropped. 	| Number                     	| `1048576`   	|
+| `EXBIN_DATA`    	| The path where the database data should be stored.                                                              	| Path                       	|             	|
+| `DEFAULT_VIEW`  	| Default view of snippets when they are submitted.                                                               	| `code`, `raw`, or `reader` 	| `code`      	|
+| `PUBLIST_LIMIT` 	| Maximum number of snippets to show in the "Latest" page. Set a limit if you have a very busy instance.          	| Number or `nil`            	| `nil`       	|
