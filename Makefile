@@ -5,6 +5,8 @@ DOCKER_IMG := m1dnight/exbin
 
 build:
 	docker build -t $(DOCKER_IMG):$(DOCKER_TAG) .
+	docker build -t $(DOCKER_IMG):latest .
 
 push: 
 	docker push $(DOCKER_IMG):$(DOCKER_TAG)
+	docker push $(DOCKER_IMG):latest
