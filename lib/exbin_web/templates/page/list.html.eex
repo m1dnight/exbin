@@ -5,7 +5,11 @@
          <%= for snippet <- @snippets do %>
          <div class="list-group mt-3">
             <!-- One Item -->
+            <%= if snippet.private do %>
+            <a href="<%= page_path(@conn, :show, snippet.name ) %>" class="list-group-item private list-group-item-action flex-column align-items-start">
+            <% else  %>
             <a href="<%= page_path(@conn, :show, snippet.name ) %>" class="list-group-item list-group-item-action flex-column align-items-start">
+            <% end %>
                <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1"></h5>
                   <small><%= human_readable_date(snippet) %></small>

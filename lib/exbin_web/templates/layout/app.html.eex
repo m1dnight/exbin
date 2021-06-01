@@ -7,13 +7,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
       <meta name="description" content="">
       <meta name="author" content="Christophe De Troyer">
-      <title>ExBin</title>
+      <title><%= Application.get_env(:exbin, :brand) %></title>
       <link rel="shortcut icon" href="<%= static_path(@conn, "/favicon.ico") %>" />
       <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
    </head>
    <body>
       <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <%= if  @current_user do %>
+         <nav class="navbar navbar-expand-lg navbar-dark bg-brown static-top">
+      <% else %>
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <% end %>
          <a class="navbar-brand" href="/">
          <%= Application.get_env(:exbin, :brand) %>
          <%= if Application.get_env(:exbin, :logo_filename) == nil do  %>
@@ -42,10 +46,20 @@
                <li class="nav-item active">
                   <%= link raw(~s'Synced'), to: sync_path(@conn, :new), class: "nav-link"  %>
                </li>
+               <%= if  @current_user do %>
+               <li class="nav-item active">
+                  <%= link raw(~s'<i class="fa fa-sign-out"></i> Logout'), to: session_path(@conn, :delete, @current_user), class: "nav-link", method: "delete" %>
+               </li>
+               <% end %>
+
             </ul>
             <%= if assigns[:snippet] do %>
             <ul class="navbar-nav">
-
+               <%= if  @current_user do %>
+               <li class="nav-item active mr-05">
+                  <%= link raw(~s'<i class="fa fa-trash"></i> Delete'), to: page_path(@conn, :delete, @snippet.name), class: "nav-link", method: "delete"  %>
+               </li>
+               <% end %>
                <li class="nav-item active mr-05">
                   <%= link raw(~s'<i class="fa fa-book"></i> Reader'), to: page_path(@conn, :reader, @snippet.name), class: "nav-link"  %>
                </li>

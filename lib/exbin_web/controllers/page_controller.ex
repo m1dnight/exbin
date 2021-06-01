@@ -2,6 +2,17 @@ defmodule ExBinWeb.PageController do
   use ExBinWeb, :controller
   require Logger
 
+  defp authenticate(conn) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not logged in as admin!")
+      |> redirect(to: "/")
+      |> halt()
+    end
+  end
+
   @spec new(Plug.Conn.t(), any) :: Plug.Conn.t()
   @doc """
   The new snippet page. Where the user can enter code.
@@ -22,15 +33,35 @@ defmodule ExBinWeb.PageController do
   """
   def list(conn, _params) do
     snippets =
-      case Application.get_env(:exbin, :maximum_snippets_in_list) do
-        nil ->
-          ExBin.Domain.list_public_snippets()
+      if conn.assigns.current_user do
+        ExBin.Domain.list_snippets()
+      else
+        case Application.get_env(:exbin, :maximum_snippets_in_list) do
+          nil ->
+            ExBin.Domain.list_public_snippets()
 
-        n ->
-          ExBin.Domain.list_public_snippets(n)
+          n ->
+            ExBin.Domain.list_public_snippets(n)
+        end
       end
 
     render(conn, "list.html", snippets: snippets)
+  end
+
+  @doc """
+  Shows a list of all the snippets, ordered from new to old.
+  """
+  def admin_list(conn, _params) do
+    res = authenticate(conn)
+
+    case authenticate(conn) do
+      %Plug.Conn{halted: true} ->
+        conn
+
+      conn ->
+        snippets = ExBin.Domain.list_snippets()
+        render(conn, "list.html", snippets: snippets)
+    end
   end
 
   @doc """
@@ -96,6 +127,25 @@ defmodule ExBinWeb.PageController do
       other ->
         Logger.warn("#{other} is not a valid default view. Defaulting to code view.")
         redirect(conn, to: "/code/#{name}")
+    end
+  end
+
+  def delete(conn, %{"name" => name}) do
+    case authenticate(conn) do
+      %Plug.Conn{halted: true} ->
+        redirect(conn, to: "/#{name}")
+
+      conn ->
+        case ExBin.Domain.get_by_name(name) do
+          nil ->
+            conn
+            |> put_view(ExBinWeb.ErrorView)
+            |> render("404.html")
+
+          snippet ->
+            ExBin.Domain.delete_snippet(snippet.id)
+            redirect(conn, to: page_path(conn, :list))
+        end
     end
   end
 

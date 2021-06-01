@@ -7,6 +7,7 @@ defmodule ExBinWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
+    plug(ExBinWeb.Auth)
   end
 
   pipeline :api do
@@ -23,6 +24,10 @@ defmodule ExBinWeb.Router do
     # Use the default browser stack
     pipe_through(:browser)
 
+    get("/login", SessionController, :new)
+    post("/login", SessionController, :create)
+    delete("/login", SessionController, :delete)
+
     get("/", PageController, :new)
     get("/list", PageController, :list)
     get("/new", PageController, :new)
@@ -36,6 +41,7 @@ defmodule ExBinWeb.Router do
     get("/reader/:name", PageController, :reader)
     get("/code/:name", PageController, :code)
     get("/:name", PageController, :show)
+    delete("/:name", PageController, :delete)
   end
 
   # Other scopes may use custom stacks.

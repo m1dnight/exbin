@@ -64,6 +64,11 @@ body {
 .list-group-item {
     background-color: #d2d7d3;
 }
+.private {
+    background-color: brown ! important;
+    color: white !important;
+}
+
 
 // New snippet page
 .codebox {
@@ -154,4 +159,13 @@ td.hljs-ln-code {
 
 .hljs-ln td {
     padding-right: 10px;
+}
+
+
+.login {
+    max-width: 50%;
+}
+
+.bg-brown {
+    background-color: brown;
 }

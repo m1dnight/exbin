@@ -84,8 +84,36 @@ defmodule ExBin.Domain do
   @doc """
   List all snippets.
   """
-  def list_snippets() do
-    Repo.all(Snippet)
+  def list_snippets(limit \\ nil) do
+    case limit do
+      nil ->
+        from(s in Snippet, order_by: [desc: s.inserted_at])
+        |> Repo.all()
+
+      n ->
+        from(s in Snippet, order_by: [desc: s.inserted_at], limit: ^n)
+        |> Repo.all()
+    end
+  end
+
+  @doc """
+  Deletes a snippet.
+  """
+  def delete_snippet(id) do
+    snippet = Repo.get(Snippet, id)
+
+    if snippet do
+      case Repo.delete(snippet) do
+        {:ok, _struct} ->
+          {:ok, "deleted #{id}"}
+
+        {:error, cs} ->
+          Logger.warn("Trying to delete snippet: #{inspect(cs)}")
+          {:error, "Error deleting snippet #{inspect(cs)}"}
+      end
+    else
+      {:error, "already deleted"}
+    end
   end
 
   @doc """

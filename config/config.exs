@@ -2,9 +2,9 @@ use Mix.Config
 
 # The port on which the TCP server should listen.
 config :exbin, :tcp_port, (System.get_env("TCP_PORT") || "9999") |> String.to_integer()
-config :exbin, :logo_filename, (System.get_env("LOGO_FILENAME") || "logo.png")
-config :exbin, :default_view, (System.get_env("DEFAULT_VIEW") || "code")
-config :exbin, :maximum_snippets_in_list, (System.get_env("PUBLIST_LIMIT") || nil)
+config :exbin, :logo_filename, System.get_env("LOGO_FILENAME") || "logo.png"
+config :exbin, :default_view, System.get_env("DEFAULT_VIEW") || "code"
+config :exbin, :maximum_snippets_in_list, System.get_env("PUBLIST_LIMIT") || nil
 
 # The ip to which the tcp server should bind.
 config :exbin, :tcp_ip, (System.get_env("TCP_IP") || "127.0.0.1") |> to_charlist() |> :inet.parse_address() |> elem(1)

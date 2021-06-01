@@ -23,6 +23,7 @@ services:
       - PUBLIST_LIMIT=${PUBLIST_LIMIT}
       - LOGO_FILENAME=${LOGO_FILENAME}
       - BRAND=${BRAND}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
     volumes:
       - ${LOGO_PATH}:/app/priv/static/images/${LOGO_FILENAME}
 

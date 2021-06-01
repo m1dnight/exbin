@@ -30,7 +30,6 @@ defmodule ExBin.Netcat do
   end
 
   def handle_cast(:accept, %{listener: s, history: h} = state) do
-
     # ACcept on the socket for the next connection.
     {:ok, client} = :gen_tcp.accept(s)
 
