@@ -31,9 +31,9 @@
                Netcat
             </h2>
             <p>
-               Exbin also support netcatting a textfile. Suppose you are configuring some server and you quickly want to
-               get data out to your other workstation. You can pipe the file to exbin, and manually type over an
-               easy-to-read URL. For example <code>cat myfile.txt | nc exbin.call-cc.be 9999</code> will return a URL to
+               ExBin also support netcatting a textfile. Suppose you are configuring some server and you quickly want to
+               get data out to your other workstation. You can pipe the file to ExBin, and manually type over an
+               easy-to-read URL. For example <code>cat myfile.txt | nc <%= ExBinWeb.Endpoint.url() %> <%= Application.get_env(:exbin, :tcp_port) %></code> will return a URL to
                your console which you can type over. All these pastes are private, of course!
             </p>
          </div>
