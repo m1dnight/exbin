@@ -14,7 +14,7 @@ defmodule ExBin.Domain do
 
     Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
 
-    from(s in Snippet, where: like(s.content, ^parameter) and s.private == false, order_by: [desc: s.inserted_at])
+    from(s in Snippet, where: ilike(s.content, ^parameter) and s.private == false, order_by: [desc: s.inserted_at])
     |> Repo.all()
   end
 
