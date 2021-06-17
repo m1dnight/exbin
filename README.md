@@ -23,7 +23,7 @@ First of all, create an `.env` file in the folder of the `docker-compose.yml` fi
 ```
 TCP_PORT=9999
 TCP_IP=0.0.0.0
-PORT=4001
+PORT=443 # If you want https, 80 if you want http.
 DB_NAME=exbindb
 DB_PASS=supersecretpassword
 DB_USER=postgres
@@ -35,13 +35,16 @@ LOGO_FILENAME=example_logo.png
 LOGO_PATH=/my/path/example_logo.png
 ```
 
+Note, the port here (`PORT`) is merely an indication if you want https or http urls in your application (for example, what is returned from the tcp socket). 
+The port you want the container to expose has to be manually set in the docker-compose file. This is 8080 by default!
+
 To run this entire thing in Docker:
 
 ```
 docker-compose up -d
 ```
 
-At this point you should be able to navigate to the site at `http://localhost:4001`.
+At this point you should be able to navigate to the site at `http://localhost:8080`.
 
 
 ## Develop 
