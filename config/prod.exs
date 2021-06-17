@@ -27,6 +27,7 @@ config :exbin, ExBin.Repo,
 config :exbin, ExBinWeb.Endpoint,
   load_from_system_env: true,
   url: [
+    scheme: (if System.get_env("PORT") == "443", do: "https", else: "http"),
     host: System.get_env("EXTERNAL_URL") || "localhost",
-    port: String.to_integer(System.get_env("PORT") || "4001")
+    port: String.to_integer(System.get_env("PORT") || "80")
   ]

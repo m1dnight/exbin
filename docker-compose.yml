@@ -5,7 +5,7 @@ services:
     image: m1dnight/exbin:latest
     restart: unless-stopped
     ports:
-      - 0.0.0.0:${PORT}:${PORT}
+      - 0.0.0.0:8080:${PORT}
       - 0.0.0.0:${TCP_PORT}:${TCP_PORT}
     depends_on:
       - db
