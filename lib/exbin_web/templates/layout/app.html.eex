@@ -60,11 +60,17 @@
                   <%= link raw(~s'<i class="fa fa-trash"></i> Delete'), to: page_path(@conn, :delete, @snippet.name), class: "nav-link", method: "delete"  %>
                </li>
                <% end %>
+               <%= if is_reader_view(@conn) do %>
+               <li class="nav-item active mr-05">
+                  <%= link raw(~s'<i class="fa fa-code"></i> Code'), to: page_path(@conn, :code, @snippet.name), class: "nav-link"  %>
+               </li>
+               <% else %>
                <li class="nav-item active mr-05">
                   <%= link raw(~s'<i class="fa fa-book"></i> Reader'), to: page_path(@conn, :reader, @snippet.name), class: "nav-link"  %>
                </li>
+               <% end %>
                <li class="nav-item active mr-05">
-                  <%= link raw(~s'<i class="fa fa-code"></i> Raw'), to: page_path(@conn, :raw, @snippet.name), class: "nav-link"  %>
+                  <%= link raw(~s'<i class="fa fa-terminal"></i> Raw'), to: page_path(@conn, :raw, @snippet.name), class: "nav-link"  %>
                </li>
                <li class="nav-item active navbar-right mr-05">
                   <a class="nav-link"><i class="fa fa-eye"></i> <%= @snippet.viewcount %></a>
