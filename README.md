@@ -33,6 +33,7 @@ DEFAULT_VIEW=reader
 PUBLIST_LIMIT=100
 LOGO_FILENAME=example_logo.png
 LOGO_PATH=/my/path/example_logo.png
+API_TOKEN=myapitoken
 ```
 
 Note, the port here (`PORT`) is merely an indication if you want https or http urls in your application (for example, what is returned from the tcp socket). 
@@ -108,3 +109,4 @@ MIX_ENV=prod TCP_PORT=6666 TCP_IP=0.0.0.0 mix phx.server
 | `LOGO_PATH` 	    | The absolute path to the logo you wish to use. This path will be used as a volume in the Docker image. If you are running from source, ignore this. | Absolute Path               | `nil`         |                                                      	| String                    	| `logo.png`   	|
 | `BRAND` 	        | Title of this ExBin instance, shown on the front page.                                                                                              | String                      | `ExBin`       |
 | `ADMIN_PASSWORD`  | Password for the admin page. Allows to see/delete private snippets. If not set, no admin rights.                                                    | String                      | disabled      |
+| `API_TOKEN`       | Secret token for the JSON API. If unset, no authentication is used!                                                                                 | String                      | disabled      |

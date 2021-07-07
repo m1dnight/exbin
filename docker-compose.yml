@@ -24,6 +24,7 @@ services:
       - LOGO_FILENAME=${LOGO_FILENAME}
       - BRAND=${BRAND}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - API_TOKEN=${API_TOKEN}
     volumes:
       - ${LOGO_PATH}:/app/priv/static/images/${LOGO_FILENAME}
 
