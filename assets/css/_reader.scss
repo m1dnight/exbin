@@ -1,0 +1,15 @@
+.reader-container {
+    max-width: 70ch !important;
+    margin-left: auto !important;
+    margin-right: auto;
+    word-wrap: break-word;
+}
+
+
+.reader-container code pre {
+    white-space: pre-wrap;
+    font-size:  1.1rem;
+    font-family: $serif-font;
+    text-align: justify;
+    text-rendering: optimizeLegibility;
+}

@@ -1,11 +1,11 @@
-defmodule ExBin.Mixfile do
+defmodule ExBin.MixProject do
   use Mix.Project
 
   def project do
     [
       app: :exbin,
-      version: "0.0.7",
-      elixir: "~> 1.4",
+      version: "0.1.0",
+      elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -20,7 +20,7 @@ defmodule ExBin.Mixfile do
   def application do
     [
       mod: {ExBin.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ex_rated]
     ]
   end
 
@@ -33,36 +33,38 @@ defmodule ExBin.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.7"},
+      {:phoenix, "~> 1.5.9"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.4"},
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 2.8.0"},
-      {:horsestaplebattery, "~> 0.1.0"},
-      {:timex, "~> 3.7.5"},
-      {:faker_elixir_octopus, "~> 1.0", only: :dev},
-      {:elixilorem, "~> 0.0.1", only: :dev},
-      {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.0"},
-      {:con_cache, "~> 1.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:horsestaplebattery, "~> 0.1.0"},
+      {:timex, "~> 3.7"},
+      {:parent, "~> 0.12.0"},
+      {:ex_rated, "~> 2.0"},
+      {:phoenix_live_view, "~> 0.15.7"}
     ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to create, migrate and run the seeds file at once:
+  # For example, to install project dependencies and perform other setup tasks, run:
   #
-  #     $ mix ecto.setup
+  #     $ mix setup
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.fresh": ["ecto.drop", "ecto.create", "ecto.migrate"],
+      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
 end

@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  internal:
+    external: false
+
+services:
+  exbin:
+    restart: always
+    image: m1dnight/exbin:latest
+    environment:
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - SECRET_SALT=${SECRET_SALT}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_DB=${DATABASE_DB}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - POOL_SIZE=${POOL_SIZE}
+      - TZ=${TZ}
+      - EPHEMERAL_AGE=${EPHEMERAL_AGE}
+      - HTTP_PORT=${HTTP_PORT}
+      - TCP_PORT=${TCP_PORT}
+      - TCP_HOST=${TCP_HOST}
+      - MAX_SIZE=${MAX_SIZE}
+      - DEFAULT_VIEW=${DEFAULT_VIEW}
+      - BASE_URL=${BASE_URL}
+      - HOST=${HOST}
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+      - ${TCP_PORT}:${TCP_PORT}
+    networks:
+      - internal
+    depends_on:
+      - db
+
+  db:
+    restart: always
+    image: postgres
+    volumes:
+      - '${DATABASE_DATA}:/var/lib/postgresql/data'
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_DB}
+      - TZ=${TZ}
+      - PGTZ=${TZ}
+    networks:
+      - internal

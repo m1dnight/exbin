@@ -1,171 +1,177 @@
-// FontAwesome stuff
-$fa-font-path: "../fonts";
-@import "font-awesome";
+@import "./custom.scss";
+@import "~highlight.js/styles/xt256.css";
+@import "highlight";
+@import "_colors";
+@import "_newsnippet";
+@import "_reader";
+@import "_table";
+@import "_statistics";
+@import "_search";
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+@import "_static";
 
-@import "bootstrap";
+// @import "~ionicons"
 
-// Reader page.
-.reader {
-    max-width: 80ch !important;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.reader-pre {
-    color: #d2d7d3;
-    font-family: arial,helvetica, serif;
-    font-size: 140%; // set to smaller by pre.
-}
-pre {
-    white-space: pre-wrap;
-    // word-wrap: break-word;
-    // display: inline-block;
-}
-// Synced menu
-#syncmenu {
-    position: absolute;
-    width: 5rem;
-    right: 0px;
-    top: 100px;
-    z-index: 1000;
-}
-
-// Statistics
-.card {
-    background-color: #4e2357;
-    border: 0px;
-    margin: 0 auto; /* Added */
-    float: none; /* Added */
-    margin-bottom: 10px; /* Added */
-}
-
-.card-header {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    background-color: transparent;
-}
-// General page setup.
-html,
-body {
+// Layout
+body,
+html {
+    padding-left: 0.1rem;
+    margin: 0;
+    background: $background;
     height: 100%;
-    background: rgb(40, 44, 52);
-    color: #d2d7d3;
+    margin: 0 !important;
+    font-family: $sans-serif-font;
+    color: $text;
+    // overflow: hidden;
 }
 
-.container {
-    height: -o-calc(100% - 48px - 2rem);
-    /* opera */
-    height: -webkit-calc(100% - 48px - 2rem);
-    /* google, safari */
-    height: -moz-calc(100% - 48px - 2rem);
-    /* firefox */
+hr {
+    color: $detail;
+}
+.container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100%;
+    width: 100%;
 }
 
-.list-group-item {
-    background-color: #d2d7d3;
-}
-.private {
-    background-color: brown ! important;
-    color: white !important;
+* {
+    box-sizing: border-box;
 }
 
-
-// New snippet page
-.codebox {
-    border: 0px solid #f6e4cc;
-    color: #d2d7d3;
-    background: rgb(40, 44, 52);
-    outline: none;
-    resize: none;
-    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
-        Courier New, monospace;
+.flex-container {
+    display: flex;
+    flex-direction: row;
     min-height: 100%;
-    height: 100%;
-    min-width: 100%;
-    width: 100%;
 }
 
-form {
-    // background: yellow;
-    width: 100%;
-    height: 100%;
+.code-column {
+    /* do not grow   - initial value: 0 */
+    flex-grow: 1;
+    /* shrink - initial value: 1 */
+    flex-shrink: 1;
+    /* width/height  - initial value: auto */
+    flex-basis: auto;
+    min-width: 0;
+    padding: 1rem;
 }
 
-.text-holder {
-    // background: purple;
-    height: 80%;
+// Menu Bar
+.menu-column {
+    background-color: $menubackground;
+    box-shadow: -5px 0 8px rgba(48, 47, 47, 0.308);
+
+    flex-grow: 0;
+    flex-shrink: 0;
+    /* width/height  - initial value: auto */
+    flex-basis: auto;
+
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    color: $text;
+
+    display: flex;
+    flex-direction: column;
+
+    // On pages where no date is shown.
+    width: 15ch !important;
 }
 
-.button-holder {
-    text-align: center;
+.iconify {
+    color: $detail;
+}
+.iconify-white {
+    color: $detailContrast;
 }
 
-// Showing snippets
-
-.code-content {
-    border: 0px solid #f6e4cc;
-    outline: none;
-    resize: none;
-    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
-        Courier New, monospace;
-    min-height: 100%;
-    height: 100%;
-    min-width: 100%;
-    width: 100%;
+// Top Menu
+.menu-column-top {
+    margin-bottom: auto;
 }
 
-.code-content-no-syntax {
-    border: 0px solid #f6e4cc;
-    outline: none;
-    resize: none;
-    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
-        Courier New, monospace;
-    min-width: 100%;
-    width: 100%;
+// Menu entries.
+.menu-entry {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.status-bar {
-    color: white;
-    background-color: rgb(40, 44, 52);
-    border-color: rgb(19, 20, 22);
-}
-.status-bar hr {
-    border-top-color: rgb(19, 20, 22);
-}
-.status-bar .alert-link {
-    color: rgb(19, 20, 22);
+.menu-entry .icon svg {
+    vertical-align: middle;
+    margin-right: 1rem;
 }
 
-// Number highlights
-
-td.hljs-ln-numbers {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    text-align: center;
-    color: #ccc;
-    border-right: 1px solid #ccc;
-    vertical-align: top;
-    padding-right: 10px;
+.menu-entry .title {
+    vertical-align: middle;
 }
 
-td.hljs-ln-code {
-    padding-left: 10px;
+// Alerts
+.alert {
+    padding: 0.2rem 1rem 0.2rem 1rem;
+    margin: 0;
+    border: 2px solid transparent;
+    border-radius: 1px !important;
 }
 
-.hljs-ln td {
-    padding-right: 10px;
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
 }
 
-
-.login {
-    max-width: 50%;
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
 }
 
-.bg-brown {
-    background-color: brown;
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert p {
+    margin-bottom: 0;
+}
+
+.alert:empty {
+    display: none;
+}
+
+.invalid-feedback {
+    color: #a94442;
+    display: block;
+    margin: -1rem 0 2rem;
+}
+
+// Links
+a {
+    color: unset;
+}
+a:link {
+    text-decoration: none;
+    color: unset;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: bold;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+// Text
+
+h5 {
+    font-size: 1.25rem;
 }

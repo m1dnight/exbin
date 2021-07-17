@@ -1,0 +1,47 @@
+@import "_colors";
+
+
+.snippet-preview {
+    background-color: $menubackground;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+}
+
+// Meta data row.
+.snippet-meta-data {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 1rem;
+}
+
+.snippet-meta-data div {
+    display: inline;
+}
+
+.snippet-meta-data svg {
+    vertical-align: middle;
+}
+
+div.snippet-preview div div.created {
+    margin-left: auto;
+    vertical-align: middle;
+}
+
+// Preview content
+.snippet-preview-content {
+    font-family: $monospace-font;
+    overflow-x: auto !important;
+}
+
+.snippet-preview-content code {
+    word-break: break-word;
+}
+
+.snippet-preview-content code pre {
+    white-space: pre-line;
+    font-size:  1rem;
+    // font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
+    text-align: justify;
+    text-rendering: optimizeLegibility;
+}

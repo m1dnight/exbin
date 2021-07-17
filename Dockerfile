@@ -1,28 +1,66 @@
-FROM elixir:1.11.2
+################################################################################
+# Build Image
+FROM elixir:1.12-slim as build
 LABEL maintainer "Christophe De Troyer <christophe@call-cc.be>"
 
-# Install  Hex, Rebar, and Phoenix.
-RUN mix local.hex --force &&                                  \
-    mix local.rebar --force &&                                \
-    mix archive.install hex phx_new 1.5.8 --force &&          \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y -q nodejs
-
-# Add the source code. 
-ADD . /app
-
-# Build the application.
-ENV MIX_ENV=prod
+# Install compile-time dependencies
+ENV DEBIAN_FRONTEND=noninteractive 
+RUN apt-get update && apt-get install -y git nodejs npm yarn python3
+RUN mkdir /app 
 WORKDIR /app 
-RUN mix deps.get --only prod &&                          \
-    mix compile &&                                      \
-    cd assets &&                                         \
-    npm install &&                                       \
-    node_modules/brunch/bin/brunch build --production && \
-    cd ..  &&                                            \
-    mix phx.digest
 
-# ENTRYPOINT ["mix"]
-ENTRYPOINT ["./startup.sh"]
+# Install Hex and Rebar 
+RUN mix do local.hex --force, local.rebar --force
 
-# -e DB_NAME=exbindb -e DB_PASS=supersecretpassword -e DB_USER=postgres -e DB_HOST=localhost
+# set build ENV
+ENV MIX_ENV=prod
+
+# install mix dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get --only $MIX_ENV
+RUN mix deps.compile
+
+# Build web assets.
+COPY assets assets
+RUN npm install --prefix ./assets && npm run deploy --prefix ./assets
+RUN mix phx.digest
+
+# Compile entire project.
+COPY priv priv
+COPY lib lib
+RUN mix compile
+
+# Build the entire release.
+RUN mix release
+
+################################################################################
+# Release Image
+
+FROM debian:stable-slim AS app
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales
+
+# Set the locale
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8     
+
+ENV MIX_ENV=prod
+
+# Make the working directory for the application.
+RUN mkdir /app
+WORKDIR /app
+
+# Copy release from build container to this container.
+COPY --from=build /app/_build/prod/rel/exbin .
+COPY entrypoint.sh .
+RUN chown -R nobody: /app
+USER nobody
+
+ENV HOME=/app
+CMD ["bash", "/app/entrypoint.sh"]
+# CMD ["sleep", "1h"]

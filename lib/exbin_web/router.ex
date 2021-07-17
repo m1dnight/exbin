@@ -2,51 +2,60 @@ defmodule ExBinWeb.Router do
   use ExBinWeb, :router
 
   pipeline :browser do
-    plug(:accepts, ["html"])
-    plug(:fetch_session)
-    plug(:fetch_flash)
-    plug(:protect_from_forgery)
-    plug(:put_secure_browser_headers)
-    plug(ExBinWeb.Auth)
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {ExBinWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
   end
 
   pipeline :api do
-    plug(:accepts, ["json"])
-    plug ExBinWeb.Token, exclude: []
+    plug :accepts, ["json"]
   end
 
-  scope "/api", ExBinWeb do
-    pipe_through(:api)
+  scope "/snippet", ExBinWeb do
+    pipe_through :browser
 
-    post("/snippet", APIController, :new)
+    get "/new", SnippetController, :new
+    post "/new", SnippetController, :create
+    get "/list", SnippetController, :list
+    get "/statistics", SnippetController, :statistics
   end
 
   scope "/", ExBinWeb do
-    # Use the default browser stack
-    pipe_through(:browser)
+    pipe_through :browser
 
-    get("/login", SessionController, :new)
-    post("/login", SessionController, :create)
-    delete("/login", SessionController, :delete)
+    # Static Pages
+    get "/about", PageController, :about
 
-    get("/", PageController, :new)
-    get("/list", PageController, :list)
-    get("/new", PageController, :new)
-    get("/about", PageController, :about)
-    get("/stats", PageController, :stats)
-    post("/new", PageController, :create)
-    post("/search", PageController, :search)
-    get("/sync", SyncController, :new)
-    get("/sync/:id", SyncController, :show)
-    get("/raw/:name", PageController, :raw)
-    get("/reader/:name", PageController, :reader)
-    get("/code/:name", PageController, :code)
-    get("/:name", PageController, :show)
-    delete("/:name", PageController, :delete)
+    live "/search", PageLive, :index
+    # Snippets.
+    get "/", SnippetController, :new
+    get "/b/:name", SnippetController, :readerview
+    get "/c/:name", SnippetController, :codeview
+    get "/r/:name", SnippetController, :rawview
+    get "/:name", SnippetController, :view
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", ExBinWeb do
   #   pipe_through :api
   # end
+
+  # Enables LiveDashboard only for development
+  #
+  # If you want to use the LiveDashboard in production, you should put
+  # it behind authentication and allow only admins to access it.
+  # If your application does not have an admins-only section yet,
+  # you can use Plug.BasicAuth to set up some basic authentication
+  # as long as you are also using SSL (which you should anyway).
+  if Mix.env() in [:dev, :test] do
+    import Phoenix.LiveDashboard.Router
+
+    scope "/" do
+      pipe_through :browser
+      live_dashboard "/dashboard", metrics: ExBinWeb.Telemetry
+    end
+  end
 end

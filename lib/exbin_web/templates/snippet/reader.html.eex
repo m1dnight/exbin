@@ -1,0 +1,6 @@
+
+<div class="reader-container">
+    <code>
+        <pre><%= readerify(@snippet.content) %></pre>
+    </code>
+</div>

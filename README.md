@@ -2,111 +2,72 @@
 
 A pastebin clone written in Phoenix/Elixir. Live [here](https://exbin.call-cc.be). 
 
-I work on this project from time to time, so the development pace is slow. If you want to dive in, feel free. The codebase is quite small, because, well, it's a simple application.
+I work on this project from time to time, so the development pace is slow. If you want to dive in, feel free. The codebase is relatively small because, well, it's a simple application.
 
 ## Features
 
- * Post pastes publicly and privatley 
+ * Post pastes publicly and privately 
+ * Opt-in ephemeral snippets. Ephemeral snippets get deleted after 24 hours.
+ * Views are only incremented once every 24 hours, per client.
+ * Usage statistics.
  * List of all public pastes 
- * Use `nc` to pipe text and get the URL. 
+ * Use `nc` to pipe text and get back tje URL. 
    (e.g., `cat file.txt | nc exbin.call-cc.be 9999`)
- * "Raw View" where text is presented as is, ideally to share code for copy and pasting.
- * Syntax highlighted view.
- * "Reader View" where text is presented in a more readable manner. Better suited to share prose text.
+ * "Raw View" where text is presented as is. Well suited for copy/pasting.
+ * "Reader View" where text is presented in a more readable manner. Well suited to share prose text.
+ * "Code View", showing snippets with syntax highlighting.
 
-## Todo
+# Installation 
 
-## Docker 
+The easiest way to run your own instance of ExBin is by running it in a Docker container.
 
-First of all, create an `.env` file in the folder of the `docker-compose.yml` file and change the contents to your liking.
+| Environment var     | Description                                                                                | Default  |
+|---------------------|--:-:---------------------------------------------------------------------------------------|--:-------|
+| `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
+| `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
+| `DATABASE_HOST`     | Host for database.                                                                         | Required |
+| `DATABASE_DB`       | Name of the database.                                                                      | Required |
+| `DATABASE_USER`     | Username for Postgres instance.                                                            | Required |
+| `DATABASE_PASSWORD` | Password for Postgres user.                                                                | Required |
+| `POOL_SIZE`         | Concurrent database connections.                                                           | `10`     |
+| `TZ`                | TZ database name                                                                           | Required |
+| `EPHEMERAL_AGE`     | Ephemeral age of snippets in seconds.                                                      | `60`     |
+| `HTTP_PORT`         | Port for HTTP endpoint.                                                                    | `4000`   |
+| `TCP_PORT`          | Port for the TCP endpoint.                                                                 | Required |
+| `TCP_HOST`          | IP to bind on for TCP socket.                                                              | Required |
+| `MAX_SIZE`          | Maximum size in bytes for the TCP endpoint.                                                | Required |
+| `DEFAULT_VIEW`      | Standard view for snippets.                                                                | Required |
+| `DEFAULT_VIEW`      | Standard view for snippets.                                                                | Required |
+| `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required |
+| `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required |
+
+Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.
+An example is shown below.
 
 ```
+SECRET_KEY_BASE=TUvAjMKpIXf+ik05cgmjErbtWVUBmKX70TCtg9ToU3ZC8gdNQoYnCrLAljBuHvKU 
+SECRET_SALT=Qrw8mzDAAdvouNi6EvP/vEBwgPw0lCXh2dCANXKbW0HnQElvhB8nETC/q/L+zxxa 
+DATABASE_HOST=db 
+DATABASE_DB=exbin
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres 
+POOL_SIZE=10 
+TZ=Europe/Brussels 
+EPHEMERAL_AGE=60
+HTTP_PORT=5000
 TCP_PORT=9999
-TCP_IP=0.0.0.0
-PORT=443 # If you want https, 80 if you want http.
-DB_NAME=exbindb
-DB_PASS=supersecretpassword
-DB_USER=postgres
-MAX_BYTES=1024
-EXBIN_DATA=./postgres-data 
-DEFAULT_VIEW=reader
-PUBLIST_LIMIT=100
-LOGO_FILENAME=example_logo.png
-LOGO_PATH=/my/path/example_logo.png
-API_TOKEN=myapitoken
+TCP_HOST=0.0.0.0
+MAX_SIZE=2048
+DEFAULT_VIEW=code 
+BASE_URL=https://example.com
+HOST=example.com 
+DATABASE_DATA=/tmp/exbindata
 ```
 
-Note, the port here (`PORT`) is merely an indication if you want https or http urls in your application (for example, what is returned from the tcp socket). 
-The port you want the container to expose has to be manually set in the docker-compose file. This is 8080 by default!
+Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
 
-To run this entire thing in Docker:
+# Things To Do 
 
-```
-docker-compose up -d
-```
-
-At this point you should be able to navigate to the site at `http://localhost:8080`.
-
-
-## Develop 
-
-```
-git clone https://github.com/m1dnight/exbin.git
-cd exbin
-mix deps.get
-mix compile
-cd assets 
-npm install
-node_modules/brunch/bin/brunch build
-cd ..
-./scripts/run.sh # Creates a docker database.
-mix ecto.create 
-mix ecto.migrate
-mix phx.server
-```
-
-## Deploy
-
-Compile:
-
-```
-git clone https://github.com/m1dnight/exbin.git
-cd exbin
-export MIX_ENV=prod
-mix deps.get --only prod
-mix compile
-cd assets 
-npm install
-node_modules/brunch/bin/brunch build --production
-cd ..
-mix phx.digest 
-mix ecto.create 
-mix ecto.migrate
-```
-
-Run:
-
-Keep in mind that there are other environment variables you can set. See above, or the `.env.example` file.
-```
-MIX_ENV=prod TCP_PORT=6666 TCP_IP=0.0.0.0 mix phx.server
-```
-
-# Env vars
-
-| Variable        	| Description                                                                                                     	                                  | Values                     	| Default     	|
-|-----------------	|---------------------------------------------------------------------------------------------------------------------------------------------------- |----------------------------	|-------------	|
-| `TCP_PORT`      	| TCP port for the socket to listen to for raw data.                                                              	                                  | Number                     	| `9999`      	|
-| `TCP_IP`        	| Interface to bind to.                                                                                           	                                  | Interface                  	| `127.0.0.1` 	|
-| `PORT`          	| Port the web app should listen to.                                                                              	                                  | Number                     	| `4001`      	|
-| `DB_NAME`       	| Name of the database.                                                                                           	                                  | String                     	| `exbindb`   	|
-| `DB_PASS`       	| Password to the database.                                                                                       	                                  | String                     	| `pass`      	|
-| `DB_USER`       	| Username to the database.                                                                                       	                                  | String                     	| `user`      	|
-| `MAX_BYTES`     	| Maximum size of text that can be dumped to the TCP socket. When the size is exceeded the connection is dropped. 	                                  | Number                     	| `1048576`   	|
-| `EXBIN_DATA`    	| The path where the database data should be stored.                                                              	                                  | Path                       	|             	|
-| `DEFAULT_VIEW`  	| Default view of snippets when they are submitted.                                                               	                                  | `code`, `raw`, or `reader` 	| `code`      	|
-| `PUBLIST_LIMIT` 	| Maximum number of snippets to show in the "Latest" page. Set a limit if you have a very busy instance.          	                                  | Number or `nil`            	| `nil`       	|
-| `LOGO_FILENAME` 	| The filename of the logo you wish to use (not the path!). The filename is of a file that exists in `assets/static/images`.                          | String                    	| `logo.png`   	|
-| `LOGO_PATH` 	    | The absolute path to the logo you wish to use. This path will be used as a volume in the Docker image. If you are running from source, ignore this. | Absolute Path               | `nil`         |                                                      	| String                    	| `logo.png`   	|
-| `BRAND` 	        | Title of this ExBin instance, shown on the front page.                                                                                              | String                      | `ExBin`       |
-| `ADMIN_PASSWORD`  | Password for the admin page. Allows to see/delete private snippets. If not set, no admin rights.                                                    | String                      | disabled      |
-| `API_TOKEN`       | Secret token for the JSON API. If unset, no authentication is used!                                                                                 | String                      | disabled      |
+ * Empty snippets are not allowed, but if you use some unprintable chars it still passes. 
+ * Synced paged back or not? 
+ * Rate limit the amount of pastes a user can make.
