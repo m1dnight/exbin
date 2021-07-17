@@ -69,13 +69,18 @@ base_url = System.get_env("BASE_URL") || raise "environment variable BASE_URL is
 config :exbin,
   base_url: base_url
 
+#############################################################################
+# Timezone
 
+timezone = System.get_env("TZ") || raise "environment variable TZ is missing."
+
+config :exbin,
+  timezone: timezone
 
 #############################################################################
 # HTTP Endpoint
 
 host = System.get_env("HOST") || raise "environment variable HOST is missing."
-
 
 config :exbin, ExBinWeb.Endpoint,
   url: [host: host, port: String.to_integer(System.get_env("HTTP_PORT") || "1234")],

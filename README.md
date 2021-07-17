@@ -71,3 +71,5 @@ Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it wit
  * Empty snippets are not allowed, but if you use some unprintable chars it still passes. 
  * Synced paged back or not? 
  * Rate limit the amount of pastes a user can make.
+ * Admin page
+ 

@@ -76,6 +76,7 @@ defmodule ExBin.Stats do
   Groups snippets created per month and returns the totals per month for a year.
   """
   def count_per_month() do
+    timezone = Application.get_env(:exbin, :timezone)
     # Query all the snippets by computing the month they were created.
     query =
       from(s in Snippet)
@@ -97,7 +98,7 @@ defmodule ExBin.Stats do
     buckets =
       0..11
       |> Enum.flat_map(fn offset ->
-        month = Timex.now() |> Timex.beginning_of_month() |> Timex.shift(months: -1 * offset)
+        month = Timex.now(timezone) |> Timex.beginning_of_month() |> Timex.shift(months: -1 * offset)
         [{month, {0, 0}}, {month, {0, 0}}]
       end)
       |> Enum.into(%{})
@@ -106,6 +107,8 @@ defmodule ExBin.Stats do
     snippet_counts =
       Repo.all(query)
       |> Enum.reduce(buckets, fn r, buckets ->
+        # The snippet comes out in UTC, so its shifted to the local timezone before putting in the bucket.
+        r = %{r | month: DateTime.shift_zone!(r.month, timezone)}
         {publ, priv} = Map.get(buckets, r.month)
 
         priv = if r.private, do: r.count, else: priv

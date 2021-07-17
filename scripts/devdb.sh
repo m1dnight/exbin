@@ -1,4 +1,4 @@
-ococker#!/bin/bash
+#!/bin/bash
 
 # To connect to the live db use this:
 # docker run --rm --name pg-tmp --net=exbinnet -e PGPASSWORD=postgres postgres psql -h exbin_dev -U postgres
@@ -26,6 +26,7 @@ docker run --rm                                  \
            --name exbindb                        \
            --net=exbinnet                        \
            -e POSTGRES_PASSWORD="postgres"       \
+           -e TZ="Europe/Brussels"       \
            -p 5432:5432                          \
            -v $data_dir:/var/lib/postgresql/data \
            postgres
