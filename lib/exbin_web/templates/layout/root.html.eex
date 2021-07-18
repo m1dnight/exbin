@@ -50,7 +50,7 @@
             </a>
 
             <!-- Menu Entry About -->
-            <a href="<%= Routes.page_path(@conn, :index) %>">
+            <a href="<%= Routes.page_path(@conn, :about) %>">
             <div class="menu-entry-bottom menu-entry">
               <span class="icon">
                 <span class="iconify" data-icon="mdi-information"></span>
