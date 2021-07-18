@@ -40,6 +40,7 @@ The easiest way to run your own instance of ExBin is by running it in a Docker c
 | `DEFAULT_VIEW`      | Standard view for snippets.                                                                | Required |
 | `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required |
 | `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required |
+| `API_KEY`           | Password token for the API. If not set, the API is publicly available.                     | Optional |
 
 Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.
 An example is shown below.

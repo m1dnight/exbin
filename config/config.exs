@@ -35,7 +35,8 @@ config :exbin,
   tcp_host: (System.get_env("TCP_HOST") || "127.0.0.1") |> to_charlist() |> :inet.parse_address() |> elem(1),
   base_url: "http://localhost:4000",
   max_size: 2048,
-  timezone: "Europe/Brussels"
+  timezone: "Europe/Brussels",
+  apikey: "devkey"
 
 # Viewcount rate limit configuration.
 config :ex_rated,
