@@ -151,11 +151,10 @@ hr {
 
 // Links
 a {
-    color: unset;
+    color: $detail;
 }
 a:link {
     text-decoration: none;
-    color: unset;
 }
 
 a:visited {
@@ -164,10 +163,15 @@ a:visited {
 
 a:hover {
     text-decoration: bold;
+    color: $detailContrast;
 }
 
 a:active {
     text-decoration: none;
+}
+
+.menu-column-top > a {
+    color: unset;
 }
 
 // Text
