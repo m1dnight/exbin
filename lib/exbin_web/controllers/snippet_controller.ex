@@ -38,12 +38,12 @@ defmodule ExBinWeb.SnippetController do
 
   def render_snippet(conn, name, view) do
     case ExBin.Snippets.get_by_name(name) do
-      nil ->
+      {:error, :not_found} ->
         conn
         |> put_flash(:error, "💩 Snippet not found.")
         |> redirect(to: "/")
 
-      snippet ->
+      {:ok, snippet} ->
         case view do
           :code ->
             render(conn, "code.html", snippet: snippet)

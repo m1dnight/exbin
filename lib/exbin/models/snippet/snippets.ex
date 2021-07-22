@@ -128,8 +128,17 @@ defmodule ExBin.Snippets do
   Gets a snippet by its human readable name.
   """
   def get_by_name(name) do
-    from(s in Snippet, where: s.name == ^name)
-    |> Repo.one()
+    snippet =
+      from(s in Snippet, where: s.name == ^name)
+      |> Repo.one()
+
+    case snippet do
+      nil ->
+        {:error, :not_found}
+
+      snippet ->
+        {:ok, snippet}
+    end
   end
 
   @doc """

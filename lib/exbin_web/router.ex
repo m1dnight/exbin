@@ -14,6 +14,12 @@ defmodule ExBinWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", ExBinWeb do
+    pipe_through :api
+
+    get "/:name", APIController, :show
+  end
+
   scope "/snippet", ExBinWeb do
     pipe_through :browser
 

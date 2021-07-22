@@ -7,7 +7,7 @@ defmodule ExBinWeb.Plug.ViewCounter do
 
   def call(conn, opts) do
     # The snippet name and identifier for client.
-    %{"name" => name}= conn.path_params
+    %{"name" => name} = conn.path_params
     client = identifier(conn)
     view_interval = opts[:view_interval]
 
@@ -26,10 +26,10 @@ defmodule ExBinWeb.Plug.ViewCounter do
 
   defp update_viewcount(name) do
     case ExBin.Snippets.get_by_name(name) do
-      nil ->
+      {:error, :not_found} ->
         {:error, "snippet not found"}
 
-      snippet ->
+      {:ok, snippet} ->
         ExBin.Snippets.update_viewcount(snippet)
     end
   end
