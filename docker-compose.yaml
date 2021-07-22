@@ -25,6 +25,7 @@ services:
       - DEFAULT_VIEW=${DEFAULT_VIEW}
       - BASE_URL=${BASE_URL}
       - HOST=${HOST}
+      - API_KEY=${API_KEY}
     ports:
       - ${HTTP_PORT}:${HTTP_PORT}
       - ${TCP_PORT}:${TCP_PORT}
