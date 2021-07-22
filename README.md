@@ -22,7 +22,7 @@ I work on this project from time to time, so the development pace is slow. If yo
 The easiest way to run your own instance of ExBin is by running it in a Docker container.
 
 | Environment var     | Description                                                                                | Default  |
-|---------------------|--:-:---------------------------------------------------------------------------------------|--:-------|
+|---------------------|--------------------------------------------------------------------------------------------|----------|
 | `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
 | `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
 | `DATABASE_HOST`     | Host for database.                                                                         | Required |
