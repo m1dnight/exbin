@@ -8,4 +8,14 @@ defmodule ExBinWeb.APIController do
       render(conn, "show.json", snippet: snippet)
     end
   end
+
+  def new(conn, %{"content" => content, "private" => priv, "ephemeral" => eph}) do
+    args = %{"content" => content, "private" => priv, "ephemeral" => eph}
+    if args["content"] == "" or String.trim(args["content"]) == "" do
+      {:error, :invalid_content}
+    else
+      {:ok, snippet} = ExBin.Snippets.insert(args)
+      render(conn, "show.json", snippet: snippet)
+    end
+  end
 end

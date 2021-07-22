@@ -10,6 +10,7 @@ defmodule ExBinWeb.APIView do
   end
 
   def render("snippet.json", %{api: snippet}) do
-    %{content: snippet.content, name: snippet.name, created: snippet.inserted_at}
+    url = ExBinWeb.Router.Helpers.snippet_url(ExBinWeb.Endpoint, :view, snippet.name)
+    %{content: snippet.content, name: snippet.name, created: snippet.inserted_at, url: url}
   end
 end
