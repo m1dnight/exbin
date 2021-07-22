@@ -4,7 +4,7 @@
    </h1>
    <p>
       ExBin is a pastebin clone written in Elixir/Phoenix. You can find the source code <a
-      href="https://github.com/m1dnight/exbin">here on github</a>.
+      href="https://github.com/m1dnight/exbin" class="link">here on github</a>.
       The current version is <code><%= ExBin.version() %></code>.
    </p>
 
