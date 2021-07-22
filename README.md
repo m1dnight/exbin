@@ -63,6 +63,7 @@ DEFAULT_VIEW=code
 BASE_URL=https://example.com
 HOST=example.com 
 DATABASE_DATA=/tmp/exbindata
+API_KEY=mysupersecretkey
 ```
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
