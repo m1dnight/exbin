@@ -12,6 +12,7 @@ defmodule ExBinWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug ExBinWeb.ApiAuth, exclude: []
   end
 
   scope "/api", ExBinWeb do
