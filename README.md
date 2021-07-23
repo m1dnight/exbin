@@ -74,4 +74,7 @@ Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it wit
  * Synced paged back or not? 
  * Rate limit the amount of pastes a user can make.
  * Admin page
+ * Custom logos
+ * Nicer warnings/checks on environment variables instead of crashing immediately.
+ * Check older issues to see what I missed
  
