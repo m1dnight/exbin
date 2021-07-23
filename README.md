@@ -77,4 +77,4 @@ Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it wit
  * Custom logos
  * Nicer warnings/checks on environment variables instead of crashing immediately.
  * Check older issues to see what I missed
- 
+ * Allow a unique user (reuse from rate limiting) to delete a snippet in the next x minutes, or create a unique delete link or something.
