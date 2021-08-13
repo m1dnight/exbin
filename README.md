@@ -31,7 +31,7 @@ The easiest way to run your own instance of ExBin is by running it in a Docker c
 | `DATABASE_PASSWORD` | Password for Postgres user.                                                                | Required |
 | `POOL_SIZE`         | Concurrent database connections.                                                           | `10`     |
 | `TZ`                | TZ database name                                                                           | Required |
-| `EPHEMERAL_AGE`     | Ephemeral age of snippets in seconds.                                                      | `60`     |
+| `EPHEMERAL_AGE`     | Ephemeral age of snippets in minutes.                                                      | `60`     |
 | `HTTP_PORT`         | Port for HTTP endpoint.                                                                    | `4000`   |
 | `TCP_PORT`          | Port for the TCP endpoint.                                                                 | Required |
 | `TCP_HOST`          | IP to bind on for TCP socket.                                                              | Required |
