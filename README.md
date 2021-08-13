@@ -22,7 +22,7 @@ I work on this project from time to time, so the development pace is slow. If yo
 The easiest way to run your own instance of ExBin is by running it in a Docker container.
 
 | Environment var     | Description                                                                                | Default  |
-|---------------------|--:-:---------------------------------------------------------------------------------------|--:-------|
+|---------------------|--------------------------------------------------------------------------------------------|----------|
 | `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
 | `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
 | `DATABASE_HOST`     | Host for database.                                                                         | Required |
@@ -63,6 +63,7 @@ DEFAULT_VIEW=code
 BASE_URL=https://example.com
 HOST=example.com 
 DATABASE_DATA=/tmp/exbindata
+API_KEY=mysupersecretkey
 ```
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
@@ -73,4 +74,7 @@ Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it wit
  * Synced paged back or not? 
  * Rate limit the amount of pastes a user can make.
  * Admin page
- 
+ * Custom logos
+ * Nicer warnings/checks on environment variables instead of crashing immediately.
+ * Check older issues to see what I missed
+ * Allow a unique user (reuse from rate limiting) to delete a snippet in the next x minutes, or create a unique delete link or something.
