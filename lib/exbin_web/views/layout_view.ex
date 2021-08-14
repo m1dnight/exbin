@@ -6,15 +6,11 @@ defmodule ExBinWeb.LayoutView do
   end
 
   def time_left(date) do
-    IO.inspect date, label: "Snippet creation date"
     maximum_age = Application.get_env(:exbin, :ephemeral_age)
-    IO.inspect maximum_age, label: "max age"
     time_to_delete = Timex.shift(date, minutes: maximum_age)
     now = Timex.now()
     IO.inspect(time_to_delete, label: "Time to delete")
     IO.inspect(now, label: "Now")
-
-
 
     case Timex.diff(time_to_delete, now, :hours) do
       0 ->

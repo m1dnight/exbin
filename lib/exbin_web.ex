@@ -32,7 +32,8 @@ defmodule ExBinWeb do
       use Phoenix.View,
         root: "lib/exbin_web/templates",
         namespace: ExBinWeb
-        use Phoenix.HTML
+
+      use Phoenix.HTML
       # Import convenience functions from controllers
       import Phoenix.Controller,
         only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
@@ -46,7 +47,8 @@ defmodule ExBinWeb do
     quote do
       use Phoenix.LiveView,
         layout: {ExBinWeb.LayoutView, "live.html"}
-        use Phoenix.HTML
+
+      use Phoenix.HTML
       unquote(view_helpers())
     end
   end

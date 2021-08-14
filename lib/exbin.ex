@@ -11,5 +11,4 @@ defmodule ExBin do
   def version() do
     @version
   end
-
 end
