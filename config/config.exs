@@ -36,7 +36,8 @@ config :exbin,
   base_url: "http://localhost:4000",
   max_size: 2048,
   timezone: "Europe/Brussels",
-  apikey: "devkey"
+  apikey: "devkey",
+  brand: "ExBin Development"
 
 # Viewcount rate limit configuration.
 config :ex_rated,

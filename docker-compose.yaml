@@ -7,7 +7,7 @@ networks:
 services:
   exbin:
     restart: always
-    image: m1dnight/exbin:0.1.0
+    image: m1dnight/exbin:0.1.3
     environment:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - SECRET_SALT=${SECRET_SALT}
@@ -26,11 +26,15 @@ services:
       - BASE_URL=${BASE_URL}
       - HOST=${HOST}
       - API_KEY=${API_KEY}
+      - BRAND=${BRAND}
+      - LOGO_FILENAME=${LOGO_FILENAME}
     ports:
       - ${HTTP_PORT}:${HTTP_PORT}
       - ${TCP_PORT}:${TCP_PORT}
     networks:
       - internal
+    volumes: 
+      - /tmp/my_logo.png:/app/lib/exbin-0.1.3/priv/static/images/logo.png
     depends_on:
       - db
 

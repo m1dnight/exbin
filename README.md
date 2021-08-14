@@ -41,6 +41,7 @@ The easiest way to run your own instance of ExBin is by running it in a Docker c
 | `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required |
 | `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required |
 | `API_KEY`           | Password token for the API. If not set, the API is publicly available.                     | Optional |
+| `BRAND`             | Name of the ExBin instance. Shown in bottom right corner when creating a snippet.          | `ExBin`  |
 
 Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.
 An example is shown below.
@@ -64,9 +65,17 @@ BASE_URL=https://example.com
 HOST=example.com 
 DATABASE_DATA=/tmp/exbindata
 API_KEY=mysupersecretkey
+BRAND=ExBin
 ```
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
+
+## Custom Branding in Docker 
+
+To create a custom logo when you use Docker do the following. Let's assume your logo is located on your host at `/path/my_logo.png`. 
+Additionally, the version of Elixir you are running is 0.1.3 (you can see this on the about page).
+To overwrite the logo, mount your file as a volume at `/app/lib/exbin-0.1.3/priv/static/images/logo.png`. 
+This will overwrite the logo with your own.
 
 # Things To Do 
 

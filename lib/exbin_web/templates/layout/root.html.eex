@@ -180,7 +180,10 @@
 
           <!-- Menu Bottom  -->
           <div class="menu-column-bottom">
-
+            <div class="menu-entry branding">
+              <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" width="30" height="30" class="d-inline-block align-top" alt="">
+              <h5><%= Application.get_env(:exbin, :brand) %></h5>
+            </div>
           </div>
         </div>
     </div>
