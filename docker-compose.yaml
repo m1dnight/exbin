@@ -27,7 +27,6 @@ services:
       - HOST=${HOST}
       - API_KEY=${API_KEY}
       - BRAND=${BRAND}
-      - LOGO_FILENAME=${LOGO_FILENAME}
     ports:
       - ${HTTP_PORT}:${HTTP_PORT}
       - ${TCP_PORT}:${TCP_PORT}
