@@ -15,7 +15,7 @@ default_view =
     other -> raise "Invalid value for DEFAULT_VIEW: #{other}"
   end
 
-ephemeral_age = System.get_env("EPHEMERAL_AGE") |> String.to_integer() || 60
+ephemeral_age = String.to_integer(System.get_env("EPHEMERAL_AGE") || "60")
 brand = if System.get_env("BRAND") == nil or System.get_env("BRAND") == "", do: "ExBin", else: System.get_env("BRAND")
 
 config :exbin,
