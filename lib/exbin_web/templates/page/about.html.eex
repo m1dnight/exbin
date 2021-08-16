@@ -21,7 +21,7 @@
       Duration
    </h2>
    <p>
-      Pastes are stored indefinitely, unless they are marked as “ephemeral”. In that case they are removed after 12 hours.
+      Pastes are stored indefinitely, unless they are marked as “ephemeral”. In that case they are removed approximately <%= Timex.Duration.from_minutes(Application.get_env(:exbin, :ephemeral_age)) |> Timex.Format.Duration.Formatters.Humanized.format %> after creation.
    </p>
 
    <h2>
