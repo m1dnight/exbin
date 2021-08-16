@@ -130,6 +130,24 @@ hr {
     margin: 0;
     border: 2px solid transparent;
     border-radius: 1px !important;
+    margin-top: .5rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.alert .icon_container {
+  padding: 0;
+  margin: 0;
+  margin-right: 0.5rem;
+  display: inline-block;
+  min-height: 48px;
+  min-width: 48px;
+}
+
+.alert .message {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .alert-info {
