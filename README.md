@@ -11,7 +11,7 @@ I work on this project from time to time, so the development pace is slow. If yo
  * Views are only incremented once every 24 hours, per client.
  * Usage statistics.
  * List of all public pastes 
- * Use `nc` to pipe text and get back tje URL. 
+ * Use `nc` to pipe text and get back the URL. 
    (e.g., `cat file.txt | nc exbin.call-cc.be 9999`)
  * "Raw View" where text is presented as is. Well suited for copy/pasting.
  * "Reader View" where text is presented in a more readable manner. Well suited to share prose text.
@@ -36,8 +36,7 @@ The easiest way to run your own instance of ExBin is by running it in a Docker c
 | `TCP_PORT`          | Port for the TCP endpoint.                                                                 | Required |
 | `TCP_HOST`          | IP to bind on for TCP socket.                                                              | Required |
 | `MAX_SIZE`          | Maximum size in bytes for the TCP endpoint.                                                | Required |
-| `DEFAULT_VIEW`      | Standard view for snippets.                                                                | Required |
-| `DEFAULT_VIEW`      | Standard view for snippets.                                                                | Required |
+| `DEFAULT_VIEW`      | Standard view for snippets. (Supported values are 'code', 'reader', or 'raw')              | Required |
 | `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required |
 | `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required |
 | `API_KEY`           | Password token for the API. If not set, the API is publicly available.                     | Optional |
@@ -73,7 +72,7 @@ Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it wit
 ## Custom Branding in Docker 
 
 To create a custom logo when you use Docker do the following. Let's assume your logo is located on your host at `/path/my_logo.png`. 
-Additionally, the version of Elixir you are running is 0.1.3 (you can see this on the about page).
+Additionally, the version of ExBin you are running is 0.1.3 (you can see this on the about page).
 To overwrite the logo, mount your file as a volume at `/app/lib/exbin-0.1.3/priv/static/images/logo.png`. 
 This will overwrite the logo with your own.
 
