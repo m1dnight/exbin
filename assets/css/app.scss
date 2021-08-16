@@ -109,9 +109,15 @@ hr {
     font-size: 1rem;
 }
 
+.menu-entry .icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin-right: 1rem;
+}
+
 .menu-entry .icon svg {
     vertical-align: middle;
-    margin-right: 1rem;
 }
 
 .menu-entry .title {
