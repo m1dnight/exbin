@@ -1,3 +1,4 @@
+<!-- DO NOT REMOVE - contributor_list:data:start:["m1dnight", "dependabot[bot]", "joshproehl"]:end -->
 # ExBin
 
 A pastebin clone written in Phoenix/Elixir. Live [here](https://exbin.call-cc.be). 
@@ -87,3 +88,17 @@ This will overwrite the logo with your own.
  * Nicer warnings/checks on environment variables instead of crashing immediately.
  * Check older issues to see what I missed
  * Allow a unique user (reuse from rate limiting) to delete a snippet in the next x minutes, or create a unique delete link or something.
+
+<!-- prettier-ignore-start -->
+<!-- DO NOT REMOVE - contributor_list:start -->
+## 👥 Contributors
+
+
+- **[@m1dnight](https://github.com/m1dnight)**
+
+- **[@dependabot[bot]](https://github.com/apps/dependabot)**
+
+- **[@joshproehl](https://github.com/joshproehl)**
+
+<!-- DO NOT REMOVE - contributor_list:end -->
+<!-- prettier-ignore-end -->
