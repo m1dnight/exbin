@@ -91,12 +91,10 @@ This will overwrite the logo with your own.
 
 <!-- prettier-ignore-start -->
 <!-- DO NOT REMOVE - contributor_list:start -->
-## 👥 Contributors
+## Contributors
 
 
 - **[@m1dnight](https://github.com/m1dnight)**
-
-- **[@dependabot[bot]](https://github.com/apps/dependabot)**
 
 - **[@joshproehl](https://github.com/joshproehl)**
 

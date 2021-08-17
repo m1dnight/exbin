@@ -10,6 +10,7 @@ docker rm -f exbindb
 docker rm -f pg-tmp
 docker rm -f exbinpgadmin
 
+timezone="Europe/Brusels"
 docker network rm exbinnet 
 docker network create exbinnet 
 
@@ -26,7 +27,7 @@ docker run --rm                                  \
            --name exbindb                        \
            --net=exbinnet                        \
            -e POSTGRES_PASSWORD="postgres"       \
-           -e TZ="Europe/Brussels"       \
+           -e TZ=$timezone                       \
            -p 5432:5432                          \
            -v $data_dir:/var/lib/postgresql/data \
            postgres
