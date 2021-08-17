@@ -13,12 +13,20 @@
 
 <body>
   <main role="main" class="container-fluid">
-    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
     <div class="flex-container">
       <%# Content Column %>
         <div class="code-column">
+          <% 
+            info = get_flash(@conn, :info)
+            error = get_flash(@conn, :error)
+          %>
+          <%= if info do %>
+            <div class="alert alert-info" role="alert"><span class="icon_container"><span class="iconify" data-icon="clarity:alert-solid" data-width="48" data-height="48" style="color:#0033CC;"></span></span><span class="message"><%= info %></span></div>
+          <% end %>
+          <%= if error do %>
+            <div class="alert alert-danger" role="alert"><span class="icon_container"><span class="iconify" data-icon="akar-icons:triangle-alert-fill" data-width="48" data-height="48" style="color:#800000;"></span></span><span class="message"><%= error %></span></div>
+          <% end %>
+
           <%= @inner_content %>
         </div>
 
