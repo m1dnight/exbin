@@ -88,6 +88,8 @@ This will overwrite the logo with your own.
  * Nicer warnings/checks on environment variables instead of crashing immediately.
  * Check older issues to see what I missed
  * Allow a unique user (reuse from rate limiting) to delete a snippet in the next x minutes, or create a unique delete link or something.
+ * Maybe use a list to filter out snippets that might contain bad words. Instead of disallowing them, we could drop them from the public list. 
+
 
 <!-- prettier-ignore-start -->
 <!-- DO NOT REMOVE - contributor_list:start -->
