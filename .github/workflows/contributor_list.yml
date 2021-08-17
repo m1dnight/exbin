@@ -2,7 +2,7 @@ name: Contributor List
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   contributor_list:
     name: Contributor List
