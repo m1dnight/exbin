@@ -64,11 +64,12 @@ defmodule ExBin.Stats do
   end
 
   @doc """
-  Returns the most popular snippet by viewcount.
+  Returns the most popular public snippet by viewcount.
+  Breaks a tie in viewcount by choosing the most recently created.
   Returns nil if no snippet is found.
   """
   def most_popular() do
-    from(from(s in Snippet, where: s.private == false, order_by: [desc: :viewcount], limit: 1))
+    from(from(s in Snippet, where: s.private == false, order_by: [desc: :viewcount, desc: :inserted_at], limit: 1))
     |> Repo.one()
   end
 
