@@ -1,6 +1,6 @@
 defmodule ExBin.StatsTest do
   use ExBin.DataCase, async: true
-  alias ExBin.{Repo, Snippet, Stats}
+  alias ExBin.{Repo, Snippet, Stats, Clock}
   import ExBin.Factory
 
 

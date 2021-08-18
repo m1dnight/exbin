@@ -1,5 +1,5 @@
 defmodule ExBin.Snippet do
-  use Ecto.Schema
+  use ExBin.Schema
   import Ecto.Changeset
 
   schema "snippets" do

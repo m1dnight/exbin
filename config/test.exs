@@ -24,5 +24,8 @@ config :exbin, ExBinWeb.Endpoint,
 config :exbin,
   tcp_port: 9998
 
+# In this env Clock freezing is allowed
+config :exbin, ExBin.Clock, freezable: true
+
 # Print only warnings and errors during test
 config :logger, level: :warn
