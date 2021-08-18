@@ -10,7 +10,7 @@ defmodule ExBin.Snippet do
     field(:private, :boolean, default: true)
     field(:ephemeral, :boolean, default: false)
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   @doc """
