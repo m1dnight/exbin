@@ -18,5 +18,14 @@ config :exbin, ExBinWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+# Allow TCP server to start in test env by running on a different port.
+# This is a quick hack. We could also alter the supervisor to only run
+# run it in specific environments.
+config :exbin,
+  tcp_port: 9998
+
+# In this env Clock freezing is allowed
+config :exbin, ExBin.Clock, freezable: true
+
 # Print only warnings and errors during test
 config :logger, level: :warn
