@@ -7,8 +7,8 @@ I work on this project from time to time, so the development pace is slow. If yo
 
 ## Features
 
- * Post pastes publicly and privately 
- * Opt-in ephemeral snippets. Ephemeral snippets get deleted after 24 hours.
+ * Post pastes either publicly or privately 
+ * Opt-in ephemeral snippets. By default these are deleted approximately 60 minutes after creation.
  * Views are only incremented once every 24 hours, per client.
  * Usage statistics.
  * List of all public pastes 
