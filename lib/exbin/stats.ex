@@ -1,5 +1,5 @@
 defmodule ExBin.Stats do
-  alias ExBin.{Snippet, Repo}
+  alias ExBin.{Snippet, Repo, Clock}
   import Ecto.Query
 
   @doc """
@@ -75,53 +75,87 @@ defmodule ExBin.Stats do
 
   @doc """
   Groups snippets created per month and returns the totals per month for a year.
+
+  Note that this returns the current month (a partial month), and the 11 months
+  prior, so it's not quite a full year of data.
+  Technically it's actually: 11 months + (between 1 day and 1 month)
   """
   def count_per_month() do
-    timezone = Application.get_env(:exbin, :timezone)
-    # Query all the snippets by computing the month they were created.
-    query =
-      from(s in Snippet)
-      |> select(
-        [s],
-        %{
-          month: fragment("date_trunc('month', ? AT TIME ZONE 'UTC')", s.inserted_at),
-          count: fragment("count(*)"),
-          private: fragment("private")
-        }
-      )
-      |> where([s], fragment("date_trunc('month', ? AT TIME ZONE 'UTC') >= date_trunc('year', NOW())", s.inserted_at))
-      |> group_by([s], fragment("date_trunc('month', ? AT TIME ZONE 'UTC')", s.inserted_at))
-      |> group_by([s], s.private)
-      |> order_by([s], fragment("date_trunc('month', ? AT TIME ZONE 'UTC') ASC", s.inserted_at))
+    buckets = empty_month_bucket_map()
 
-    # Generate the list of last 12 months.
-    # {month, {public, private}}
-    buckets =
-      0..11
-      |> Enum.flat_map(fn offset ->
-        month = Timex.now(timezone) |> Timex.beginning_of_month() |> Timex.shift(months: -1 * offset)
-        [{month, {0, 0}}, {month, {0, 0}}]
-      end)
-      |> Enum.into(%{})
+    # Insert the counts from the database into the buckets, sort it, and return that.
+    Repo.all(count_per_month_query())
+    |> Enum.reduce(buckets, fn r, buckets ->
+      target_month_start = r.month
+                           |> NaiveDateTime.truncate(:second)
+      {publ, priv} = Map.get(buckets, target_month_start)
 
-    # Insert the counts from the database.
-    snippet_counts =
-      Repo.all(query)
-      |> Enum.reduce(buckets, fn r, buckets ->
-        # The snippet comes out in UTC, so its shifted to the local timezone before putting in the bucket.
-        r = %{r | month: DateTime.shift_zone!(r.month, timezone)}
-        {publ, priv} = Map.get(buckets, r.month)
+      priv = if r.private, do: r.count, else: priv
+      publ = if r.private, do: publ, else: r.count
 
-        priv = if r.private, do: r.count, else: priv
-        publ = if r.private, do: publ, else: r.count
+      Map.put(buckets, target_month_start, {publ, priv})
+    end)
+    |> Enum.into([])                                  # Turn the map into a list now that we no longer need to look up items
+    |> Enum.sort_by(&elem(&1, 0), &Timex.before?/2)   # And sort the list so the months are in order and the most recent one is last
+    |> Enum.drop(1)                                   # Prune the oldest element out of the list, as we only actually want 11 months.
+  end
 
-        Map.put(buckets, r.month, {publ, priv})
-      end)
+  # We use this to solve https://github.com/elixir-ecto/ecto/issues/3159
+  # (Ecto explodes because it oesn't understand that two fragments with the
+  # same arguments are actually the same fragment, so it incorrectly demands
+  # that you group_by a field which you're actually grouping by already.)
+  #
+  # NOTE: Elixir/Ecto is treating the timestamp columns as DateTimes with
+  # zones, but in Postgres they're actually "datetime without zone"
+  # (https://github.com/elixir-ecto/ecto/issues/1868#issuecomment-268169955)
+  # Because of this when we do manipulations on the Postgres side we actually
+  # need to first cast the timestamp into ETC/UTC and THEN move it to the 
+  # application TZ. (AT TIME ZONE stamps the TZ onto the timestamp *at the
+  # same wall clock time*, rather than convert it to that TZ for "timestamp
+  # without time zone" fields.
+  defmacrop month_trunc_in_zone_frag(field, tz) do
+    quote do
+      fragment("date_trunc('month', (? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ?) as month_bucket", unquote(field), unquote(tz))
+    end
+  end
 
-    # Create an ordered list.
-    buckets
-    |> Map.merge(snippet_counts)
-    |> Enum.into([])
-    |> Enum.sort_by(&elem(&1, 0), &Timex.before?/2)
+  # Create a query to get the counts for each month in the last year, grouped by public/private
+  # (So 2 results per month, assuming each month has both public and private snippets)
+  defp count_per_month_query() do
+    app_tz = Application.get_env(:exbin, :timezone)
+
+    from(s in Snippet)
+    |> select(
+      [s],
+      %{
+        month: month_trunc_in_zone_frag(s.inserted_at, ^app_tz),
+        count: fragment("count(*)"),
+        private: fragment("private")
+      }
+    )
+    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= NOW() AT TIME ZONE ? - interval '1 year'", s.inserted_at, ^app_tz, ^app_tz))
+    |> group_by([s], fragment("month_bucket"))
+    |> group_by([s], s.private)
+    |> order_by([s], fragment("month_bucket"))
+  end
+
+  # Generates a a bucket list for 12 months prior to the current time.
+  # Resulting Map will be keyed with NaiveDateTimes truncated to the 
+  # second, indicating the beginning of the month, with a zeroed'
+  # {public_count, private_count} tuple as the initial value.
+  @spec empty_month_bucket_map() :: Map.t()
+  defp empty_month_bucket_map() do
+    application_tz = Application.get_env(:exbin, :timezone)
+    current_month_start = Clock.utc_now()
+                          |> DateTime.shift_zone!(application_tz)
+                          |> Timex.beginning_of_month()
+                          |> NaiveDateTime.truncate(:second)
+
+    0..12
+    |> Enum.flat_map(fn offset -> 
+      month = Timex.shift(current_month_start, months: -1*offset)
+      [{month, {0,0}}]
+    end)
+    |> Enum.into(%{})
   end
 end
