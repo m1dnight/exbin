@@ -1,4 +1,4 @@
-<!-- DO NOT REMOVE - contributor_list:data:start:["m1dnight", "dependabot[bot]", "joshproehl"]:end -->
+<!-- DO NOT REMOVE - contributor_list:data:start:["m1dnight", "joshproehl", "dependabot[bot]"]:end -->
 # ExBin
 
 A pastebin clone written in Phoenix/Elixir. Live [here](https://exbin.call-cc.be). 
@@ -92,12 +92,14 @@ This will overwrite the logo with your own.
 
 <!-- prettier-ignore-start -->
 <!-- DO NOT REMOVE - contributor_list:start -->
-## Contributors
+## 👥 Contributors
 
 
 - **[@m1dnight](https://github.com/m1dnight)**
 
 - **[@joshproehl](https://github.com/joshproehl)**
+
+- **[@dependabot[bot]](https://github.com/apps/dependabot)**
 
 <!-- DO NOT REMOVE - contributor_list:end -->
 <!-- prettier-ignore-end -->
