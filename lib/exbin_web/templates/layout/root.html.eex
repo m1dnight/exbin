@@ -189,7 +189,11 @@
           <!-- Menu Bottom  -->
           <div class="menu-column-bottom">
             <div class="menu-entry branding">
-              <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" width="30" height="30" class="d-inline-block align-top" alt="">
+              <%= if Application.get_env(:exbin, :custom_logo_path) do %>
+                <img src="<%= Routes.static_path(@conn, "/files/#{Path.basename(Application.get_env(:exbin, :custom_logo_path))}") %>" width="<%= Application.get_env(:exbin, :custom_logo_size) %>" height="<%= Application.get_env(:exbin, :custom_logo_size) %>" class="d-inline-block align-top" alt="">
+              <% else %>
+                <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" width="30" height="30" class="d-inline-block align-top" alt="">
+              <% end %>
               <h5><%= Application.get_env(:exbin, :brand) %></h5>
             </div>
           </div>

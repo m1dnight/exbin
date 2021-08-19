@@ -15,6 +15,16 @@ defmodule ExBinWeb.Router do
     plug ExBinWeb.ApiAuth, exclude: []
   end
 
+  pipeline :custom_files do
+    plug ExBinWeb.Plug.CustomLogo
+  end
+
+  scope "/files", ExBinWeb do
+    pipe_through [:custom_files]
+    match :*, "/*not_found", Plug.FileNotFound, []
+  end
+
+
   scope "/api", ExBinWeb do
     pipe_through :api
 

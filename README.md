@@ -22,26 +22,29 @@ I work on this project from time to time, so the development pace is slow. If yo
 
 The easiest way to run your own instance of ExBin is by running it in a Docker container.
 
-| Environment var     | Description                                                                                | Default  |
-|---------------------|--------------------------------------------------------------------------------------------|----------|
-| `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
-| `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required |
-| `DATABASE_HOST`     | Host for database.                                                                         | Required |
-| `DATABASE_DB`       | Name of the database.                                                                      | Required |
-| `DATABASE_USER`     | Username for Postgres instance.                                                            | Required |
-| `DATABASE_PASSWORD` | Password for Postgres user.                                                                | Required |
-| `POOL_SIZE`         | Concurrent database connections.                                                           | `10`     |
-| `TZ`                | TZ database name                                                                           | Required |
-| `EPHEMERAL_AGE`     | Ephemeral age of snippets in minutes.                                                      | `60`     |
-| `HTTP_PORT`         | Port for HTTP endpoint.                                                                    | `4000`   |
-| `TCP_PORT`          | Port for the TCP endpoint.                                                                 | Required |
-| `TCP_HOST`          | IP to bind on for TCP socket.                                                              | Required |
-| `MAX_SIZE`          | Maximum size in bytes for the TCP endpoint.                                                | Required |
-| `DEFAULT_VIEW`      | Standard view for snippets. (Supported values are 'code', 'reader', or 'raw')              | Required |
-| `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required |
-| `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required |
-| `API_KEY`           | Password token for the API. If not set, the API is publicly available.                     | Optional |
-| `BRAND`             | Name of the ExBin instance. Shown in bottom right corner when creating a snippet.          | `ExBin`  |
+| Environment var     | Description                                                                                | Default             |
+|---------------------|--------------------------------------------------------------------------------------------|---------------------|
+| `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required            |
+| `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret`.                        | Required            |
+| `DATABASE_HOST`     | Host for database.                                                                         | Required            |
+| `DATABASE_DB`       | Name of the database.                                                                      | Required            |
+| `DATABASE_USER`     | Username for Postgres instance.                                                            | Required            |
+| `DATABASE_PASSWORD` | Password for Postgres user.                                                                | Required            |
+| `POOL_SIZE`         | Concurrent database connections.                                                           | `10`                |
+| `TZ`                | TZ database name                                                                           | Required            |
+| `EPHEMERAL_AGE`     | Ephemeral age of snippets in minutes.                                                      | `60`                |
+| `HTTP_PORT`         | Port for HTTP endpoint.                                                                    | `4000`              |
+| `TCP_PORT`          | Port for the TCP endpoint.                                                                 | Required            |
+| `TCP_HOST`          | IP to bind on for TCP socket.                                                              | Required            |
+| `MAX_SIZE`          | Maximum size in bytes for the TCP endpoint.                                                | Required            |
+| `DEFAULT_VIEW`      | Standard view for snippets. (Supported values are 'code', 'reader', or 'raw')              | Required            |
+| `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required            |
+| `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required            |
+| `API_KEY`           | Password token for the API. If not set, the API is publicly available.                     | Optional            |
+| `BRAND`             | Name of the ExBin instance. Shown in bottom right corner when creating a snippet.          | `ExBin`             |
+| `CUSTOM_LOGO_PATH`  | The full path on the host machine to your custom logo. E.g. "/srv/exbin/my_logo.png"       | Optional            |
+| `CUSTOM_LOGO_SIZE`  | The pixel dimensions of your logo, which is assumed to be square. Ignored if no logo set.  | `30`                |
+
 
 Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.
 An example is shown below.
@@ -66,16 +69,30 @@ HOST=example.com
 DATABASE_DATA=/tmp/exbindata
 API_KEY=mysupersecretkey
 BRAND=ExBin
+CUSTOM_LOGO_PATH=/exbin_branding/my_cool_logo.png
+CUSTOM_LOGO_SIZE=50
 ```
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
 
 ## Custom Branding in Docker 
 
-To create a custom logo when you use Docker do the following. Let's assume your logo is located on your host at `/path/my_logo.png`. 
-Additionally, the version of ExBin you are running is 0.1.3 (you can see this on the about page).
-To overwrite the logo, mount your file as a volume at `/app/lib/exbin-0.1.3/priv/static/images/logo.png`. 
-This will overwrite the logo with your own.
+In order to configure this you will need to mount the file into your docker container as a volume, and then set the CUSTOM_LOGO_PATH environment variable to the full path (inside the container) that the file is mounted at.  
+Here is an example of what you would add to your docker-compose.yml:
+```
+services:
+  exbin:
+    environment:
+      CUSTOM_LOGO_PATH=/exbin_branding/my_cool_logo.png
+      CUSTOM_LOGO_SIZE=50
+    volumes:
+      - /path/on/docker/host/my_logo.png:/exbin_branding/logo.png
+```
+
+    
+Logo by default is 30x30 pixels, but you can define the size for the width/height attributes of the img tag by setting CUSTOM_LOGO_SIZE.  
+Logos are assumed to be square, so the same value will be used for both height and width.  
+Any layout errors that come from using sizes other than 30x30 are your problem. :-)
 
 # Things To Do 
 
@@ -83,7 +100,6 @@ This will overwrite the logo with your own.
  * Synced paged back or not? 
  * Rate limit the amount of pastes a user can make.
  * Admin page
- * Custom logos
  * Nicer warnings/checks on environment variables instead of crashing immediately.
  * Check older issues to see what I missed
  * Allow a unique user (reuse from rate limiting) to delete a snippet in the next x minutes, or create a unique delete link or something.

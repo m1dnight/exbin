@@ -32,8 +32,6 @@ services:
       - ${TCP_PORT}:${TCP_PORT}
     networks:
       - internal
-    volumes: 
-      - /tmp/my_logo.png:/app/lib/exbin-0.1.3/priv/static/images/logo.png
     depends_on:
       - db
 
