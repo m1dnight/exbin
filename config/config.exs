@@ -10,6 +10,7 @@ use Mix.Config
 config :exbin,
   ecto_repos: [ExBin.Repo]
 
+
 # Configures the endpoint
 config :exbin, ExBinWeb.Endpoint,
   url: [host: "localhost"],

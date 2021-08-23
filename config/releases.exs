@@ -100,3 +100,10 @@ apikey = System.get_env("API_KEY") || raise "environment variable API_KEY is mis
 
 config :exbin,
   apikey: apikey
+
+#############################################################################
+# Custom Logo
+
+config :exbin,
+  custom_logo_path: System.get_env("CUSTOM_LOGO_PATH"),
+  custom_logo_size: System.get_env("CUSTOM_LOGO_SIZE") || "30"
