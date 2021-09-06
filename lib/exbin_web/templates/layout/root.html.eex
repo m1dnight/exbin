@@ -21,10 +21,24 @@
             error = get_flash(@conn, :error)
           %>
           <%= if info do %>
-            <div class="alert alert-info" role="alert"><span class="icon_container"><span class="iconify" data-icon="clarity:alert-solid" data-width="48" data-height="48" style="color:#0033CC;"></span></span><span class="message"><%= info %></span></div>
+            <div class="alert alert-info" role="alert">
+              <span class="icon_container">
+                <span class="iconify" data-icon="clarity:alert-solid" data-width="10" data-height="10" style="color:#0033CC;"></span>
+              </span>
+              <span class="message">
+                <%= info %>
+              </span>
+            </div>
           <% end %>
           <%= if error do %>
-            <div class="alert alert-danger" role="alert"><span class="icon_container"><span class="iconify" data-icon="akar-icons:triangle-alert-fill" data-width="48" data-height="48" style="color:#800000;"></span></span><span class="message"><%= error %></span></div>
+            <div class="alert alert-danger" role="alert">
+              <span class="icon_container">
+                <span class="iconify" data-icon="akar-icons:triangle-alert-fill" data-width="10" data-height="10" style="color:#800000;"></span>
+              </span>
+              <span class="message">
+                <%= error %>
+              </span>
+            </div>
           <% end %>
 
           <%= @inner_content %>
@@ -171,6 +185,7 @@
               </span>
             </div>
 
+
             <!-- Menu Entry Ephemeral -->
             <%= if @snippet.ephemeral do %>
             <div class="menu-entry">
@@ -196,6 +211,44 @@
               <% end %>
               <h5><%= Application.get_env(:exbin, :brand) %></h5>
             </div>
+
+            <%= if @current_user do %>
+            <div class="menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-person"></span>
+              </span>
+              <span class="title">
+                  <%= @current_user.email %>
+              </span>
+            </div>
+            <div class="menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-lock "></span>
+              </span>
+              <span class="title">
+                  <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+              </span>
+            </div>
+          <% else %>
+            <div class="menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-person"></span>
+              </span>
+              <span class="title">
+                 <%= link "Register", to: Routes.user_registration_path(@conn, :new) %>
+              </span>
+            </div>
+            <div class="menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-lock"></span>
+              </span>
+              <span class="title">
+                  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
+              </span>
+            </div>
+          <% end %>
+
+
           </div>
         </div>
     </div>

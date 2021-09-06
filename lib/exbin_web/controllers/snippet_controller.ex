@@ -21,7 +21,7 @@ defmodule ExbinWeb.SnippetController do
   end
 
   def view(conn, %{"name" => name}) do
-    render_snippet(conn, name, Application.get_env(:exbin, :default_view))
+    render_snippet(conn, name, Application.get_env(:ex_bin, :default_view))
   end
 
   def codeview(conn, %{"name" => name}) do
