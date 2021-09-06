@@ -210,26 +210,21 @@
               <% else %>
                 <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" width="30" height="30" class="d-inline-block align-top" alt="">
               <% end %>
-              <h5><%= Application.get_env(:exbin, :brand) %></h5>
+            </div>
+
+            <div class="menu-entry branding">
+              <p class="title"><%= Application.get_env(:exbin, :brand) %></p>
             </div>
 
             <%= if @current_user do %>
-            <div class="menu-entry branding">
+            <div class="menu-entry">
               <span class="icon">
                 <span class="iconify" data-icon="mdi-person"></span>
               </span>
-              <h5 class="trim">
-                  <%= @current_user.email %>
-              </h5>
-            </div>
-
-            <div class="menu-entry">
-              <span class="icon">
-                <span class="iconify" data-icon="mdi-eye"></span>
-              </span>
-              <span class="title">
-                ThisIsSuperLong@googlemail.com
-              </span>
+              <p class="title">
+                  <%#= @current_user.email %>
+                  supersupersuperlong@supersuperlong.com
+              </p>
             </div>
 
             <div class="menu-entry">

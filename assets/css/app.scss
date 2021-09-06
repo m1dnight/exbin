@@ -77,6 +77,7 @@ hr {
     color: $text;
 
     display: flex;
+    // flex-wrap: wrap;
     flex-direction: column;
 
     // On pages where no date is shown.
@@ -99,9 +100,22 @@ hr {
 .menu-entry {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+    display: flex;
+    // flex-direction: column;
+}
+.menu-entry span.icon {
+    display:inline-flex;
+    flex: 0 0 auto;
+}
+
+.menu-entry p.title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
 }
 
 .branding {
+    justify-content: center;
     text-align: center;
 }
 
@@ -124,6 +138,14 @@ hr {
 .menu-entry .title {
     vertical-align: middle;
 }
+
+
+.trim {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
 
 // Alerts
 .alert {
@@ -170,7 +192,7 @@ hr {
 }
 
 .alert p {
-    margin-bottom: 0;
+    // margin-bottom: 0;
 }
 
 .alert:empty {
@@ -180,7 +202,7 @@ hr {
 .invalid-feedback {
     color: #a94442;
     display: block;
-    margin: -1rem 0 2rem;
+    // margin: -1rem 0 2rem;
 }
 
 // Links
