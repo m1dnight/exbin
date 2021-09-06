@@ -1,38 +1,38 @@
-defmodule ExBinWeb.Router do
-  use ExBinWeb, :router
+defmodule ExbinWeb.Router do
+  use ExbinWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {ExBinWeb.LayoutView, :root}
+    plug :put_root_layout, {ExbinWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug ExBinWeb.ApiAuth, exclude: []
+    plug ExbinWeb.ApiAuth, exclude: []
   end
 
   pipeline :custom_files do
-    plug ExBinWeb.Plug.CustomLogo
+    plug ExbinWeb.Plug.CustomLogo
   end
 
-  scope "/files", ExBinWeb do
+  scope "/files", ExbinWeb do
     pipe_through [:custom_files]
     match :*, "/*not_found", Plug.FileNotFound, []
   end
 
 
-  scope "/api", ExBinWeb do
+  scope "/api", ExbinWeb do
     pipe_through :api
 
     post "/new", APIController, :new
     get "/:name", APIController, :show
   end
 
-  scope "/snippet", ExBinWeb do
+  scope "/snippet", ExbinWeb do
     pipe_through :browser
 
     get "/new", SnippetController, :new
@@ -41,7 +41,7 @@ defmodule ExBinWeb.Router do
     get "/statistics", SnippetController, :statistics
   end
 
-  scope "/", ExBinWeb do
+  scope "/", ExbinWeb do
     pipe_through :browser
 
     # Static Pages
@@ -57,7 +57,7 @@ defmodule ExBinWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ExBinWeb do
+  # scope "/api", ExbinWeb do
   #   pipe_through :api
   # end
 
@@ -73,7 +73,7 @@ defmodule ExBinWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: ExBinWeb.Telemetry
+      live_dashboard "/dashboard", metrics: ExbinWeb.Telemetry
     end
   end
 end

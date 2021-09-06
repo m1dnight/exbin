@@ -1,4 +1,4 @@
-defmodule ExBin.Scrubber do
+defmodule Exbin.Scrubber do
   require Logger
 
   def child_spec(_arg) do
@@ -13,6 +13,6 @@ defmodule ExBin.Scrubber do
   defp run() do
     maximum_age = Application.get_env(:exbin, :ephemeral_age)
     Logger.warn("Running scrubber for all snippets older than #{maximum_age} minutes.")
-    ExBin.Snippets.scrub(maximum_age)
+    Exbin.Snippets.scrub(maximum_age)
   end
 end

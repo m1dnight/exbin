@@ -1,4 +1,4 @@
-defmodule ExBinWeb.ErrorHelpers do
+defmodule ExbinWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule ExBinWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(ExBinWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(ExbinWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(ExBinWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(ExbinWeb.Gettext, "errors", msg, opts)
     end
   end
 end

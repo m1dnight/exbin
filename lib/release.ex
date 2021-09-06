@@ -1,4 +1,4 @@
-defmodule ExBin.Release do
+defmodule Exbin.Release do
   @app :exbin
 
   def migrate do

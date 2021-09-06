@@ -1,4 +1,4 @@
-defmodule ExBinWeb.Telemetry do
+defmodule ExbinWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -49,7 +49,7 @@ defmodule ExBinWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ExBinWeb, :count_users, []}
+      # {ExbinWeb, :count_users, []}
     ]
   end
 end

@@ -1,6 +1,6 @@
-defmodule ExBinWeb.APIView do
-  use ExBinWeb, :view
-  alias ExBinWeb.APIView
+defmodule ExbinWeb.APIView do
+  use ExbinWeb, :view
+  alias ExbinWeb.APIView
 
   #############################################################################
   # API Views
@@ -10,7 +10,7 @@ defmodule ExBinWeb.APIView do
   end
 
   def render("snippet.json", %{api: snippet}) do
-    url = ExBinWeb.Router.Helpers.snippet_url(ExBinWeb.Endpoint, :view, snippet.name)
+    url = ExbinWeb.Router.Helpers.snippet_url(ExbinWeb.Endpoint, :view, snippet.name)
     %{content: snippet.content, name: snippet.name, created: snippet.inserted_at, url: url}
   end
 end

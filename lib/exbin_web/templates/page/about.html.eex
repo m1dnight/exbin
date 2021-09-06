@@ -1,11 +1,11 @@
 <div class="static-container">
    <h1>
-      ExBin
+      Exbin
    </h1>
    <p>
-      ExBin is a pastebin clone written in Elixir/Phoenix. You can find the source code <a
+      Exbin is a pastebin clone written in Elixir/Phoenix. You can find the source code <a
       href="https://github.com/m1dnight/exbin" class="link">here on github</a>.
-      The current version is <code><%= ExBin.version() %></code>.
+      The current version is <code><%= Exbin.version() %></code>.
    </p>
 
    <h2>
@@ -28,9 +28,9 @@
       Netcat
    </h2>
    <p>
-      ExBin also support netcatting a textfile. Suppose you are configuring some server and you quickly want to
-      get data out to your other workstation. You can pipe the file to ExBin, and manually type over an
-      easy-to-read URL. For example <code>cat myfile.txt | nc <%= ExBinWeb.Endpoint.host() %> <%= Application.get_env(:exbin, :tcp_port) %></code> will return a URL to
+      Exbin also support netcatting a textfile. Suppose you are configuring some server and you quickly want to
+      get data out to your other workstation. You can pipe the file to Exbin, and manually type over an
+      easy-to-read URL. For example <code>cat myfile.txt | nc <%= ExbinWeb.Endpoint.host() %> <%= Application.get_env(:exbin, :tcp_port) %></code> will return a URL to
       your console which you can type over. All these pastes are private, of course!
    </p>
 </div>

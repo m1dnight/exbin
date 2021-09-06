@@ -1,8 +1,8 @@
-defmodule ExBinWeb.SnippetController do
-  use ExBinWeb, :controller
+defmodule ExbinWeb.SnippetController do
+  use ExbinWeb, :controller
 
   # Only increment viewcounter every 24 hours.
-  plug ExBinWeb.Plug.ViewCounter, [view_interval: 86_400_000] when action in [:view, :readerview, :codeview, :rawview]
+  plug ExbinWeb.Plug.ViewCounter, [view_interval: 86_400_000] when action in [:view, :readerview, :codeview, :rawview]
 
   @spec new(Plug.Conn.t(), any) :: Plug.Conn.t()
   def new(conn, _params) do
@@ -15,7 +15,7 @@ defmodule ExBinWeb.SnippetController do
       |> put_flash(:error, "💩 Empty snippets not allowed.")
       |> redirect(to: "/")
     else
-      {:ok, snippet} = ExBin.Snippets.insert(args)
+      {:ok, snippet} = Exbin.Snippets.insert(args)
       redirect(conn, to: "/#{snippet.name}")
     end
   end
@@ -37,7 +37,7 @@ defmodule ExBinWeb.SnippetController do
   end
 
   def render_snippet(conn, name, view) do
-    case ExBin.Snippets.get_by_name(name) do
+    case Exbin.Snippets.get_by_name(name) do
       {:error, :not_found} ->
         conn
         |> put_flash(:error, "💩 Snippet not found.")
@@ -63,7 +63,7 @@ defmodule ExBinWeb.SnippetController do
   end
 
   def list(conn, _params) do
-    case ExBin.Snippets.list_public_snippets() do
+    case Exbin.Snippets.list_public_snippets() do
       [] ->
         conn
         |> put_flash(:error, "😢 There are no public snippets to show!")
@@ -80,11 +80,11 @@ defmodule ExBinWeb.SnippetController do
 
   def statistics(conn, _params) do
     data = %{
-      monthly: ExBin.Stats.count_per_month(),
-      avg_views: ExBin.Stats.average_viewcount(),
-      avg_length: ExBin.Stats.average_length(),
-      privpub: ExBin.Stats.count_public_private(),
-      most_viewed: ExBin.Stats.most_popular()
+      monthly: Exbin.Stats.count_per_month(),
+      avg_views: Exbin.Stats.average_viewcount(),
+      avg_length: Exbin.Stats.average_length(),
+      privpub: Exbin.Stats.count_public_private(),
+      most_viewed: Exbin.Stats.most_popular()
     }
 
     render(conn, "statistics.html", data: data)

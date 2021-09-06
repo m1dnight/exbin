@@ -1,6 +1,6 @@
-defmodule ExBin do
+defmodule Exbin do
   @moduledoc """
-  ExBin keeps the contexts that define your domain
+  Exbin keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

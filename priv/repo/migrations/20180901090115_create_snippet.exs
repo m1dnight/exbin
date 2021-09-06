@@ -1,4 +1,4 @@
-defmodule ExBin.Repo.Migrations.UpdateSnippet do
+defmodule Exbin.Repo.Migrations.UpdateSnippet do
   use Ecto.Migration
 
   def change do

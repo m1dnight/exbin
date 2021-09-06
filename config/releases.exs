@@ -16,7 +16,7 @@ default_view =
   end
 
 ephemeral_age = String.to_integer(System.get_env("EPHEMERAL_AGE") || "60")
-brand = if System.get_env("BRAND") == nil or System.get_env("BRAND") == "", do: "ExBin", else: System.get_env("BRAND")
+brand = if System.get_env("BRAND") == nil or System.get_env("BRAND") == "", do: "Exbin", else: System.get_env("BRAND")
 
 config :exbin,
   default_view: default_view,
@@ -32,7 +32,7 @@ db_username = System.get_env("DATABASE_USER") || raise "Environment variable DAT
 db_password = System.get_env("DATABASE_PASSWORD") || raise "Environment variable DATABASE_PASSWORD is missing"
 database_url = "ecto://#{db_username}:#{db_password}@#{db_host}/#{db_database}"
 
-config :exbin, ExBin.Repo,
+config :exbin, Exbin.Repo,
   # ssl: true,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
@@ -42,11 +42,11 @@ config :exbin, ExBin.Repo,
 
 secret_key_base = System.get_env("SECRET_KEY_BASE") || raise "environment variable SECRET_KEY_BASE is missing."
 
-config :exbin, ExBinWeb.Endpoint, secret_key_base: secret_key_base
+config :exbin, ExbinWeb.Endpoint, secret_key_base: secret_key_base
 
 signing_salt = System.get_env("SECRET_SALT") || raise "environment variable SECRET_SALT is missing."
 
-config :exbin, ExBinWeb.Endpoint, live_view: [signing_salt: signing_salt]
+config :exbin, ExbinWeb.Endpoint, live_view: [signing_salt: signing_salt]
 #############################################################################
 # TCP Endpoint
 
@@ -84,14 +84,14 @@ config :exbin,
 
 host = System.get_env("HOST") || raise "environment variable HOST is missing."
 
-config :exbin, ExBinWeb.Endpoint,
+config :exbin, ExbinWeb.Endpoint,
   url: [host: host, port: String.to_integer(System.get_env("HTTP_PORT") || "1234")],
   http: [
     port: String.to_integer(System.get_env("HTTP_PORT") || "1234"),
     transport_options: [socket_opts: [:inet6]]
   ]
 
-config :exbin, ExBinWeb.Endpoint, server: true
+config :exbin, ExbinWeb.Endpoint, server: true
 
 #############################################################################
 # API Security

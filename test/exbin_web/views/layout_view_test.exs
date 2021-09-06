@@ -1,5 +1,5 @@
-defmodule ExBinWeb.LayoutViewTest do
-  use ExBinWeb.ConnCase, async: true
+defmodule ExbinWeb.LayoutViewTest do
+  use ExbinWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and
   # use functions such as safe_to_string() to convert the helper

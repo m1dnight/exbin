@@ -1,16 +1,16 @@
-defmodule ExBinWeb.FallbackController do
+defmodule ExbinWeb.FallbackController do
   @moduledoc """
   Translates controller action results into valid `Plug.Conn` responses.
 
   See `Phoenix.Controller.action_fallback/1` for more details.
   """
-  use ExBinWeb, :controller
+  use ExbinWeb, :controller
 
   # This clause handles errors returned by Ecto's insert/update/delete.
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> put_view(ExBinWeb.ChangesetView)
+    |> put_view(ExbinWeb.ChangesetView)
     |> render("error.json", changeset: changeset)
   end
 
@@ -20,7 +20,7 @@ defmodule ExBinWeb.FallbackController do
 
     conn
     |> put_status(:not_found)
-    |> put_view(ExBinWeb.ErrorView)
+    |> put_view(ExbinWeb.ErrorView)
     |> render(:"404")
   end
 
@@ -28,7 +28,7 @@ defmodule ExBinWeb.FallbackController do
   def call(conn, {:error, _e}) do
     conn
     |> put_status(:not_found)
-    |> put_view(ExBinWeb.ErrorView)
+    |> put_view(ExbinWeb.ErrorView)
     |> render(:"400")
   end
 end

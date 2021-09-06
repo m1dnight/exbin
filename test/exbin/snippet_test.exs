@@ -1,7 +1,7 @@
-defmodule ExBin.SnippetTest do
-  use ExBin.DataCase, async: true
-  alias ExBin.{Repo, Snippet}
-  import ExBin.Factory
+defmodule Exbin.SnippetTest do
+  use Exbin.DataCase, async: true
+  alias Exbin.{Repo, Snippet}
+  import Exbin.Factory
 
   test "errors if name is empty" do
     changeset = Snippet.changeset(build(:snippet, %{name: ""}))

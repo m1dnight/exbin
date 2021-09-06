@@ -1,3 +1,3 @@
-defmodule ExBinWeb.PageView do
-  use ExBinWeb, :view
+defmodule ExbinWeb.PageView do
+  use ExbinWeb, :view
 end

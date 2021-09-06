@@ -1,5 +1,5 @@
-defmodule ExBin.Stats do
-  alias ExBin.{Snippet, Repo, Clock}
+defmodule Exbin.Stats do
+  alias Exbin.{Snippet, Repo, Clock}
   import Ecto.Query
 
   @doc """
@@ -109,7 +109,7 @@ defmodule ExBin.Stats do
   # zones, but in Postgres they're actually "datetime without zone"
   # (https://github.com/elixir-ecto/ecto/issues/1868#issuecomment-268169955)
   # Because of this when we do manipulations on the Postgres side we actually
-  # need to first cast the timestamp into ETC/UTC and THEN move it to the 
+  # need to first cast the timestamp into ETC/UTC and THEN move it to the
   # application TZ. (AT TIME ZONE stamps the TZ onto the timestamp *at the
   # same wall clock time*, rather than convert it to that TZ for "timestamp
   # without time zone" fields.
@@ -140,7 +140,7 @@ defmodule ExBin.Stats do
   end
 
   # Generates a a bucket list for 12 months prior to the current time.
-  # Resulting Map will be keyed with NaiveDateTimes truncated to the 
+  # Resulting Map will be keyed with NaiveDateTimes truncated to the
   # second, indicating the beginning of the month, with a zeroed'
   # {public_count, private_count} tuple as the initial value.
   @spec empty_month_bucket_map() :: Map.t()
@@ -152,7 +152,7 @@ defmodule ExBin.Stats do
                           |> NaiveDateTime.truncate(:second)
 
     0..12
-    |> Enum.flat_map(fn offset -> 
+    |> Enum.flat_map(fn offset ->
       month = Timex.shift(current_month_start, months: -1*offset)
       [{month, {0,0}}]
     end)

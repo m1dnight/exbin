@@ -1,10 +1,10 @@
-defmodule ExBinWeb.APIController do
-  use ExBinWeb, :controller
+defmodule ExbinWeb.APIController do
+  use ExbinWeb, :controller
 
-  action_fallback ExBinWeb.FallbackController
+  action_fallback ExbinWeb.FallbackController
 
   def show(conn, %{"name" => name}) do
-    with {:ok, snippet} <- ExBin.Snippets.get_by_name(name) do
+    with {:ok, snippet} <- Exbin.Snippets.get_by_name(name) do
       render(conn, "show.json", snippet: snippet)
     end
   end
@@ -14,7 +14,7 @@ defmodule ExBinWeb.APIController do
     if args["content"] == "" or String.trim(args["content"]) == "" do
       {:error, :invalid_content}
     else
-      {:ok, snippet} = ExBin.Snippets.insert(args)
+      {:ok, snippet} = Exbin.Snippets.insert(args)
       render(conn, "show.json", snippet: snippet)
     end
   end

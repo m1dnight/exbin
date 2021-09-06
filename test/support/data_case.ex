@@ -1,4 +1,4 @@
-defmodule ExBin.DataCase do
+defmodule Exbin.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule ExBin.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use ExBin.DataCase, async: true`, although
+  by setting `use Exbin.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -18,20 +18,20 @@ defmodule ExBin.DataCase do
 
   using do
     quote do
-      alias ExBin.Repo
+      alias Exbin.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import ExBin.DataCase
+      import Exbin.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExBin.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Exbin.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ExBin.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Exbin.Repo, {:shared, self()})
     end
 
     :ok

@@ -1,4 +1,4 @@
-defmodule ExBinWeb.Plug.FileNotFound do
+defmodule ExbinWeb.Plug.FileNotFound do
   import Plug.Conn
 
   def init(opts), do: opts

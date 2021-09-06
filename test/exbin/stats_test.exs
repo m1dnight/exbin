@@ -1,7 +1,7 @@
-defmodule ExBin.StatsTest do
-  use ExBin.DataCase, async: true
-  alias ExBin.{Repo, Snippet, Stats, Clock}
-  import ExBin.Factory
+defmodule Exbin.StatsTest do
+  use Exbin.DataCase, async: true
+  alias Exbin.{Repo, Snippet, Stats, Clock}
+  import Exbin.Factory
 
   @test_zone "Europe/Brussels" # Tests are running in UTC+2 timezone
   @utc_zone "Etc/UTC"
@@ -194,7 +194,7 @@ defmodule ExBin.StatsTest do
       # This snippet should be in the month bucket of their naive insert date, since it's 2 hours later in "our" timezone
       insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2021-07-01 00:01:00.000000], @utc_zone)})
       insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2021-08-01 00:01:00.000000], @utc_zone)})
-      
+
       Clock.freeze(~U[2021-08-15 12:00:00.000000Z])
       assert Stats.count_per_month == [
           {~N[2020-09-01 00:00:00], {0,0}},
@@ -240,7 +240,7 @@ defmodule ExBin.StatsTest do
       insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2020-09-01 00:01:00.000000], @test_zone) |> DateTime.shift_zone!(@utc_zone)})
       insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2021-07-01 00:01:00.000000], @test_zone) |> DateTime.shift_zone!(@utc_zone)})
       insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2021-08-01 00:01:00.000000], @test_zone) |> DateTime.shift_zone!(@utc_zone)})
-      
+
       Clock.freeze(~U[2021-08-15 12:00:00.000000Z])
       assert Stats.count_per_month == [
           {~N[2020-09-01 00:00:00], {1,0}},

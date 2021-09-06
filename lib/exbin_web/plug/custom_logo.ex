@@ -1,4 +1,4 @@
-defmodule ExBinWeb.Plug.CustomLogo do
+defmodule ExbinWeb.Plug.CustomLogo do
   @moduledoc """
   Allows defining a path via Application configuration that will be served from
   the filesystem.

@@ -2,7 +2,7 @@
   <!-- Search Row  -->
 <div>
   <form id="unique" phx-change="suggest" phx-submit="search" class="search-row" phx-hook="StatusHooks">
-    
+
         <div class='input-column'>
           <input type="text" name="q" value="<%= @query %>" placeholder="Live Search" list="results" autocomplete="off" class="searchbox"/>
         </div>
@@ -31,11 +31,11 @@
       <span class="iconify" data-icon="mdi-timer-sand"></span>
       <% end %>
       <div class="created">
-        <%= ExBinWeb.SnippetView.format_age(snippet.inserted_at) %>
+        <%= ExbinWeb.SnippetView.format_age(snippet.inserted_at) %>
       </div>
     </div>
     <div class="snippet-preview-content">
-      <code><pre><%= snippet.content |> ExBinWeb.SnippetView.summary()  %></pre></code>
+      <code><pre><%= snippet.content |> ExbinWeb.SnippetView.summary()  %></pre></code>
     </div>
   </div>
   </a>

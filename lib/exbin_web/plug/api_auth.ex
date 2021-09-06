@@ -1,4 +1,4 @@
-defmodule ExBinWeb.ApiAuth do
+defmodule ExbinWeb.ApiAuth do
   import Plug.Conn
 
   def init(opts) do

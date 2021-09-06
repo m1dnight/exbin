@@ -1,7 +1,7 @@
-defmodule ExBin.Snippets do
+defmodule Exbin.Snippets do
   require Logger
   import Ecto.Query
-  alias ExBin.{Snippet, Repo}
+  alias Exbin.{Snippet, Repo}
 
   #############################################################################
   # Search

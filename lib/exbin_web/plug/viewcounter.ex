@@ -1,4 +1,4 @@
-defmodule ExBinWeb.Plug.ViewCounter do
+defmodule ExbinWeb.Plug.ViewCounter do
   require Logger
 
   def init(opts) do
@@ -25,12 +25,12 @@ defmodule ExBinWeb.Plug.ViewCounter do
   end
 
   defp update_viewcount(name) do
-    case ExBin.Snippets.get_by_name(name) do
+    case Exbin.Snippets.get_by_name(name) do
       {:error, :not_found} ->
         {:error, "snippet not found"}
 
       {:ok, snippet} ->
-        ExBin.Snippets.update_viewcount(snippet)
+        Exbin.Snippets.update_viewcount(snippet)
     end
   end
 

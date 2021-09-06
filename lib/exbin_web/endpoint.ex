@@ -1,4 +1,4 @@
-defmodule ExBinWeb.Endpoint do
+defmodule ExbinWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :exbin
 
   # The session will be stored in the cookie and signed,
@@ -10,7 +10,7 @@ defmodule ExBinWeb.Endpoint do
     signing_salt: "/tULamPJ"
   ]
 
-  socket "/socket", ExBinWeb.UserSocket,
+  socket "/socket", ExbinWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -50,5 +50,5 @@ defmodule ExBinWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ExBinWeb.Router
+  plug ExbinWeb.Router
 end
