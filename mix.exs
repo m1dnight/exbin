@@ -49,7 +49,8 @@ defmodule ExBin.MixProject do
       {:timex, "~> 3.7"},
       {:parent, "~> 0.12.0"},
       {:ex_rated, "~> 2.0"},
-      {:phoenix_live_view, "~> 0.15.7"}
+      {:phoenix_live_view, "~> 0.15.7"},
+      {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false}
     ]
   end
 
