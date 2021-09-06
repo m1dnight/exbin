@@ -20,11 +20,12 @@
             info = get_flash(@conn, :info)
             error = get_flash(@conn, :error)
           %>
+          <%#= Removed the icons because I suck at css. Should fix them if time permits. %>
           <%= if info do %>
             <div class="alert alert-info" role="alert">
               <span class="icon_container">
-                <span class="iconify" data-icon="clarity:alert-solid" data-width="10" data-height="10" style="color:#0033CC;"></span>
-              </span>
+                <%# <span class="iconify" data-icon="clarity:alert-solid" data-width="10" data-height="10" style="color:#0033CC;"></span>
+              </span> %>
               <span class="message">
                 <%= info %>
               </span>
@@ -33,8 +34,8 @@
           <%= if error do %>
             <div class="alert alert-danger" role="alert">
               <span class="icon_container">
-                <span class="iconify" data-icon="akar-icons:triangle-alert-fill" data-width="10" data-height="10" style="color:#800000;"></span>
-              </span>
+                <%# <span class="iconify" data-icon="akar-icons:triangle-alert-fill" data-width="10" data-height="10" style="color:#800000;"></span>
+              </span> %>
               <span class="message">
                 <%= error %>
               </span>
@@ -213,17 +214,27 @@
             </div>
 
             <%= if @current_user do %>
-            <div class="menu-entry">
+            <div class="menu-entry branding">
               <span class="icon">
                 <span class="iconify" data-icon="mdi-person"></span>
               </span>
-              <span class="title">
+              <h5 class="trim">
                   <%= @current_user.email %>
-              </span>
+              </h5>
             </div>
+
             <div class="menu-entry">
               <span class="icon">
-                <span class="iconify" data-icon="mdi-lock "></span>
+                <span class="iconify" data-icon="mdi-eye"></span>
+              </span>
+              <span class="title">
+                ThisIsSuperLong@googlemail.com
+              </span>
+            </div>
+
+            <div class="menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-lock"></span>
               </span>
               <span class="title">
                   <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
