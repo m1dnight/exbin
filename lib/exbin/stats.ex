@@ -79,6 +79,8 @@ defmodule ExBin.Stats do
   Note that this returns the current month (a partial month), and the 11 months
   prior, so it's not quite a full year of data.
   Technically it's actually: 11 months + (between 1 day and 1 month)
+
+  Returns a {public_count, private_count} tuple for each month.
   """
   def count_per_month() do
     buckets = empty_month_bucket_map()
@@ -101,7 +103,7 @@ defmodule ExBin.Stats do
   end
 
   # We use this to solve https://github.com/elixir-ecto/ecto/issues/3159
-  # (Ecto explodes because it oesn't understand that two fragments with the
+  # (Ecto explodes because it doesn't understand that two fragments with the
   # same arguments are actually the same fragment, so it incorrectly demands
   # that you group_by a field which you're actually grouping by already.)
   #
@@ -123,6 +125,7 @@ defmodule ExBin.Stats do
   # (So 2 results per month, assuming each month has both public and private snippets)
   defp count_per_month_query() do
     app_tz = Application.get_env(:exbin, :timezone)
+    now = Clock.utc_now()
 
     from(s in Snippet)
     |> select(
@@ -133,7 +136,7 @@ defmodule ExBin.Stats do
         private: fragment("private")
       }
     )
-    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= NOW() AT TIME ZONE ? - interval '1 year'", s.inserted_at, ^app_tz, ^app_tz))
+    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= (? AT TIME ZONE ? - interval '1 year')", s.inserted_at, ^app_tz, ^now, ^app_tz))
     |> group_by([s], fragment("month_bucket"))
     |> group_by([s], s.private)
     |> order_by([s], fragment("month_bucket"))

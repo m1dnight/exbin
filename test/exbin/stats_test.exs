@@ -125,19 +125,18 @@ defmodule ExBin.StatsTest do
     end
 
     test "does not return results for snippets created before the begining of the 11th ago month" do
-      # If it is 2021-08-15, we we should be getting results from 2020-09-01 and forward.
       # Results before 2020-09-01 should not be included in any bucket, even if they are within a year of "now"
-      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2018-06-16 12:00:00.000000], @utc_zone)})
-      insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2018-07-16 12:00:00.000000], @utc_zone)})
-      insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2019-08-31 12:00:00.000000], @utc_zone)})
-      insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2019-09-01 23:00:00.000000], @utc_zone)})
-      # This one should be in our result, because it's in 2020-09 in "our" time zone.
-      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2020-08-31 23:55:00.000000], @utc_zone)})
-      insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2020-09-05 12:00:00.000000], @utc_zone)})
+      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2001-08-16 12:00:00.000000], @utc_zone)})
+      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2019-08-16 12:00:00.000000], @utc_zone)})
+      # This one should be 1 minute before it's 2020-09-01 in @test_zone, and so should still not be in the result set.
+      insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2020-08-31 21:59:00.000000], @utc_zone)})
+      # The very last minute pre-reporting-period in the testing TZ, and so should not be in result set.
+      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2020-08-31 23:59:00.000000], @test_zone) |> DateTime.shift_zone!(@utc_zone)})
 
+      # If it is 2021-08-15, we we should be getting results from 2020-09-01 and forward.
       Clock.freeze(~U[2021-08-15 12:00:00.000000Z])
       assert Stats.count_per_month == [
-          {~N[2020-09-01 00:00:00], {1,1}},
+          {~N[2020-09-01 00:00:00], {0,0}},
           {~N[2020-10-01 00:00:00], {0,0}},
           {~N[2020-11-01 00:00:00], {0,0}},
           {~N[2020-12-01 00:00:00], {0,0}},
