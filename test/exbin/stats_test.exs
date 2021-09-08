@@ -151,6 +151,29 @@ defmodule ExBin.StatsTest do
         ]
     end
 
+    # This should never occur, except potentially in cases of database corruption or perhaps changing the application TZ?
+    test "does not return any results for snippets that are created in the future" do
+      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[3021-01-01 00:00:00.000000], @utc_zone)})
+      insert!(:snippet, %{private: true, inserted_at: Timex.to_datetime(~N[2021-09-01 00:00:00.000000], @utc_zone)})
+      insert!(:snippet, %{private: false, inserted_at: Timex.to_datetime(~N[2021-08-15 12:01:00.000000], @utc_zone)})
+
+      Clock.freeze(~U[2021-08-15 12:00:00.000000Z])
+      assert Stats.count_per_month == [
+          {~N[2020-09-01 00:00:00], {0,0}},
+          {~N[2020-10-01 00:00:00], {0,0}},
+          {~N[2020-11-01 00:00:00], {0,0}},
+          {~N[2020-12-01 00:00:00], {0,0}},
+          {~N[2021-01-01 00:00:00], {0,0}},
+          {~N[2021-02-01 00:00:00], {0,0}},
+          {~N[2021-03-01 00:00:00], {0,0}},
+          {~N[2021-04-01 00:00:00], {0,0}},
+          {~N[2021-05-01 00:00:00], {0,0}},
+          {~N[2021-06-01 00:00:00], {0,0}},
+          {~N[2021-07-01 00:00:00], {0,0}},
+          {~N[2021-08-01 00:00:00], {0,0}}
+        ]
+    end
+
     # Note, this was the test that exposed the errors. Every other test worked, but this one was just missing results.
     # That is why this one has a bunch of extra data being checked. If they helped diagnose the problem the first time,
     # they'll help guard against it in the future.

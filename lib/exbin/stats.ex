@@ -76,26 +76,25 @@ defmodule ExBin.Stats do
   @doc """
   Groups snippets created per month and returns the totals per month for a year.
 
-  Note that this returns the current month (a partial month), and the 11 months
-  prior, so it's not quite a full year of data.
+  Note that this returns the current month (a partial month) up until the
+  current time, and the 11 months prior, so it's not quite a full year of data.
   Technically it's actually: 11 months + (between 1 day and 1 month)
+  Any dates that are in the future are filtered out. (Although this should only
+  happen in cases of database corruption, bad inserts, or changing the app TZ)
 
-  Returns a {public_count, private_count} tuple for each month.
+  Returns a map keyed with the beginning of the month, truncated to the second,
+  as a NaiveDateTime, with a {public_count, private_count} tuple for each month.
   """
   def count_per_month() do
     buckets = empty_month_bucket_map()
-
-    # Insert the counts from the database into the buckets, sort it, and return that.
-    Repo.all(count_per_month_query())
-    |> Enum.reduce(buckets, fn r, buckets ->
-      target_month_start = r.month
-                           |> NaiveDateTime.truncate(:second)
-      {publ, priv} = Map.get(buckets, target_month_start)
-
-      priv = if r.private, do: r.count, else: priv
-      publ = if r.private, do: publ, else: r.count
-
-      Map.put(buckets, target_month_start, {publ, priv})
+    count_per_month_query()
+    |> Repo.all
+    |> Enum.reduce(buckets, fn result, acc ->
+      target_month_start = NaiveDateTime.truncate(result.month, :second)
+      {publ, priv} = Map.get(acc, target_month_start)
+      priv = if result.private, do: result.count, else: priv
+      publ = if result.private, do: publ, else: result.count
+      Map.put(acc, target_month_start, {publ, priv})
     end)
     |> Enum.into([])                                  # Turn the map into a list now that we no longer need to look up items
     |> Enum.sort_by(&elem(&1, 0), &Timex.before?/2)   # And sort the list so the months are in order and the most recent one is last
@@ -137,6 +136,7 @@ defmodule ExBin.Stats do
       }
     )
     |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= (? AT TIME ZONE ? - interval '1 year')", s.inserted_at, ^app_tz, ^now, ^app_tz))
+    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? <= (? AT TIME ZONE ?)", s.inserted_at, ^app_tz, ^now, ^app_tz))
     |> group_by([s], fragment("month_bucket"))
     |> group_by([s], s.private)
     |> order_by([s], fragment("month_bucket"))
