@@ -76,24 +76,25 @@ defmodule ExBin.Stats do
   @doc """
   Groups snippets created per month and returns the totals per month for a year.
 
-  Note that this returns the current month (a partial month), and the 11 months
-  prior, so it's not quite a full year of data.
+  Note that this returns the current month (a partial month) up until the
+  current time, and the 11 months prior, so it's not quite a full year of data.
   Technically it's actually: 11 months + (between 1 day and 1 month)
+  Any dates that are in the future are filtered out. (Although this should only
+  happen in cases of database corruption, bad inserts, or changing the app TZ)
+
+  Returns a map keyed with the beginning of the month, truncated to the second,
+  as a NaiveDateTime, with a {public_count, private_count} tuple for each month.
   """
   def count_per_month() do
     buckets = empty_month_bucket_map()
-
-    # Insert the counts from the database into the buckets, sort it, and return that.
-    Repo.all(count_per_month_query())
-    |> Enum.reduce(buckets, fn r, buckets ->
-      target_month_start = r.month
-                           |> NaiveDateTime.truncate(:second)
-      {publ, priv} = Map.get(buckets, target_month_start)
-
-      priv = if r.private, do: r.count, else: priv
-      publ = if r.private, do: publ, else: r.count
-
-      Map.put(buckets, target_month_start, {publ, priv})
+    count_per_month_query()
+    |> Repo.all
+    |> Enum.reduce(buckets, fn result, acc ->
+      target_month_start = NaiveDateTime.truncate(result.month, :second)
+      {publ, priv} = Map.get(acc, target_month_start)
+      priv = if result.private, do: result.count, else: priv
+      publ = if result.private, do: publ, else: result.count
+      Map.put(acc, target_month_start, {publ, priv})
     end)
     |> Enum.into([])                                  # Turn the map into a list now that we no longer need to look up items
     |> Enum.sort_by(&elem(&1, 0), &Timex.before?/2)   # And sort the list so the months are in order and the most recent one is last
@@ -101,7 +102,7 @@ defmodule ExBin.Stats do
   end
 
   # We use this to solve https://github.com/elixir-ecto/ecto/issues/3159
-  # (Ecto explodes because it oesn't understand that two fragments with the
+  # (Ecto explodes because it doesn't understand that two fragments with the
   # same arguments are actually the same fragment, so it incorrectly demands
   # that you group_by a field which you're actually grouping by already.)
   #
@@ -109,7 +110,7 @@ defmodule ExBin.Stats do
   # zones, but in Postgres they're actually "datetime without zone"
   # (https://github.com/elixir-ecto/ecto/issues/1868#issuecomment-268169955)
   # Because of this when we do manipulations on the Postgres side we actually
-  # need to first cast the timestamp into ETC/UTC and THEN move it to the 
+  # need to first cast the timestamp into ETC/UTC and THEN move it to the
   # application TZ. (AT TIME ZONE stamps the TZ onto the timestamp *at the
   # same wall clock time*, rather than convert it to that TZ for "timestamp
   # without time zone" fields.
@@ -123,6 +124,7 @@ defmodule ExBin.Stats do
   # (So 2 results per month, assuming each month has both public and private snippets)
   defp count_per_month_query() do
     app_tz = Application.get_env(:exbin, :timezone)
+    now = Clock.utc_now()
 
     from(s in Snippet)
     |> select(
@@ -133,14 +135,15 @@ defmodule ExBin.Stats do
         private: fragment("private")
       }
     )
-    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= NOW() AT TIME ZONE ? - interval '1 year'", s.inserted_at, ^app_tz, ^app_tz))
+    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= (? AT TIME ZONE ? - interval '1 year')", s.inserted_at, ^app_tz, ^now, ^app_tz))
+    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? <= (? AT TIME ZONE ?)", s.inserted_at, ^app_tz, ^now, ^app_tz))
     |> group_by([s], fragment("month_bucket"))
     |> group_by([s], s.private)
     |> order_by([s], fragment("month_bucket"))
   end
 
   # Generates a a bucket list for 12 months prior to the current time.
-  # Resulting Map will be keyed with NaiveDateTimes truncated to the 
+  # Resulting Map will be keyed with NaiveDateTimes truncated to the
   # second, indicating the beginning of the month, with a zeroed'
   # {public_count, private_count} tuple as the initial value.
   @spec empty_month_bucket_map() :: Map.t()
@@ -152,7 +155,7 @@ defmodule ExBin.Stats do
                           |> NaiveDateTime.truncate(:second)
 
     0..12
-    |> Enum.flat_map(fn offset -> 
+    |> Enum.flat_map(fn offset ->
       month = Timex.shift(current_month_start, months: -1*offset)
       [{month, {0,0}}]
     end)
