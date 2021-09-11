@@ -36,6 +36,8 @@ defmodule Exbin.Snippets do
 
       # Insert.
       changeset = Snippet.changeset(%Snippet{}, args)
+      IO.inspect args, label: "args"
+      IO.inspect changeset, label: "changeset"
       Repo.insert!(changeset)
     end)
   end

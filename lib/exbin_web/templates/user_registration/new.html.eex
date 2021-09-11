@@ -19,9 +19,9 @@
         <%= error_tag f, :password %>
       </div>
 
-        <div class="form-field">
-          <%= submit "Register", class: "login-input", value: "Log In" %>
-        </div>
+      <div class="form-field">
+        <%= submit "Register", class: "login-input", value: "Log In" %>
+      </div>
     <% end %>
 
     <p id="links">
