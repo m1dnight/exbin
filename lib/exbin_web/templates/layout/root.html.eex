@@ -222,8 +222,7 @@
                 <span class="iconify" data-icon="mdi-person"></span>
               </span>
               <p class="title">
-                  <%#= @current_user.email %>
-                  supersupersuperlong@supersuperlong.com
+                  <%= @current_user.email %>
               </p>
             </div>
 

@@ -10,23 +10,23 @@
       <% end %>
 
       <div class="form-field">
-        <%= email_input f, :email, required: true , class: "login-input", id: "login-username"%>
+        <%= email_input f, :email, required: true , class: "login-input", id: "login-username", placeholder: "Username" %>
         <%= error_tag f, :email %>
       </div>
 
       <div class="form-field">
-        <%= password_input f, :password, required: true , class: "login-input", id: "login-password"%>
+        <%= password_input f, :password, required: true , class: "login-input", id: "login-password",  placeholder: "Password" %>
         <%= error_tag f, :password %>
       </div>
 
-      <div>
-        <%= submit "Register" %>
-      </div>
+        <div class="form-field">
+          <%= submit "Register", class: "login-input", value: "Log In" %>
+        </div>
     <% end %>
 
-<p>
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+    <p id="links">
+      <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
+      <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
+    </p>
   </div>
 </div>
