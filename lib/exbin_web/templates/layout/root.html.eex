@@ -72,6 +72,20 @@
             </div>
             </a>
 
+            <%= if @current_user do %>
+            <!-- Menu Entry Latest -->
+            <a href="<%= Routes.snippet_path(@conn, :personal_list) %>">
+            <div class="menu-entry-bottom menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-format-list-bulleted"></span>
+              </span>
+              <span class="title">
+                My Snippets
+              </span>
+            </div>
+            </a>
+            <% end %>
+
             <!-- Menu Entry About -->
             <a href="<%= Routes.page_path(@conn, :about) %>">
             <div class="menu-entry-bottom menu-entry">

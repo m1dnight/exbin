@@ -30,7 +30,7 @@ defmodule ExbinWeb.SnippetController do
   end
 
   def view(conn, %{"name" => name}) do
-    render_snippet(conn, name, Application.get_env(:ex_bin, :default_view))
+    render_snippet(conn, name, Application.get_env(:exbin, :default_view))
   end
 
   def codeview(conn, %{"name" => name}) do
@@ -53,6 +53,7 @@ defmodule ExbinWeb.SnippetController do
         |> redirect(to: "/")
 
       {:ok, snippet} ->
+        IO.puts view
         case view do
           :code ->
             render(conn, "code.html", snippet: snippet)
@@ -80,6 +81,20 @@ defmodule ExbinWeb.SnippetController do
 
       snippets ->
         render(conn, "list.html", snippets: snippets)
+    end
+  end
+
+  def personal_list(conn, _params) do
+    user = conn.assigns.current_user
+
+    case Exbin.Snippets.list_user_snippets(user.id) do
+      [] ->
+        conn
+        |> put_flash(:error, "😢 You have no snippets!")
+        |> render("list.html", snippets: [])
+
+      user_snippets ->
+        render(conn, "list.html", snippets: user_snippets)
     end
   end
 

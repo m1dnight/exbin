@@ -36,8 +36,8 @@ defmodule Exbin.Snippets do
 
       # Insert.
       changeset = Snippet.changeset(%Snippet{}, args)
-      IO.inspect args, label: "args"
-      IO.inspect changeset, label: "changeset"
+      IO.inspect(args, label: "args")
+      IO.inspect(changeset, label: "changeset")
       Repo.insert!(changeset)
     end)
   end
@@ -141,6 +141,17 @@ defmodule Exbin.Snippets do
       snippet ->
         {:ok, snippet}
     end
+  end
+
+  def list_user_snippets(user_id, opts \\ []) do
+    limit = Keyword.get(opts, :limit, nil)
+
+    q =
+      from(s in Snippet, order_by: [desc: s.inserted_at])
+      |> where([s], s.user_id == ^user_id)
+      |> limit(^limit)
+
+    Repo.all(q)
   end
 
   @doc """
