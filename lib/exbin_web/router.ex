@@ -22,11 +22,18 @@ defmodule ExbinWeb.Router do
     plug ExbinWeb.Plug.CustomLogo
   end
 
+  if Mix.env() == :dev do
+    scope "/dev" do
+      pipe_through :browser
+
+      forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+  end
+
   scope "/files", ExbinWeb do
     pipe_through [:custom_files]
     match :*, "/*not_found", Plug.FileNotFound, []
   end
-
 
   scope "/api", ExbinWeb do
     pipe_through :api

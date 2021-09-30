@@ -10,7 +10,6 @@ use Mix.Config
 config :exbin,
   ecto_repos: [Exbin.Repo]
 
-
 # Configures the endpoint
 config :exbin, ExbinWeb.Endpoint,
   url: [host: "localhost"],
@@ -45,6 +44,10 @@ config :ex_rated,
   timeout: 86_400_000,
   cleanup_rate: 10_000,
   persistent: false
+
+config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.Local
+
+config :swoosh, :api_client, false
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

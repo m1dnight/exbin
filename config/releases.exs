@@ -107,3 +107,17 @@ config :exbin,
 config :exbin,
   custom_logo_path: System.get_env("CUSTOM_LOGO_PATH"),
   custom_logo_size: System.get_env("CUSTOM_LOGO_SIZE") || "30"
+
+  #############################################################################
+  # Emails
+
+config :exbin, ExBin.Mailer,
+  adapter: Swoosh.Adapters.SMTP,
+  relay: System.get_env("SMTP_RELAY"),
+  username: System.get_env("SMTP_USER"),
+  password: System.get_env("SMTP_PASSWORD"),
+  ssl: true,
+  auth: :always,
+  auth: :always,
+  port: System.get_env("SMTP_PORT"),
+  retries: 2

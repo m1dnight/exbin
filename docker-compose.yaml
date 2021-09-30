@@ -27,6 +27,10 @@ services:
       - HOST=${HOST}
       - API_KEY=${API_KEY}
       - BRAND=${BRAND}
+      - SMTP_RELAY=${SMTP_RELAY}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_PORT=${SMTP_PORT}
     ports:
       - ${HTTP_PORT}:${HTTP_PORT}
       - ${TCP_PORT}:${TCP_PORT}

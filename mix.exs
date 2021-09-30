@@ -9,7 +9,8 @@ defmodule Exbin.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
+      aliase
+      Swoosh.Emails: aliases(),
       deps: deps()
     ]
   end
@@ -20,7 +21,7 @@ defmodule Exbin.MixProject do
   def application do
     [
       mod: {Exbin.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ex_rated]
+      extra_applications: [:logger, :runtime_tools, :ex_rated, :swoosh, :gen_smtp]
     ]
   end
 
@@ -51,7 +52,9 @@ defmodule Exbin.MixProject do
       {:parent, "~> 0.12.0"},
       {:ex_rated, "~> 2.0"},
       {:phoenix_live_view, "~> 0.15.7"},
-      {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false}
+      {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false},
+      {:swoosh, "~> 1.5"},
+      {:gen_smtp, "~> 1.0"}
     ]
   end
 

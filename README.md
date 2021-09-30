@@ -44,6 +44,10 @@ The easiest way to run your own instance of Exbin is by running it in a Docker c
 | `BRAND`             | Name of the Exbin instance. Shown in bottom right corner when creating a snippet.          | `Exbin`             |
 | `CUSTOM_LOGO_PATH`  | The full path on the host machine to your custom logo. E.g. "/srv/exbin/my_logo.png"       | Optional            |
 | `CUSTOM_LOGO_SIZE`  | The pixel dimensions of your logo, which is assumed to be square. Ignored if no logo set.  | `30`                |
+| `SMTP_RELAY`        | SMTP relay for the mailer.                                                                 | Required            |
+| `SMTP_USER`         | SMTP username for the mailer.                                                              | Required            |
+| `SMTP_PASSWORD`     | SMTP password for the mailer.                                                              | Required            |
+| `SMTP_PORT`         | SMTP port for the mailer.                                                                  | Required            |
 
 
 Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.

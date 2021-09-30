@@ -5,17 +5,33 @@ defmodule Exbin.Accounts.UserNotifier do
   #   * Swoosh - https://hexdocs.pm/swoosh
   #   * Bamboo - https://hexdocs.pm/bamboo
   #
-  defp deliver(to, body) do
-    require Logger
-    Logger.debug(body)
-    {:ok, %{to: to, body: body}}
+  # defp deliver(to, body) do
+  #   require Logger
+  #   Logger.debug(body)
+  #   {:ok, %{to: to, body: body}}
+  # end
+  require Logger
+  import Swoosh.Email
+
+  defp deliver(recipient, subject, body) do
+    email =
+      new()
+      |> to(recipient)
+      |> from({"ExBin Mailer", "admin@call-cc.be"})
+      |> subject(subject)
+      |> text_body(body)
+
+    with {:ok, _metadata} <- Mailer.deliver(email) do
+      Logger.debug(email)
+      {:ok, email}
+    end
   end
 
   @doc """
   Deliver instructions to confirm account.
   """
   def deliver_confirmation_instructions(user, url) do
-    deliver(user.email, """
+    deliver(user.email, "ExBin Account Confirmation", """
 
     ==============================
 
@@ -35,7 +51,7 @@ defmodule Exbin.Accounts.UserNotifier do
   Deliver instructions to reset a user password.
   """
   def deliver_reset_password_instructions(user, url) do
-    deliver(user.email, """
+    deliver(user.email, "Reset Password ExBin", """
 
     ==============================
 
@@ -55,7 +71,7 @@ defmodule Exbin.Accounts.UserNotifier do
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, """
+    deliver(user.email, "Update Email Exbin",  """
 
     ==============================
 
