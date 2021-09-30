@@ -1,4 +1,4 @@
-defmodule ExBin.Clock do
+defmodule Exbin.Clock do
   @moduledoc """
   A wrapper around DateTime.utc_now that allows us to freeze time for testing purposes.
   Should be used in place of DateTime.utc_now/0 or Timex.now/0
@@ -30,7 +30,7 @@ defmodule ExBin.Clock do
 
     defmacro time_travel(to, do: block) do
       quote do
-        alias ExBin.Clock                                                         # Make it so blocks passed in can reference Clock easily.
+        alias Exbin.Clock                                                         # Make it so blocks passed in can reference Clock easily.
         previous = if Process.get(:mock_utc_now), do: Clock.utc_now, else: nil    # save the current time if it's been frozen
         Clock.freeze(unquote(to))                                                 # freeze the clock at the new time
         result = unquote(block)                                                   # run the test block

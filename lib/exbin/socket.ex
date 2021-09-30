@@ -1,4 +1,4 @@
-defmodule ExBin.Netcat do
+defmodule Exbin.Netcat do
   use GenServer
   require Logger
 
@@ -63,7 +63,7 @@ defmodule ExBin.Netcat do
 
       data ->
         Logger.debug("Received #{byte_size(data)} bytes.")
-        {:ok, snippet} = ExBin.Snippets.insert(%{"content" => data, "private" => "true"})
+        {:ok, snippet} = Exbin.Snippets.insert(%{"content" => data, "private" => "true"})
         :gen_tcp.send(client_socket, "#{Application.get_env(:exbin, :base_url)}/r/#{snippet.name}\n")
     end
 

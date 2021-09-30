@@ -1,5 +1,5 @@
-defmodule ExBin.Snippet do
-  use ExBin.Schema
+defmodule Exbin.Snippet do
+  use Exbin.Schema
   import Ecto.Changeset
 
   schema "snippets" do
@@ -9,6 +9,7 @@ defmodule ExBin.Snippet do
     field(:viewcount, :integer, default: 0)
     field(:private, :boolean, default: true)
     field(:ephemeral, :boolean, default: false)
+    belongs_to :user, Exbin.Accounts.User
 
     timestamps()
   end
@@ -18,7 +19,7 @@ defmodule ExBin.Snippet do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:content, :name, :viewcount, :private, :ephemeral])
+    |> cast(params, [:content, :name, :viewcount, :private, :ephemeral, :user_id])
     |> validate_required([:name])
     |> unique_constraint(:name)
   end

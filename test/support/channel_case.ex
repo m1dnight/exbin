@@ -1,4 +1,4 @@
-defmodule ExBinWeb.ChannelCase do
+defmodule ExbinWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule ExBinWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use ExBinWeb.ChannelCase, async: true`, although
+  by setting `use ExbinWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,18 +21,18 @@ defmodule ExBinWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import ExBinWeb.ChannelCase
+      import ExbinWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint ExBinWeb.Endpoint
+      @endpoint ExbinWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExBin.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Exbin.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ExBin.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Exbin.Repo, {:shared, self()})
     end
 
     :ok

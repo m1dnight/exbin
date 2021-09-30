@@ -1,5 +1,5 @@
-defmodule ExBinWeb.LayoutView do
-  use ExBinWeb, :view
+defmodule ExbinWeb.LayoutView do
+  use ExbinWeb, :view
 
   def format_date(date) do
     Timex.format!(date, "{0D}/{0M}/{YY}")

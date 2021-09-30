@@ -11,10 +11,10 @@
 # testing to ensure that the datetimes aren't equal if checked less
 # than a second apart. Fortunately due to :async, this shouldn't
 # slow down the overall tests too much.
-defmodule ExBin.ClockTest do
+defmodule Exbin.ClockTest do
   use ExUnit.Case, async: true
-  require ExBin.Clock
-  alias ExBin.Clock
+  require Exbin.Clock
+  alias Exbin.Clock
 
   describe "utc_now/0" do
     test "returns correct datetime" do
@@ -24,9 +24,9 @@ defmodule ExBin.ClockTest do
 
   defmodule FreezeTest do
     use ExUnit.Case, async: true
-    require ExBin.Clock
-    alias ExBin.Clock
-      
+    require Exbin.Clock
+    alias Exbin.Clock
+
     describe "freezing the clock" do
       test "does not change the internal time while Clock is frozen" do
         Clock.freeze
@@ -50,8 +50,8 @@ defmodule ExBin.ClockTest do
 
   defmodule ThawTest do
     use ExUnit.Case, async: true
-    require ExBin.Clock
-    alias ExBin.Clock
+    require Exbin.Clock
+    alias Exbin.Clock
 
     describe "unfreeze/0" do
       test "restores to correct time after unfreezing" do
@@ -67,8 +67,8 @@ defmodule ExBin.ClockTest do
 
   defmodule TimeTravelTest do
     use ExUnit.Case, async: true
-    require ExBin.Clock
-    alias ExBin.Clock
+    require Exbin.Clock
+    alias Exbin.Clock
 
     describe "time_travel" do
       test "executes a block with time frozen at the given time, and restores to real time after block" do

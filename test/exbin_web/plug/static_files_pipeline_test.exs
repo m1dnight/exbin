@@ -1,4 +1,4 @@
-defmodule ExBinWeb.Plug.StaticFilesPipelineTest do
+defmodule ExbinWeb.Plug.StaticFilesPipelineTest do
   # I don't like that this test is designed to test the entire pipeline,
   # including CustomLogo plug and NotFound plug, as well as any future
   # custom files things, however they're pretty inter-linked and we need
@@ -6,7 +6,7 @@ defmodule ExBinWeb.Plug.StaticFilesPipelineTest do
   # best way to do it.
 
   defmodule IfNoCustomLogoSet do
-    use ExBinWeb.ConnCase, async: true
+    use ExbinWeb.ConnCase, async: true
 
     describe "application layout" do
       test "sets correct logo path and dimensions if no custom logo path set", %{conn: conn} do
@@ -23,8 +23,8 @@ defmodule ExBinWeb.Plug.StaticFilesPipelineTest do
   end
 
   defmodule WithCustomLogoSet do
-    use ExBinWeb.ConnCase, async: false
-    import ExBin.Factory
+    use ExbinWeb.ConnCase, async: false
+    import Exbin.Factory
 
     setup do
       orig_custom_logo_path = Application.get_env(:exbin, :custom_logo_path)
@@ -37,7 +37,7 @@ defmodule ExBinWeb.Plug.StaticFilesPipelineTest do
       File.write!(test_file, "#{test_file}")
       Application.put_env(:exbin, :custom_logo_path, test_file)
 
-      on_exit(fn -> 
+      on_exit(fn ->
         Application.put_env(:exbin, :custom_logo_path, orig_custom_logo_path)
         Application.put_env(:exbin, :custom_logo_size, orig_custom_logo_size)
         File.rm!(test_file)
@@ -46,7 +46,7 @@ defmodule ExBinWeb.Plug.StaticFilesPipelineTest do
 
       {:ok, test_file_path: test_file}
     end
-      
+
     test "does not interfere with snippets starting with the string 'files'", %{conn: conn} do
       insert!(:snippet, %{name: "filesAreCool", content: "filesAreCool works great!"})
       conn = get(conn, "/filesAreCool")

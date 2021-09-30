@@ -1,19 +1,30 @@
-defmodule ExBin.Snippets do
+defmodule Exbin.Snippets do
   require Logger
   import Ecto.Query
-  alias ExBin.{Snippet, Repo}
+  alias Exbin.{Snippet, Repo}
 
   #############################################################################
   # Search
 
   def search(query) do
     sanitized = LikeInjection.like_sanitize(query)
-    Logger.debug("Query: #{query}, sanitied: #{sanitized}")
+    Logger.debug("Query: #{query}, sanitized: #{sanitized}")
     parameter = "%#{sanitized}%"
 
     Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
 
     from(s in Snippet, where: ilike(s.content, ^parameter) and s.private == false, order_by: [desc: s.inserted_at])
+    |> Repo.all()
+  end
+
+  def search(query, user_id) do
+    sanitized = LikeInjection.like_sanitize(query)
+    Logger.debug("Query: #{query}, sanitized: #{sanitized}")
+    parameter = "%#{sanitized}%"
+
+    Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
+
+    from(s in Snippet, where: ilike(s.content, ^parameter) and s.user_id == ^user_id or s.private == false, order_by: [desc: s.inserted_at])
     |> Repo.all()
   end
 
@@ -36,6 +47,8 @@ defmodule ExBin.Snippets do
 
       # Insert.
       changeset = Snippet.changeset(%Snippet{}, args)
+      IO.inspect(args, label: "args")
+      IO.inspect(changeset, label: "changeset")
       Repo.insert!(changeset)
     end)
   end
@@ -139,6 +152,17 @@ defmodule ExBin.Snippets do
       snippet ->
         {:ok, snippet}
     end
+  end
+
+  def list_user_snippets(user_id, opts \\ []) do
+    limit = Keyword.get(opts, :limit, nil)
+
+    q =
+      from(s in Snippet, order_by: [desc: s.inserted_at])
+      |> where([s], s.user_id == ^user_id)
+      |> limit(^limit)
+
+    Repo.all(q)
   end
 
   @doc """

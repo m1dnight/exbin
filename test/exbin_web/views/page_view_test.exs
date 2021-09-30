@@ -1,3 +1,3 @@
-defmodule ExBinWeb.PageViewTest do
-  use ExBinWeb.ConnCase, async: true
+defmodule ExbinWeb.PageViewTest do
+  use ExbinWeb.ConnCase, async: true
 end

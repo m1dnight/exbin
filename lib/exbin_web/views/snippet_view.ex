@@ -1,5 +1,5 @@
-defmodule ExBinWeb.SnippetView do
-  use ExBinWeb, :view
+defmodule ExbinWeb.SnippetView do
+  use ExbinWeb, :view
 
   #############################################################################
   # Generate the raw strings to embed the statistics data in the html.

@@ -1,8 +1,8 @@
-defmodule ExBin.Factory do
-  alias ExBin.Repo
+defmodule Exbin.Factory do
+  alias Exbin.Repo
 
   def build(:snippet) do
-    %ExBin.Snippet{name: "TestSnippet_#{random_string()}"}
+    %Exbin.Snippet{name: "TestSnippet_#{random_string()}"}
   end
 
 

@@ -1,0 +1,82 @@
+@import "_colors";
+
+.login-container {
+    max-width: 500px;
+    margin-left: auto !important;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 20px;
+    text-align: center;
+    padding: 20px 20px 0;
+    margin: 0;
+}
+
+.login-item {
+    padding: 25px 25px 0;
+    margin: 20px 20px 0;
+
+}
+
+.login-input {
+    width: 100%;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    text-transform: uppercase;
+    color: $text;
+    background-color: $menubackground;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+    height: 2.25rem;
+    padding: 0 1rem;
+    // margin: 0.05rem 0;
+    border: 1px solid $text;
+    border-radius: 2px;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    background-image: none;
+    text-align: center;
+    line-height: 2.25rem;
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 0.875rem;
+    font-family: inherit;
+    letter-spacing: 0.03em;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-field {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.error-message, .invalid_feedback {
+    padding: 0.2rem 1rem 0.2rem 1rem;
+    margin: 0;
+    border: 2px solid transparent;
+    border-radius: 1px !important;
+    margin-top: .5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+#links {
+text-align: center;
+}

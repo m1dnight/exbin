@@ -1,9 +1,9 @@
-defmodule ExBinWeb.PageControllerTest do
-  use ExBinWeb.ConnCase, async: true
+defmodule ExbinWeb.PageControllerTest do
+  use ExbinWeb.ConnCase, async: true
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "ExBin Development"
+    assert html_response(conn, 200) =~ "Exbin Development"
   end
 
 end

@@ -47,17 +47,20 @@ let hooks = {}
 hooks.StatusHooks = {
     disconnected() {
         document.getElementById("connected").style.display = "none";
-        document.getElementById("disconnected").style.display = "unset";
+        document.getElementById("disconnected").style.display = "flex";
+        console.log(new Date())
         console.log("disconnected")
     },
     reconnected() {
-        document.getElementById("connected").style.display = "unset";
+        document.getElementById("connected").style.display = "flex";
         document.getElementById("disconnected").style.display = "none";
+        console.log(new Date())
         console.log("reconnected")
     },
     mounted() {
-        document.getElementById("connected").style.display = "unset";
+        document.getElementById("connected").style.display = "flex";
         document.getElementById("disconnected").style.display = "none";
+        console.log(new Date())
         console.log("connected")
     }
 }

@@ -1,38 +1,41 @@
-defmodule ExBinWeb.Router do
-  use ExBinWeb, :router
+defmodule ExbinWeb.Router do
+  use ExbinWeb, :router
+
+  import ExbinWeb.UserAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {ExBinWeb.LayoutView, :root}
+    plug :put_root_layout, {ExbinWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug ExBinWeb.ApiAuth, exclude: []
+    plug ExbinWeb.ApiAuth, exclude: []
   end
 
   pipeline :custom_files do
-    plug ExBinWeb.Plug.CustomLogo
+    plug ExbinWeb.Plug.CustomLogo
   end
 
-  scope "/files", ExBinWeb do
+  scope "/files", ExbinWeb do
     pipe_through [:custom_files]
     match :*, "/*not_found", Plug.FileNotFound, []
   end
 
 
-  scope "/api", ExBinWeb do
+  scope "/api", ExbinWeb do
     pipe_through :api
 
     post "/new", APIController, :new
     get "/:name", APIController, :show
   end
 
-  scope "/snippet", ExBinWeb do
+  scope "/snippet", ExbinWeb do
     pipe_through :browser
 
     get "/new", SnippetController, :new
@@ -41,7 +44,7 @@ defmodule ExBinWeb.Router do
     get "/statistics", SnippetController, :statistics
   end
 
-  scope "/", ExBinWeb do
+  scope "/", ExbinWeb do
     pipe_through :browser
 
     # Static Pages
@@ -57,7 +60,7 @@ defmodule ExBinWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ExBinWeb do
+  # scope "/api", ExbinWeb do
   #   pipe_through :api
   # end
 
@@ -73,7 +76,40 @@ defmodule ExBinWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: ExBinWeb.Telemetry
+      live_dashboard "/dashboard", metrics: ExbinWeb.Telemetry
     end
+  end
+
+  ## Authentication routes
+
+  scope "/", ExbinWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/users/register", UserRegistrationController, :new
+    post "/users/register", UserRegistrationController, :create
+    get "/users/log_in", UserSessionController, :new
+    post "/users/log_in", UserSessionController, :create
+    get "/users/reset_password", UserResetPasswordController, :new
+    post "/users/reset_password", UserResetPasswordController, :create
+    get "/users/reset_password/:token", UserResetPasswordController, :edit
+    put "/users/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/", ExbinWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/users/settings", UserSettingsController, :edit
+    put "/users/settings", UserSettingsController, :update
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    get "/users/snippets", SnippetController, :personal_list
+  end
+
+  scope "/", ExbinWeb do
+    pipe_through [:browser]
+
+    delete "/users/log_out", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :confirm
   end
 end

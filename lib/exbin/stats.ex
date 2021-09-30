@@ -1,5 +1,5 @@
-defmodule ExBin.Stats do
-  alias ExBin.{Snippet, Repo, Clock}
+defmodule Exbin.Stats do
+  alias Exbin.{Snippet, Repo, Clock}
   import Ecto.Query
 
   @doc """

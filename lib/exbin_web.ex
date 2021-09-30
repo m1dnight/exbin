@@ -1,12 +1,12 @@
-defmodule ExBinWeb do
+defmodule ExbinWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use ExBinWeb, :controller
-      use ExBinWeb, :view
+      use ExbinWeb, :controller
+      use ExbinWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,11 +19,11 @@ defmodule ExBinWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: ExBinWeb
+      use Phoenix.Controller, namespace: ExbinWeb
 
       import Plug.Conn
-      import ExBinWeb.Gettext
-      alias ExBinWeb.Router.Helpers, as: Routes
+      import ExbinWeb.Gettext
+      alias ExbinWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -31,7 +31,7 @@ defmodule ExBinWeb do
     quote do
       use Phoenix.View,
         root: "lib/exbin_web/templates",
-        namespace: ExBinWeb
+        namespace: ExbinWeb
 
       use Phoenix.HTML
       # Import convenience functions from controllers
@@ -46,7 +46,7 @@ defmodule ExBinWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ExBinWeb.LayoutView, "live.html"}
+        layout: {ExbinWeb.LayoutView, "live.html"}
 
       use Phoenix.HTML
       unquote(view_helpers())
@@ -75,7 +75,7 @@ defmodule ExBinWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import ExBinWeb.Gettext
+      import ExbinWeb.Gettext
     end
   end
 
@@ -90,9 +90,9 @@ defmodule ExBinWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import ExBinWeb.ErrorHelpers
-      import ExBinWeb.Gettext
-      alias ExBinWeb.Router.Helpers, as: Routes
+      import ExbinWeb.ErrorHelpers
+      import ExbinWeb.Gettext
+      alias ExbinWeb.Router.Helpers, as: Routes
     end
   end
 

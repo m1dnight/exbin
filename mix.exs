@@ -1,4 +1,4 @@
-defmodule ExBin.MixProject do
+defmodule Exbin.MixProject do
   use Mix.Project
 
   def project do
@@ -19,7 +19,7 @@ defmodule ExBin.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {ExBin.Application, []},
+      mod: {Exbin.Application, []},
       extra_applications: [:logger, :runtime_tools, :ex_rated]
     ]
   end
@@ -33,6 +33,7 @@ defmodule ExBin.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 2.0"},
       {:phoenix, "~> 1.5.9"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
@@ -49,7 +50,8 @@ defmodule ExBin.MixProject do
       {:timex, "~> 3.7"},
       {:parent, "~> 0.12.0"},
       {:ex_rated, "~> 2.0"},
-      {:phoenix_live_view, "~> 0.15.7"}
+      {:phoenix_live_view, "~> 0.15.7"},
+      {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false}
     ]
   end
 

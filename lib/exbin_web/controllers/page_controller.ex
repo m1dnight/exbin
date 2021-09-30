@@ -1,5 +1,5 @@
-defmodule ExBinWeb.PageController do
-  use ExBinWeb, :controller
+defmodule ExbinWeb.PageController do
+  use ExbinWeb, :controller
 
   def about(conn, _params) do
     conn

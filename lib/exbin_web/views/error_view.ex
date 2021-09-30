@@ -1,5 +1,5 @@
-defmodule ExBinWeb.ErrorView do
-  use ExBinWeb, :view
+defmodule ExbinWeb.ErrorView do
+  use ExbinWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

@@ -1,5 +1,5 @@
 <!-- DO NOT REMOVE - contributor_list:data:start:["m1dnight", "joshproehl", "dependabot[bot]"]:end -->
-# ExBin
+# Exbin
 
 A pastebin clone written in Phoenix/Elixir. Live [here](https://exbin.call-cc.be). 
 
@@ -20,7 +20,7 @@ I work on this project from time to time, so the development pace is slow. If yo
 
 # Installation 
 
-The easiest way to run your own instance of ExBin is by running it in a Docker container.
+The easiest way to run your own instance of Exbin is by running it in a Docker container.
 
 | Environment var     | Description                                                                                | Default             |
 |---------------------|--------------------------------------------------------------------------------------------|---------------------|
@@ -41,7 +41,7 @@ The easiest way to run your own instance of ExBin is by running it in a Docker c
 | `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`. | Required            |
 | `HOST`              | Hostname for this instance. E.g., `example.com`.                                           | Required            |
 | `API_KEY`           | Password token for the API. If not set, the API is publicly available.                     | Optional            |
-| `BRAND`             | Name of the ExBin instance. Shown in bottom right corner when creating a snippet.          | `ExBin`             |
+| `BRAND`             | Name of the Exbin instance. Shown in bottom right corner when creating a snippet.          | `Exbin`             |
 | `CUSTOM_LOGO_PATH`  | The full path on the host machine to your custom logo. E.g. "/srv/exbin/my_logo.png"       | Optional            |
 | `CUSTOM_LOGO_SIZE`  | The pixel dimensions of your logo, which is assumed to be square. Ignored if no logo set.  | `30`                |
 
@@ -68,7 +68,7 @@ BASE_URL=https://example.com
 HOST=example.com 
 DATABASE_DATA=/tmp/exbindata
 API_KEY=mysupersecretkey
-BRAND=ExBin
+BRAND=Exbin
 CUSTOM_LOGO_PATH=/exbin_branding/my_cool_logo.png
 CUSTOM_LOGO_SIZE=50
 ```

@@ -1,4 +1,4 @@
-defmodule ExBin.Repo do
+defmodule Exbin.Repo do
   use Ecto.Repo,
     otp_app: :exbin,
     adapter: Ecto.Adapters.Postgres

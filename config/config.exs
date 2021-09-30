@@ -8,15 +8,15 @@
 use Mix.Config
 
 config :exbin,
-  ecto_repos: [ExBin.Repo]
+  ecto_repos: [Exbin.Repo]
 
 
 # Configures the endpoint
-config :exbin, ExBinWeb.Endpoint,
+config :exbin, ExbinWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "L2jznV0Pu2SuhkCPqBWKIxk0PGZW27e6MeB2FCP6akYpm/nlKGx49mnKrZGvlS0X",
-  render_errors: [view: ExBinWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: ExBin.PubSub,
+  render_errors: [view: ExbinWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Exbin.PubSub,
   live_view: [signing_salt: "EubGfePc"]
 
 # Configures Elixir's Logger
@@ -38,7 +38,7 @@ config :exbin,
   max_size: 2048,
   timezone: "Europe/Brussels",
   apikey: "devkey",
-  brand: "ExBin Development"
+  brand: "Exbin Development"
 
 # Viewcount rate limit configuration.
 config :ex_rated,
