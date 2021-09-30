@@ -6,7 +6,6 @@ defmodule ExbinWeb.SnippetController do
 
   @spec new(Plug.Conn.t(), any) :: Plug.Conn.t()
   def new(conn, _params) do
-    IO.inspect get_session(conn), label: "session"
     render(conn, "new.html")
   end
 
