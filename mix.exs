@@ -9,8 +9,7 @@ defmodule Exbin.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      aliase
-      Swoosh.Emails: aliases(),
+      aliases: aliases(),
       deps: deps()
     ]
   end

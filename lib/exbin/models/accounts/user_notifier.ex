@@ -14,10 +14,11 @@ defmodule Exbin.Accounts.UserNotifier do
   import Swoosh.Email
 
   defp deliver(recipient, subject, body) do
+  sender = Application.get_env(:exbin, Exbin.Mailer)[:from]
     email =
       new()
       |> to(recipient)
-      |> from({"ExBin Mailer", "admin@call-cc.be"})
+      |> from({"ExBin Mailer", sender})
       |> subject(subject)
       |> text_body(body)
 

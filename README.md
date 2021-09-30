@@ -48,6 +48,7 @@ The easiest way to run your own instance of Exbin is by running it in a Docker c
 | `SMTP_USER`         | SMTP username for the mailer.                                                              | Required            |
 | `SMTP_PASSWORD`     | SMTP password for the mailer.                                                              | Required            |
 | `SMTP_PORT`         | SMTP port for the mailer.                                                                  | Required            |
+| `SMTP_FROM`         | SMTP sender address for the mailer.                                                        | Required            |
 
 
 Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.

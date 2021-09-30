@@ -47,6 +47,9 @@ config :ex_rated,
 
 config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.Local
 
+config :exbin, Exbin.Mailer,
+  from: "exbin@call-cc.be"
+
 config :swoosh, :api_client, false
 
 # Import environment specific config. This must remain at the bottom

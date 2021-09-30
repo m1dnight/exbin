@@ -31,6 +31,7 @@ services:
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_PORT=${SMTP_PORT}
+      - SMTP_FROM=${SMTP_FROM}
     ports:
       - ${HTTP_PORT}:${HTTP_PORT}
       - ${TCP_PORT}:${TCP_PORT}
