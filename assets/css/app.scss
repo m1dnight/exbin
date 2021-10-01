@@ -60,6 +60,28 @@ hr {
     padding: 1rem;
 }
 
+
+.buttonToLink{
+    background: none;
+    border: none;
+    color: red;
+    height: unset !important;
+    line-height: unset;
+    vertical-align: unset;
+    padding: unset;
+ }
+ 
+ .buttonToLink:hover{
+    background: none;
+    text-decoration: underline;
+ }
+
+ .snippet-meta-data > svg {
+     display: flex;
+ }
+
+
+
 // Menu Bar
 .menu-column {
     background-color: $menubackground;

@@ -47,6 +47,7 @@ defmodule ExbinWeb.Router do
 
     get "/new", SnippetController, :new
     post "/new", SnippetController, :create
+    post "/delete", SnippetController, :delete
     get "/list", SnippetController, :list
     get "/statistics", SnippetController, :statistics
   end

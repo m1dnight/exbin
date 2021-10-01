@@ -157,6 +157,20 @@ defmodule Exbin.Snippets do
     end
   end
 
+  def get_by_id(id) do
+    snippet =
+      from(s in Snippet, where: s.id == ^id)
+      |> Repo.one()
+
+    case snippet do
+      nil ->
+        {:error, :not_found}
+
+      snippet ->
+        {:ok, snippet}
+    end
+  end
+
   def list_user_snippets(user_id, opts \\ []) do
     limit = Keyword.get(opts, :limit, nil)
 

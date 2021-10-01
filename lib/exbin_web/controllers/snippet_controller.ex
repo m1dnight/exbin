@@ -99,8 +99,30 @@ defmodule ExbinWeb.SnippetController do
     end
   end
 
-  def delete(conn, _params) do
-    render(conn, "index.html")
+  def delete(conn, %{"snippet" => snippet_id}) do
+    {:ok, snippet} = Exbin.Snippets.get_by_id(snippet_id)
+
+    user = conn.assigns.current_user
+
+    case user do
+      nil ->
+        conn
+        |> put_flash(:error, "😢 You can not delete this snippet!")
+        |> render_snippet(snippet.name, Application.get_env(:exbin, :default_view))
+
+      user ->
+        if user.id == snippet.user_id do
+          Exbin.Snippets.delete_snippet(snippet)
+
+          conn
+          |> put_flash(:info, "😄 Snippet deleted!")
+          |> redirect(to: "/")
+        else
+          conn
+          |> put_flash(:error, "😢 You can not delete this snippet!")
+          |> render_snippet(snippet.name, Application.get_env(:exbin, :default_view))
+        end
+    end
   end
 
   def statistics(conn, _params) do

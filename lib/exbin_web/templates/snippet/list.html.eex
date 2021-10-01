@@ -11,6 +11,13 @@
       <%= if snippet.ephemeral do %>
       <span class="iconify" data-icon="mdi-timer-sand"></span>
       <% end %>
+      <%= if @current_user != nil and @current_user.id == snippet.user_id do %>
+        <%= form_for @conn, Routes.snippet_path(@conn, :delete, snippet: snippet), [as: :snippet], fn f -> %>
+          <%= submit class: "buttonToLink" do%>
+          <span class="iconify" data-icon="mdi-delete"></span>
+          <% end %>
+        <% end %>
+      <% end %>
       <div class="created">
         <%= format_age(snippet.inserted_at) %>
       </div>
