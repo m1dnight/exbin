@@ -104,7 +104,7 @@ config :exbin, ExbinWeb.Endpoint, server: true
 #############################################################################
 # API Security
 
-apikey = System.get_env("API_KEY") || raise "environment variable API_KEY is missing."
+apikey = System.get_env("API_KEY") || nil
 
 config :exbin,
   apikey: apikey

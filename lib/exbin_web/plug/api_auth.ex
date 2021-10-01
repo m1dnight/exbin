@@ -28,8 +28,6 @@ defmodule ExbinWeb.ApiAuth do
   defp valid_token?(token) do
     global_token = Application.get_env(:exbin, :apikey)
 
-    IO.inspect(global_token, label: "global token")
-
     case {global_token, token} do
       # No token means no auth!
       {nil, _} ->
