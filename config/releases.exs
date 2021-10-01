@@ -82,7 +82,6 @@ config :exbin,
 #############################################################################
 # HTTP Endpoint
 
-
 host = System.get_env("HOST") || raise "environment variable HOST is missing."
 
 {scheme, port} =
@@ -93,14 +92,12 @@ host = System.get_env("HOST") || raise "environment variable HOST is missing."
   end
 
 scheme =
-
-
-config :exbin, ExbinWeb.Endpoint,
-  url: [host: host, port: port, scheme: scheme],
-  http: [
-    port: String.to_integer(System.get_env("HTTP_PORT") || "1234"),
-    transport_options: [socket_opts: [:inet6]]
-  ]
+  config :exbin, ExbinWeb.Endpoint,
+    url: [host: host, port: port, scheme: scheme],
+    http: [
+      port: String.to_integer(System.get_env("HTTP_PORT") || "1234"),
+      transport_options: [socket_opts: [:inet6]]
+    ]
 
 config :exbin, ExbinWeb.Endpoint, server: true
 
