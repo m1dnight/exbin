@@ -82,11 +82,21 @@ config :exbin,
 #############################################################################
 # HTTP Endpoint
 
+
 host = System.get_env("HOST") || raise "environment variable HOST is missing."
-host = System.get_env("HTTPS") || raise "environment variable HTTPS is missing."
+
+{scheme, port} =
+  if System.get_env("HTTPS") == "true" do
+    {"https", 443}
+  else
+    {"http", 80}
+  end
+
+scheme =
+
 
 config :exbin, ExbinWeb.Endpoint,
-  url: [host: host, port: if(System.get_env("HTTPS") == "true", do: 443, else: 80)],
+  url: [host: host, port: port, scheme: scheme],
   http: [
     port: String.to_integer(System.get_env("HTTP_PORT") || "1234"),
     transport_options: [socket_opts: [:inet6]]
@@ -114,20 +124,20 @@ config :exbin,
 
 config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.SMTP
 
-host = System.get_env("SMTP_RELAY") || raise "environment variable SMTP_RELAY is missing."
-host = System.get_env("SMTP_USER") || raise "environment variable SMTP_USER is missing."
-host = System.get_env("SMTP_PASSWORD") || raise "environment variable SMTP_PASSWORD is missing."
-host = System.get_env("SMTP_FROM") || raise "environment variable SMTP_FROM is missing."
-host = System.get_env("SMTP_PORT") || raise "environment variable SMTP_PORT is missing."
+smtprelay = System.get_env("SMTP_RELAY") || raise "environment variable SMTP_RELAY is missing."
+smtpuser = System.get_env("SMTP_USER") || raise "environment variable SMTP_USER is missing."
+smtppassword = System.get_env("SMTP_PASSWORD") || raise "environment variable SMTP_PASSWORD is missing."
+smtpfrom = System.get_env("SMTP_FROM") || raise "environment variable SMTP_FROM is missing."
+smtpport = System.get_env("SMTP_PORT") || raise "environment variable SMTP_PORT is missing."
 
 config :exbin, Exbin.Mailer,
   adapter: Swoosh.Adapters.SMTP,
-  relay: System.get_env("SMTP_RELAY"),
-  username: System.get_env("SMTP_USER"),
-  password: System.get_env("SMTP_PASSWORD"),
-  from: System.get_env("SMTP_FROM"),
+  relay: smtprelay,
+  username: smtpuser,
+  password: smtppassword,
+  from: smtpfrom,
   ssl: true,
   auth: :always,
   auth: :always,
-  port: System.get_env("SMTP_PORT"),
+  port: smtpport,
   retries: 2
