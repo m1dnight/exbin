@@ -4,7 +4,7 @@ defmodule Exbin.MixProject do
   def project do
     [
       app: :exbin,
-      version: "0.1.6",
+      version: "0.1.6.dev",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
