@@ -18,7 +18,7 @@ defmodule Exbin.ClockTest do
 
   describe "utc_now/0" do
     test "returns correct datetime" do
-      assert Timex.equal?(Clock.utc_now, DateTime.utc_now)
+      assert Timex.equal?(Clock.utc_now(), DateTime.utc_now())
     end
   end
 
@@ -29,11 +29,11 @@ defmodule Exbin.ClockTest do
 
     describe "freezing the clock" do
       test "does not change the internal time while Clock is frozen" do
-        Clock.freeze
-        start_time = Clock.utc_now
+        Clock.freeze()
+        start_time = Clock.utc_now()
         Process.sleep(1500)
-        end_time  = Clock.utc_now
-        Clock.unfreeze
+        end_time = Clock.utc_now()
+        Clock.unfreeze()
 
         assert start_time == end_time
       end
@@ -41,9 +41,9 @@ defmodule Exbin.ClockTest do
       test "freezes to requested time if one is given" do
         target = ~U[2001-12-25 12:17:39.0000Z]
         Clock.freeze(target)
-        assert Clock.utc_now == target
-        Clock.unfreeze
-        refute Clock.utc_now == target
+        assert Clock.utc_now() == target
+        Clock.unfreeze()
+        refute Clock.utc_now() == target
       end
     end
   end
@@ -55,12 +55,12 @@ defmodule Exbin.ClockTest do
 
     describe "unfreeze/0" do
       test "restores to correct time after unfreezing" do
-        Clock.freeze
+        Clock.freeze()
         Process.sleep(1500)
-        refute Timex.equal?(Clock.utc_now, DateTime.utc_now)
-        Clock.unfreeze
+        refute Timex.equal?(Clock.utc_now(), DateTime.utc_now())
+        Clock.unfreeze()
 
-        assert Timex.equal?(Clock.utc_now, DateTime.utc_now)
+        assert Timex.equal?(Clock.utc_now(), DateTime.utc_now())
       end
     end
   end
@@ -75,25 +75,25 @@ defmodule Exbin.ClockTest do
         target = ~U[2001-12-25 12:17:39.0000Z]
 
         Clock.time_travel target do
-          assert Clock.utc_now == target
+          assert Clock.utc_now() == target
           Process.sleep(1500)
-          assert Clock.utc_now == target
+          assert Clock.utc_now() == target
         end
 
-        assert Timex.equal?(Clock.utc_now, DateTime.utc_now)
+        assert Timex.equal?(Clock.utc_now(), DateTime.utc_now())
       end
 
       test "re-freezes time to where it was if it was frozen before the block" do
         long_ago = ~U[2001-12-25 12:17:39.0000Z]
 
-        Clock.freeze
-        frozen_time = Clock.utc_now
+        Clock.freeze()
+        frozen_time = Clock.utc_now()
 
         Clock.time_travel long_ago do
-          assert Clock.utc_now == long_ago
+          assert Clock.utc_now() == long_ago
         end
 
-        assert Timex.equal?(Clock.utc_now, frozen_time)
+        assert Timex.equal?(Clock.utc_now(), frozen_time)
       end
     end
   end

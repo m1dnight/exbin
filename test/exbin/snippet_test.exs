@@ -35,5 +35,4 @@ defmodule Exbin.SnippetTest do
     insert!(:snippet, %{name: "Ghostly"})
     assert %Snippet{ephemeral: false, name: "Ghostly"} = Repo.one(Snippet)
   end
-
 end

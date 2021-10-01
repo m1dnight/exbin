@@ -87,8 +87,9 @@ defmodule Exbin.Stats do
   """
   def count_per_month() do
     buckets = empty_month_bucket_map()
+
     count_per_month_query()
-    |> Repo.all
+    |> Repo.all()
     |> Enum.reduce(buckets, fn result, acc ->
       target_month_start = NaiveDateTime.truncate(result.month, :second)
       {publ, priv} = Map.get(acc, target_month_start)
@@ -96,9 +97,12 @@ defmodule Exbin.Stats do
       publ = if result.private, do: publ, else: result.count
       Map.put(acc, target_month_start, {publ, priv})
     end)
-    |> Enum.into([])                                  # Turn the map into a list now that we no longer need to look up items
-    |> Enum.sort_by(&elem(&1, 0), &Timex.before?/2)   # And sort the list so the months are in order and the most recent one is last
-    |> Enum.drop(1)                                   # Prune the oldest element out of the list, as we only actually want 11 months.
+    # Turn the map into a list now that we no longer need to look up items
+    |> Enum.into([])
+    # And sort the list so the months are in order and the most recent one is last
+    |> Enum.sort_by(&elem(&1, 0), &Timex.before?/2)
+    # Prune the oldest element out of the list, as we only actually want 11 months.
+    |> Enum.drop(1)
   end
 
   # We use this to solve https://github.com/elixir-ecto/ecto/issues/3159
@@ -116,7 +120,11 @@ defmodule Exbin.Stats do
   # without time zone" fields.
   defmacrop month_trunc_in_zone_frag(field, tz) do
     quote do
-      fragment("date_trunc('month', (? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ?) as month_bucket", unquote(field), unquote(tz))
+      fragment(
+        "date_trunc('month', (? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ?) as month_bucket",
+        unquote(field),
+        unquote(tz)
+      )
     end
   end
 
@@ -135,8 +143,20 @@ defmodule Exbin.Stats do
         private: fragment("private")
       }
     )
-    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= (? AT TIME ZONE ? - interval '1 year')", s.inserted_at, ^app_tz, ^now, ^app_tz))
-    |> where([s], fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? <= (? AT TIME ZONE ?)", s.inserted_at, ^app_tz, ^now, ^app_tz))
+    |> where(
+      [s],
+      fragment(
+        "(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? >= (? AT TIME ZONE ? - interval '1 year')",
+        s.inserted_at,
+        ^app_tz,
+        ^now,
+        ^app_tz
+      )
+    )
+    |> where(
+      [s],
+      fragment("(? AT TIME ZONE 'Etc/UTC') AT TIME ZONE ? <= (? AT TIME ZONE ?)", s.inserted_at, ^app_tz, ^now, ^app_tz)
+    )
     |> group_by([s], fragment("month_bucket"))
     |> group_by([s], s.private)
     |> order_by([s], fragment("month_bucket"))
@@ -149,15 +169,17 @@ defmodule Exbin.Stats do
   @spec empty_month_bucket_map() :: Map.t()
   defp empty_month_bucket_map() do
     application_tz = Application.get_env(:exbin, :timezone)
-    current_month_start = Clock.utc_now()
-                          |> DateTime.shift_zone!(application_tz)
-                          |> Timex.beginning_of_month()
-                          |> NaiveDateTime.truncate(:second)
+
+    current_month_start =
+      Clock.utc_now()
+      |> DateTime.shift_zone!(application_tz)
+      |> Timex.beginning_of_month()
+      |> NaiveDateTime.truncate(:second)
 
     0..12
     |> Enum.flat_map(fn offset ->
-      month = Timex.shift(current_month_start, months: -1*offset)
-      [{month, {0,0}}]
+      month = Timex.shift(current_month_start, months: -1 * offset)
+      [{month, {0, 0}}]
     end)
     |> Enum.into(%{})
   end

@@ -7,9 +7,10 @@ defmodule Exbin.Schema do
   defmacro __using__(_) do
     quote do
       use Ecto.Schema
+
       @timestamps_opts [
-        autogenerate: { Exbin.Clock, :utc_now, [] },
-        type: :utc_datetime_usec,
+        autogenerate: {Exbin.Clock, :utc_now, []},
+        type: :utc_datetime_usec
       ]
     end
   end

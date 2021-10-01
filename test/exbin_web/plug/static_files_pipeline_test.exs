@@ -72,7 +72,8 @@ defmodule ExbinWeb.Plug.StaticFilesPipelineTest do
 
       assert conn.state == :file
       assert conn.status == 200
-      assert conn.resp_body == test_file #The file is created with it's own path as the contents so that we can verify we've got the right one
+      # The file is created with it's own path as the contents so that we can verify we've got the right one
+      assert conn.resp_body == test_file
     end
   end
 end

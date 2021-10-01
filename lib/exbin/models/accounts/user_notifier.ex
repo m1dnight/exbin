@@ -14,7 +14,8 @@ defmodule Exbin.Accounts.UserNotifier do
   import Swoosh.Email
 
   defp deliver(recipient, subject, body) do
-  sender = Application.get_env(:exbin, Exbin.Mailer)[:from]
+    sender = Application.get_env(:exbin, Exbin.Mailer)[:from]
+
     email =
       new()
       |> to(recipient)
@@ -22,7 +23,7 @@ defmodule Exbin.Accounts.UserNotifier do
       |> subject(subject)
       |> text_body(body)
 
-    with {:ok, _metadata} <- Mailer.deliver(email) do
+    with {:ok, _metadata} <- Exbin.Mailer.deliver(email) do
       Logger.debug(email)
       {:ok, email}
     end
@@ -72,7 +73,7 @@ defmodule Exbin.Accounts.UserNotifier do
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, "Update Email Exbin",  """
+    deliver(user.email, "Update Email Exbin", """
 
     ==============================
 

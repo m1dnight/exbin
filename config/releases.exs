@@ -108,10 +108,12 @@ config :exbin,
   custom_logo_path: System.get_env("CUSTOM_LOGO_PATH"),
   custom_logo_size: System.get_env("CUSTOM_LOGO_SIZE") || "30"
 
-  #############################################################################
-  # Emails
+#############################################################################
+# Emails
 
-config :exbin, ExBin.Mailer,
+config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.SMTP
+
+config :exbin, Exbin.Mailer,
   adapter: Swoosh.Adapters.SMTP,
   relay: System.get_env("SMTP_RELAY"),
   username: System.get_env("SMTP_USER"),

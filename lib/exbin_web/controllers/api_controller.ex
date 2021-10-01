@@ -11,6 +11,7 @@ defmodule ExbinWeb.APIController do
 
   def new(conn, %{"content" => content, "private" => priv, "ephemeral" => eph}) do
     args = %{"content" => content, "private" => priv, "ephemeral" => eph}
+
     if args["content"] == "" or String.trim(args["content"]) == "" do
       {:error, :invalid_content}
     else

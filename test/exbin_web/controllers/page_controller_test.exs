@@ -5,5 +5,4 @@ defmodule ExbinWeb.PageControllerTest do
     conn = get(conn, "/")
     assert html_response(conn, 200) =~ "Exbin Development"
   end
-
 end

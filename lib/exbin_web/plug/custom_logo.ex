@@ -9,8 +9,7 @@ defmodule ExbinWeb.Plug.CustomLogo do
 
   def call(%Conn{request_path: "/files/" <> requested_filename} = conn, _opts) do
     with {:ok, dirname, basename} <- custom_logo_paths_tuple(),
-         true <- String.equivalent?(requested_filename, basename)
-    do
+         true <- String.equivalent?(requested_filename, basename) do
       Plug.run(conn, [{Plug.Static, [at: "/files", from: dirname, only: [basename]]}])
     else
       _ -> conn

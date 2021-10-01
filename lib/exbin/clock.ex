@@ -13,7 +13,7 @@ defmodule Exbin.Clock do
 
   if @config[:freezable] do
     def utc_now do
-      Process.get(:mock_utc_now) || DateTime.utc_now
+      Process.get(:mock_utc_now) || DateTime.utc_now()
     end
 
     def freeze do
@@ -30,12 +30,18 @@ defmodule Exbin.Clock do
 
     defmacro time_travel(to, do: block) do
       quote do
-        alias Exbin.Clock                                                         # Make it so blocks passed in can reference Clock easily.
-        previous = if Process.get(:mock_utc_now), do: Clock.utc_now, else: nil    # save the current time if it's been frozen
-        Clock.freeze(unquote(to))                                                 # freeze the clock at the new time
-        result = unquote(block)                                                   # run the test block
-        if previous, do: Clock.freeze(previous), else: Clock.unfreeze             # reset the clock back to the previous time if it was frozen, or unfreeze if it wasn't
-        result                                                                    # and return the result
+        # Make it so blocks passed in can reference Clock easily.
+        alias Exbin.Clock
+        # save the current time if it's been frozen
+        previous = if Process.get(:mock_utc_now), do: Clock.utc_now(), else: nil
+        # freeze the clock at the new time
+        Clock.freeze(unquote(to))
+        # run the test block
+        result = unquote(block)
+        # reset the clock back to the previous time if it was frozen, or unfreeze if it wasn't
+        if previous, do: Clock.freeze(previous), else: Clock.unfreeze()
+        # and return the result
+        result
       end
     end
   else

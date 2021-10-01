@@ -53,7 +53,8 @@ defmodule ExbinWeb.SnippetController do
         |> redirect(to: "/")
 
       {:ok, snippet} ->
-        IO.puts view
+        IO.puts(view)
+
         case view do
           :code ->
             render(conn, "code.html", snippet: snippet)
