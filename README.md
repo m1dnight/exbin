@@ -95,10 +95,27 @@ services:
       - /path/on/docker/host/my_logo.png:/exbin_branding/logo.png
 ```
 
-    
 Logo by default is 30x30 pixels, but you can define the size for the width/height attributes of the img tag by setting CUSTOM_LOGO_SIZE.  
 Logos are assumed to be square, so the same value will be used for both height and width.  
 Any layout errors that come from using sizes other than 30x30 are your problem. :-)
+
+## JSON API
+
+There is a JSON API available. If your install has an API key set (the `API_KEY` environment variable), it is required to post through the API. If it is not set, the API can be freely used. 
+
+An example request for a snippet without authentication looks like this.
+
+```
+$ curl -XPOST -H "Content-type: application/json" -d '{"content": "this is the content", "private": true, "ephemeral": false}' 'https://exbin.call-cc.be/api/new'
+{"content":"this is the content","created":"2021-10-01T20:32:38.702101Z","name":"RegelatedDoublemindedness","url":"https://exbin.call-cc.be/RegelatedDoublemindedness"}
+```
+
+To use an authenticated endpoint simply add another field to the JSON payload with the token.
+
+```
+$ curl -XPOST -H "Content-type: application/json" -d '{"content": "this is the content", "private": true, "ephemeral": false, "token": "supersecret"}' 'https://exbin.call-cc.be/api/new'
+{"content":"this is the content","created":"2021-10-01T20:32:38.702101Z","name":"RegelatedDoublemindedness","url":"https://exbin.call-cc.be/RegelatedDoublemindedness"}
+```
 
 # Things To Do 
 
@@ -110,6 +127,7 @@ Any layout errors that come from using sizes other than 30x30 are your problem. 
  * Check older issues to see what I missed
  * Allow a unique user (reuse from rate limiting) to delete a snippet in the next x minutes, or create a unique delete link or something.
  * Maybe use a list to filter out snippets that might contain bad words. Instead of disallowing them, we could drop them from the public list. 
+ * Write some unit tests..
 
 
 <!-- prettier-ignore-start -->
