@@ -86,7 +86,7 @@ host = System.get_env("HOST") || raise "environment variable HOST is missing."
 host = System.get_env("HTTPS") || raise "environment variable HTTPS is missing."
 
 config :exbin, ExbinWeb.Endpoint,
-  url: [host: host, port: if System.get_env("HTTPS") == "true", do: 443, else: 80],
+  url: [host: host, port: if(System.get_env("HTTPS") == "true", do: 443, else: 80)],
   http: [
     port: String.to_integer(System.get_env("HTTP_PORT") || "1234"),
     transport_options: [socket_opts: [:inet6]]
