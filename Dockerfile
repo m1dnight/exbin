@@ -29,6 +29,7 @@ RUN mix phx.digest
 # Compile entire project.
 COPY priv priv
 COPY lib lib
+COPY rel rel 
 RUN mix compile
 
 # Build the entire release.
@@ -56,7 +57,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # Copy release from build container to this container.
-COPY --from=build /app/_build/prod/rel/exbin .
+COPY --from=build /app/_build/prod/rel/ .
 COPY entrypoint.sh .
 RUN chown -R nobody: /app
 USER nobody

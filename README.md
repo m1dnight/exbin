@@ -81,6 +81,22 @@ CUSTOM_LOGO_SIZE=50
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
 
+## Initial User Account
+
+When installing/running ExBin for the first time, a user will be created for you.
+It is highly recommended that you change this user its email and password. 
+Look for a line like this in the log files.
+
+```
+Created a user with email admin@exbin.call-cc.be and password ccbbf2726ac2ce3d3918
+```
+
+If there are already users present in the database no user will be created.
+The logfile will show this.
+
+```
+Did not create a user because there are already registered users in the database.
+```
 ## Custom Branding in Docker 
 
 In order to configure this you will need to mount the file into your docker container as a volume, and then set the CUSTOM_LOGO_PATH environment variable to the full path (inside the container) that the file is mounted at.  

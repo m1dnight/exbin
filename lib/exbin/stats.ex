@@ -45,6 +45,7 @@ defmodule Exbin.Stats do
         d
     end
   end
+
   @doc """
   Counts the total of private and public snippets in the database.
   """

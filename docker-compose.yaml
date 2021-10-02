@@ -7,7 +7,7 @@ networks:
 services:
   exbin:
     restart: always
-    image: m1dnight/exbin:0.1.3
+    image: m1dnight/exbin:latest
     environment:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - SECRET_SALT=${SECRET_SALT}

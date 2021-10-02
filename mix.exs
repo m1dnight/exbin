@@ -10,7 +10,13 @@ defmodule Exbin.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      default_release: :prod,
+      releases: [
+        prod: [
+          overlays: "rel/overlays"
+        ]
+      ]
     ]
   end
 
