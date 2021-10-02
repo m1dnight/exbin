@@ -25,12 +25,12 @@ if (document.getElementById('publicPrivateRatio')) {
             datasets: [{
                 data: [totalPrivate, totalPublic],
                 backgroundColor: [
-                    grayTransparent,
-                    purpleTransparent
+                    purpleTransparent,
+                    grayTransparent
                 ],
                 borderColor: [
-                    grayTransparent,
-                    purpleTransparent
+                    purpleTransparent,
+                    grayTransparent
                 ],
             }],
 
@@ -83,9 +83,9 @@ if (document.getElementById('monthlySnippets')) {
                 cubicInterpolationMode: 'monotone',
                 tension: 0.5,
                 // Color of the line itself.
-                borderColor: grayTransparent,
+                borderColor: purpleTransparent,
                 // Color of the dots and the area underneath.
-                backgroundColor: grayTransparent,
+                backgroundColor: purpleTransparent,
                 // Fill the area underneath.
                 fill: true
             },
@@ -96,9 +96,9 @@ if (document.getElementById('monthlySnippets')) {
                 cubicInterpolationMode: 'monotone',
                 tension: 0.5,
                 // Color of the line itself.
-                borderColor: purpleTransparent,
+                borderColor: grayTransparent,
                 // Color of the dots and the area underneath.
-                backgroundColor: purpleTransparent,
+                backgroundColor: grayTransparent,
                 // Fill the area underneath.
                 fill: true
             }]
