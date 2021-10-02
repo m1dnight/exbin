@@ -97,6 +97,9 @@ The logfile will show this.
 ```
 Did not create a user because there are already registered users in the database.
 ```
+
+The first user is the only admin user possible. I should probably update this in the future, but not today.
+If you already have a bunch of users, you can easily change it by toggling the flag in the database.
 ## Custom Branding in Docker 
 
 In order to configure this you will need to mount the file into your docker container as a volume, and then set the CUSTOM_LOGO_PATH environment variable to the full path (inside the container) that the file is mounted at.  
