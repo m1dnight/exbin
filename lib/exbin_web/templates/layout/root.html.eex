@@ -123,9 +123,9 @@
             </a>
 
             <%= if assigns[:snippet] do  %>
-            <div class="menu-entry">
+
             <hr>
-            </div>
+
             <!-- Menu Entry Raw -->
             <div class="menu-entry">
               <a href="<%= Routes.snippet_path(@conn, :rawview, @snippet.name) %>">
@@ -248,6 +248,15 @@
                   <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
               </span>
             </div>
+
+            <div class="menu-entry">
+              <span class="icon">
+                <span class="iconify" data-icon="mdi-cog"></span>
+              </span>
+              <span class="title">
+                  <%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %>
+              </span>
+            </div>
           <% else %>
             <div class="menu-entry">
               <span class="icon">
@@ -266,8 +275,6 @@
               </span>
             </div>
           <% end %>
-
-
           </div>
         </div>
     </div>

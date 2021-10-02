@@ -15,7 +15,7 @@
       <% end %>
 
       <%# Delete Badge %>
-      <%= if @current_user != nil and @current_user.id == snippet.user_id do %>
+      <%= if @current_user != nil and (@current_user.id == snippet.user_id or @current_user.admin == true) do %>
         <div class="meta-icon">
           <%= form_for @conn, Routes.snippet_path(@conn, :delete, snippet: snippet), [as: :snippet], fn _f -> %>
             <%= submit class: "text-button" do%>

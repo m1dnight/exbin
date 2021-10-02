@@ -16,7 +16,8 @@ defmodule Exbin.InitialUser do
 
     user_data = %{
       email: "admin@exbin.call-cc.be",
-      password: pass
+      password: pass,
+      admin: true
     }
 
     IO.puts("Created a user with email #{user_data.email} and password #{user_data.password}")
@@ -32,7 +33,7 @@ defmodule Exbin.InitialUser do
         insert_first_user()
 
       _ ->
-        IO.puts "Did not create a user because there are already registered users in the database."
+        IO.puts("Did not create a user because there are already registered users in the database.")
         :ok
     end
   end

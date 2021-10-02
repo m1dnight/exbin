@@ -111,7 +111,7 @@ defmodule ExbinWeb.SnippetController do
         |> render_snippet(snippet.name, Application.get_env(:exbin, :default_view))
 
       user ->
-        if user.id == snippet.user_id do
+        if user.id == snippet.user_id or user.admin == true do
           Exbin.Snippets.delete_snippet(snippet)
 
           conn
