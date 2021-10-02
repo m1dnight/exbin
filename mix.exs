@@ -53,7 +53,8 @@ defmodule Exbin.MixProject do
       {:phoenix_live_view, "~> 0.15.7"},
       {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false},
       {:swoosh, "~> 1.5"},
-      {:gen_smtp, "~> 1.0"}
+      {:gen_smtp, "~> 1.0"},
+      {:sizeable, "~> 1.0"}
     ]
   end
 

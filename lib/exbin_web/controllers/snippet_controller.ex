@@ -131,7 +131,9 @@ defmodule ExbinWeb.SnippetController do
       avg_views: Exbin.Stats.average_viewcount(),
       avg_length: Exbin.Stats.average_length(),
       privpub: Exbin.Stats.count_public_private(),
-      most_viewed: Exbin.Stats.most_popular()
+      most_viewed: Exbin.Stats.most_popular(),
+      user_count: Exbin.Stats.count_users(),
+      database_size: Exbin.Stats.database_size()
     }
 
     render(conn, "statistics.html", data: data)

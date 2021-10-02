@@ -2,6 +2,13 @@ defmodule ExbinWeb.SnippetView do
   use ExbinWeb, :view
 
   #############################################################################
+  # Size of database.
+
+  def human_readable_size(v) do
+    Sizeable.filesize(v)
+  end
+
+  #############################################################################
   # Generate the raw strings to embed the statistics data in the html.
 
   def month_label(date) do

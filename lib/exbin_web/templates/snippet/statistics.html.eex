@@ -52,4 +52,18 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="card">
+            <div class="tile">
+                <p><span class="iconify iconify-white" data-icon="mdi-person"></span> Users</p>
+                <h5><%= @data.user_count %></h5>
+            </div>
+        </div>
+        <div class="card">
+            <div class="tile">
+                <p><span class="iconify iconify-white" data-icon="mdi-database"></span> Database Size</p>
+                <h5><%= @data.database_size |> human_readable_size %></h5>
+            </div>
+        </div>
+    </div>
 </div>

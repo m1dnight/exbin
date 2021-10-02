@@ -1,5 +1,5 @@
 defmodule Exbin.Stats do
-  alias Exbin.{Snippet, Repo, Clock}
+  alias Exbin.{Snippet, Repo, Clock, Accounts.User}
   import Ecto.Query
 
   @doc """
@@ -18,12 +18,33 @@ defmodule Exbin.Stats do
   end
 
   @doc """
+  Count all the users.
+  """
+  def count_users() do
+    Repo.one(from(s in User, select: count(s.id)))
+  end
+
+  @doc """
   Count all the snippets.
   """
   def count_snippets() do
     Repo.one(from(s in Snippet, select: count(s.id)))
   end
 
+  @doc """
+  Compute the total database size.
+  """
+  def database_size() do
+    query = from(s in Snippet, select: %{size: fragment("pg_database_size('exbin_dev')")})
+
+    case Repo.one(query) do
+      %{size: nil} ->
+        0.0
+
+      %{size: d} ->
+        d
+    end
+  end
   @doc """
   Counts the total of private and public snippets in the database.
   """
