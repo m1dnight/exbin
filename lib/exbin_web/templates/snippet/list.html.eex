@@ -3,21 +3,34 @@
   <a href="<%= Routes.snippet_path(@conn, :view, snippet.name) %>">
   <div class="snippet-preview">
     <div class="snippet-meta-data">
+      <%# Private Badge %>
       <%= if snippet.private do %>
-      <span class="iconify" data-icon="mdi-lock"></span>
+        <div class="meta-icon">
+          <span class="iconify" data-icon="mdi-lock"></span>
+        </div>
       <% else %>
-      <span class="iconify" data-icon="mdi-globe"></span>
+        <div class="meta-icon">
+          <span class="iconify" data-icon="mdi-globe"></span>
+        </div>
       <% end %>
-      <%= if snippet.ephemeral do %>
-      <span class="iconify" data-icon="mdi-timer-sand"></span>
-      <% end %>
+
+      <%# Delete Badge %>
       <%= if @current_user != nil and @current_user.id == snippet.user_id do %>
-        <%= form_for @conn, Routes.snippet_path(@conn, :delete, snippet: snippet), [as: :snippet], fn f -> %>
-          <%= submit class: "buttonToLink" do%>
-          <span class="iconify" data-icon="mdi-delete"></span>
+        <div class="meta-icon">
+          <%= form_for @conn, Routes.snippet_path(@conn, :delete, snippet: snippet), [as: :snippet], fn _f -> %>
+            <%= submit class: "text-button" do%>
+              <span class="iconify" data-icon="mdi-delete"></span>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       <% end %>
+
+      <%= if snippet.ephemeral do %>
+        <div class="meta-icon">
+          <span class="iconify" data-icon="mdi-timer-sand"></span>
+        </div>
+      <% end %>
+
       <div class="created">
         <%= format_age(snippet.inserted_at) %>
       </div>

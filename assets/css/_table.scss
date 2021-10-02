@@ -1,11 +1,9 @@
 @import "_colors";
 
-
 .snippet-preview {
     background-color: $menubackground;
     margin-bottom: 1rem;
     padding: 1rem;
-
 }
 
 // Meta data row.
@@ -16,12 +14,28 @@
 }
 
 .snippet-meta-data div {
-    display: inline;
+    display: flex;
 }
 
-.snippet-meta-data svg {
+.snippet-meta-data div.meta-icon svg {
     vertical-align: middle;
     display: flex;
+}
+
+.text-button {
+    background: none;
+    border: none;
+    color: red;
+    height: unset !important;
+    line-height: unset;
+    vertical-align: unset;
+    padding: unset;
+    font-size: 1rem;
+}
+
+.text-button:hover {
+    background: none;
+    text-decoration: underline;
 }
 
 div.snippet-preview div div.created {
@@ -41,7 +55,7 @@ div.snippet-preview div div.created {
 
 .snippet-preview-content code pre {
     white-space: pre-line;
-    font-size:  1rem;
+    font-size: 1rem;
     // font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
     text-align: justify;
     text-rendering: optimizeLegibility;
