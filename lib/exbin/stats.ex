@@ -35,8 +35,9 @@ defmodule Exbin.Stats do
   Compute the total database size.
   """
   def database_size() do
-    query = from(s in Snippet, select: %{size: fragment("pg_database_size('exbin_dev')")})
-
+    database_name = Application.get_env(:exbin, Exbin.Repo)[:database]
+    sq = from(s in Snippet, select: %{size: fragment("pg_database_size(?)", ^database_name)})
+    query = from v in subquery(sq), select: %{size: v.size}, group_by: fragment("size")
     case Repo.one(query) do
       %{size: nil} ->
         0.0
@@ -46,6 +47,7 @@ defmodule Exbin.Stats do
     end
   end
 
+  @spec count_public_private :: %{private: any, public: any}
   @doc """
   Counts the total of private and public snippets in the database.
   """

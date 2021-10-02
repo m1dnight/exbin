@@ -35,6 +35,7 @@ database_url = "ecto://#{db_username}:#{db_password}@#{db_host}/#{db_database}"
 config :exbin, Exbin.Repo,
   # ssl: true,
   url: database_url,
+  database: db_database,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 #############################################################################
