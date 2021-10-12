@@ -18,7 +18,9 @@ defmodule Exbin.Application do
       # Start a worker by calling: Exbin.
       Exbin.Scrubber,
       # Start the socket server.
-      Exbin.Netcat
+      Exbin.Netcat,
+      # STatistics Cache
+      {Cachex, name: :stats_cache}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

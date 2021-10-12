@@ -60,7 +60,8 @@ defmodule Exbin.MixProject do
       {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false},
       {:swoosh, "~> 1.5"},
       {:gen_smtp, "~> 1.0"},
-      {:sizeable, "~> 1.0"}
+      {:sizeable, "~> 1.0"},
+      {:cachex, "~> 3.4"}
     ]
   end
 

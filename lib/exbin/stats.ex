@@ -1,11 +1,12 @@
 defmodule Exbin.Stats do
   alias Exbin.{Snippet, Repo, Clock, Accounts.User}
   import Ecto.Query
+  @cache :stats_cache
 
   @doc """
   Computes the average length of a snippet.
   """
-  def average_length() do
+  def average_length_() do
     query = from(s in Snippet, select: %{len: fragment("avg(length(?))", s.content)})
 
     case Repo.one(query) do
@@ -14,6 +15,18 @@ defmodule Exbin.Stats do
 
       %{len: d} ->
         Decimal.to_float(d)
+    end
+  end
+
+  def average_length() do
+    case Cachex.get(@cache, :average_length) do
+      {:ok, nil} ->
+        result = average_length_()
+        Cachex.put(@cache, :average_length, result, ttl: :timer.hours(1))
+        result
+
+      {:ok, result} ->
+        result
     end
   end
 
@@ -27,25 +40,51 @@ defmodule Exbin.Stats do
   @doc """
   Count all the snippets.
   """
-  def count_snippets() do
+  def count_snippets_() do
     Repo.one(from(s in Snippet, select: count(s.id)))
+  end
+
+  def count_snippets() do
+    case Cachex.get(@cache, :count_snippets) do
+      {:ok, nil} ->
+        result = count_snippets_()
+        Cachex.put(@cache, :count_snippets, result, ttl: :timer.hours(1))
+        result
+
+      {:ok, result} ->
+        result
+    end
   end
 
   @doc """
   Compute the total database size.
   """
-  def database_size() do
+  def database_size_() do
     database_name = Application.get_env(:exbin, Exbin.Repo)[:database]
     sq = from(s in Snippet, select: %{size: fragment("pg_database_size(?)", ^database_name)})
     query = from v in subquery(sq), select: %{size: v.size}, group_by: fragment("size")
+
     case Repo.one(query) do
       %{size: nil} ->
         0.0
 
       %{size: d} ->
         d
+
       _ ->
         0.0
+    end
+  end
+
+  def database_size() do
+    case Cachex.get(@cache, :database_size) do
+      {:ok, nil} ->
+        result = database_size_()
+        Cachex.put(@cache, :database_size, result, ttl: :timer.hours(1))
+        result
+
+      {:ok, result} ->
+        result
     end
   end
 
@@ -53,7 +92,7 @@ defmodule Exbin.Stats do
   @doc """
   Counts the total of private and public snippets in the database.
   """
-  def count_public_private() do
+  def count_public_private_() do
     q =
       from s in Snippet,
         select: %{private?: s.private, total: count()},
@@ -71,6 +110,20 @@ defmodule Exbin.Stats do
 
       [%{private?: false, total: publ}, %{private?: true, total: priv}] ->
         %{private: priv, public: publ}
+    end
+  end
+
+
+
+  def count_public_private() do
+    case Cachex.get(@cache, :count_public_private) do
+      {:ok, nil} ->
+        result = count_public_private_()
+        Cachex.put(@cache, :count_public_private, result, ttl: :timer.hours(1))
+        result
+
+      {:ok, result} ->
+        result
     end
   end
 
