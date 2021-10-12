@@ -122,13 +122,26 @@ config :exbin,
 
 config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.SMTP
 
-smtprelay = System.get_env("SMTP_RELAY") || raise "environment variable SMTP_RELAY is missing."
-smtpuser = System.get_env("SMTP_USER") || raise "environment variable SMTP_USER is missing."
-smtppassword = System.get_env("SMTP_PASSWORD") || raise "environment variable SMTP_PASSWORD is missing."
-smtpfrom = System.get_env("SMTP_FROM") || raise "environment variable SMTP_FROM is missing."
-smtpport = System.get_env("SMTP_PORT") || raise "environment variable SMTP_PORT is missing."
+# Ifthey are set in the docker compose file, but no value is given, they are defaulted to the empty string.
+# Therefore we use the empty string as a nil value here.
 
-config :exbin, Exbin.Mailer,
+smtprelay = System.get_env("SMTP_RELAY") || (IO.puts "environment variable SMTP_RELAY is missing."; "")
+smtpuser = System.get_env("SMTP_USER") || (IO.puts  "environment variable SMTP_USER is missing."; "")
+smtppassword = System.get_env("SMTP_PASSWORD") || (IO.puts  "environment variable SMTP_PASSWORD is missing."; "")
+smtpfrom = System.get_env("SMTP_FROM") || (IO.puts  "environment variable SMTP_FROM is missing."; "")
+smtpport = System.get_env("SMTP_PORT") || (IO.puts  "environment variable SMTP_PORT is missing."; "")
+
+missing_vars = [smtprelay, smtpuser, smtppassword, smtpfrom, smtpport]
+               |> Enum.filter(&(&1 == ""))
+               |> Enum.count()
+
+if missing_vars != 0 do
+  IO.puts "Not configuring any SMTP server. Check all the environment variables carefully."
+  config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.Local
+  config :exbin, Exbin.Mailer, from: "exbin@example.com"
+  config :swoosh, :api_client, false
+else
+  config :exbin, Exbin.Mailer,
   adapter: Swoosh.Adapters.SMTP,
   relay: smtprelay,
   username: smtpuser,
@@ -139,3 +152,5 @@ config :exbin, Exbin.Mailer,
   auth: :always,
   port: smtpport,
   retries: 2
+
+end
