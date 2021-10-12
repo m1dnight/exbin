@@ -20,7 +20,7 @@ defmodule Exbin.Snippet do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:content, :name, :viewcount, :private, :ephemeral, :user_id])
-    |> validate_required([:name])
+    |> validate_required([:name, :content])
     |> unique_constraint(:name)
   end
 end

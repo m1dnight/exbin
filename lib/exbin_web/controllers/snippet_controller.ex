@@ -15,13 +15,14 @@ defmodule ExbinWeb.SnippetController do
       |> put_flash(:error, "💩 Empty snippets not allowed.")
       |> redirect(to: "/")
     else
+      IO.inspect args, label: "incoming args"
       user = conn.assigns.current_user
 
       args =
         if user do
           Map.merge(args, %{"user_id" => user.id})
         else
-          %{}
+          args
         end
 
       {:ok, snippet} = Exbin.Snippets.insert(args)
