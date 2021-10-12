@@ -10,8 +10,8 @@
 @import "_login";
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
 @import "_static";
 
 // @import "~ionicons"
@@ -22,7 +22,9 @@ html {
     padding-left: 0.1rem;
     margin: 0;
     background: $background;
-    height: 100%;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
     margin: 0 !important;
     font-family: $sans-serif-font;
     color: $text;
@@ -37,6 +39,9 @@ hr {
     margin: 0 !important;
     height: 100%;
     width: 100%;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
 }
 
 * {
@@ -47,6 +52,9 @@ hr {
     display: flex;
     flex-direction: row;
     min-height: 100%;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
 }
 
 .code-column {
@@ -58,13 +66,15 @@ hr {
     flex-basis: auto;
     min-width: 0;
     padding: 1rem;
+    overflow-x: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: auto;
 }
-
-
-
 
 // Menu Bar
 .menu-column {
+    position: sticky;
     background-color: $menubackground;
     box-shadow: -5px 0 8px rgba(48, 47, 47, 0.308);
 
@@ -108,7 +118,7 @@ hr {
     // flex-direction: column;
 }
 .menu-entry span.icon {
-    display:inline-flex;
+    display: inline-flex;
     flex: 0 0 auto;
 }
 
@@ -143,13 +153,11 @@ hr {
     vertical-align: middle;
 }
 
-
 .trim {
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
-
 
 // Alerts
 .alert {
@@ -157,24 +165,24 @@ hr {
     margin: 0;
     border: 2px solid transparent;
     border-radius: 1px !important;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     margin-bottom: 2rem;
     position: relative;
 }
 
 .alert .icon_container {
-  padding: 0;
-  margin: 0;
-  margin-right: 0.5rem;
-  display: inline-block;
-  min-height: 48px;
-  min-width: 48px;
+    padding: 0;
+    margin: 0;
+    margin-right: 0.5rem;
+    display: inline-block;
+    min-height: 48px;
+    min-width: 48px;
 }
 
 .alert .message {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .alert-info {
