@@ -44,6 +44,8 @@ defmodule Exbin.Stats do
 
       %{size: d} ->
         d
+      _ ->
+        0.0
     end
   end
 
