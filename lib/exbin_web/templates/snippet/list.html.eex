@@ -14,8 +14,6 @@
         </div>
       <% end %>
 
-      <% IO.inspect @current_user.admin %>
-      <%= @current_user != nil and (@current_user.id == snippet.user_id or @current_user.admin == true) %>
       <%# Delete Badge %>
       <%= if @current_user != nil and (@current_user.id == snippet.user_id or @current_user.admin == true) do %>
         <div class="meta-icon">
