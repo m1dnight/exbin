@@ -77,6 +77,12 @@ API_KEY=mysupersecretkey
 BRAND=Exbin
 CUSTOM_LOGO_PATH=/exbin_branding/my_cool_logo.png
 CUSTOM_LOGO_SIZE=50
+SMTP_USER=test@example.com
+SMTP_PASSWORD=supersecretyes
+SMTP_PORT=465
+SMTP_FROM=ebin@example.com
+SMTP_RELAY=mail.example.com
+HTTPS=true
 ```
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
@@ -121,6 +127,8 @@ Any layout errors that come from using sizes other than 30x30 are your problem. 
 ## JSON API
 
 There is a JSON API available. If your install has an API key set (the `API_KEY` environment variable), it is required to post through the API. If it is not set, the API can be freely used. 
+The payload of the API is JSON, and expects at least the content of the snippet.
+
 
 An example request for a snippet without authentication looks like this.
 
