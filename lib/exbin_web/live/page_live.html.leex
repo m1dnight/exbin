@@ -4,7 +4,7 @@
   <form id="unique" phx-change="suggest" phx-submit="search" class="search-row" phx-hook="StatusHooks">
 
         <div class='input-column'>
-          <input type="text" name="q" value="<%= @query %>" placeholder="Live Search" list="results" autocomplete="off" class="searchbox"/>
+          <input type="text" name="q" value="<%= @query %>" placeholder="Live Search" list="results" phx-debounce="1000" autocomplete="off" class="searchbox"/>
         </div>
 
     <div class='status-column'>
