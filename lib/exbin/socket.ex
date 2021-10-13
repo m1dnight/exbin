@@ -53,7 +53,7 @@ defmodule Exbin.Netcat do
   end
 
   defp serve(client_socket) do
-    IO.inspect(client_socket, label: "serving")
+    Logger.debug("Serving #{inspect :inet.peername(client_socket)}")
     limit = Application.get_env(:exbin, :max_size)
     data = do_rcv(client_socket, <<>>, limit)
 
