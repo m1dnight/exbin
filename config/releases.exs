@@ -118,6 +118,16 @@ config :exbin,
   custom_logo_size: System.get_env("CUSTOM_LOGO_SIZE") || "30"
 
 #############################################################################
+# Logging
+
+debug = System.get_env("DEBUG") || ""
+
+
+config :logger,
+  level: if debug == "true" do, :debug, else: :warning
+
+
+#############################################################################
 # Emails
 
 config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.SMTP

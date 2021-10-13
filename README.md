@@ -49,7 +49,8 @@ The easiest way to run your own instance of Exbin is by running it in a Docker c
 | `SMTP_PASSWORD`     | SMTP password for the mailer.                                                              | Required            |
 | `SMTP_PORT`         | SMTP port for the mailer.                                                                  | Required            |
 | `SMTP_FROM`         | SMTP sender address for the mailer.                                                        | Required            |
-| `HTTPS`         | Boolean indicating this app will be served over HTTPS (e.g., reverse proxy)                    | `true`              |
+| `HTTPS`             | Boolean indicating this app will be served over HTTPS (e.g., reverse proxy)                | `true`              |
+| `DEBUG`             | Enable debug logging. Set to "true" to enable.                                             | `""`                |
 
 
 Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.
