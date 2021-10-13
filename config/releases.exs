@@ -124,7 +124,7 @@ debug = System.get_env("DEBUG") || ""
 
 
 config :logger,
-  level: if debug == "true" do, :debug, else: :warning
+  level: if debug == "true", do: :debug, else: :warning
 
 
 #############################################################################
