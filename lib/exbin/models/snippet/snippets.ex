@@ -25,7 +25,8 @@ defmodule Exbin.Snippets do
     Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
 
     from(s in Snippet,
-      where: (ilike(s.content, ^parameter) and s.user_id == ^user_id) or s.private == false,
+      where: ilike(s.content, ^parameter) and s.user_id == ^user_id,
+      or_where: ilike(s.content, ^parameter) and s.private == false,
       order_by: [desc: s.inserted_at]
     )
     |> Repo.all()
