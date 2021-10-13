@@ -15,7 +15,6 @@ defmodule ExbinWeb.SnippetController do
       |> put_flash(:error, "💩 Empty snippets not allowed.")
       |> redirect(to: "/")
     else
-      IO.inspect args, label: "incoming args"
       user = conn.assigns.current_user
 
       args =
@@ -75,7 +74,14 @@ defmodule ExbinWeb.SnippetController do
   end
 
   def list(conn, _params) do
-    case Exbin.Snippets.list_public_snippets() do
+    snippets =
+      if Map.get(conn.assigns, :current_user, nil) != nil and Map.get(conn.assigns, :current_user).admin == true do
+        Exbin.Snippets.list_snippets()
+      else
+        Exbin.Snippets.list_public_snippets()
+      end
+
+    case snippets do
       [] ->
         conn
         |> put_flash(:error, "😢 There are no public snippets to show!")
