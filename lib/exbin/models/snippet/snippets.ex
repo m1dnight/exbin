@@ -32,6 +32,76 @@ defmodule Exbin.Snippets do
     |> Repo.all()
   end
 
+  def search_stream(query, callback) do
+    sanitized = LikeInjection.like_sanitize(query)
+    Logger.debug("Query: #{query}, sanitized: #{sanitized}")
+    parameter = "%#{sanitized}%"
+
+    Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
+
+    query =
+      from(s in Snippet,
+        where: ilike(s.content, ^parameter) and s.private == false,
+        order_by: [desc: s.inserted_at]
+      )
+
+    stream = Repo.stream(query)
+
+    # Functions for the query stream.
+    chunk_fun = fn element, {count, acc} ->
+      {:cont, Enum.reverse([element | acc]), {count + 1, []}}
+    end
+
+    after_fun = fn
+      {0, []} ->
+        {:cont, [], []}
+
+      {_n, []} ->
+        {:cont, []}
+
+      {_n, acc} ->
+        {:cont, acc, []}
+    end
+
+    Repo.transaction(fn ->
+      stream
+      |> Stream.chunk_every(1000)
+      |> Stream.chunk_while({0, []}, chunk_fun, after_fun)
+      |> Stream.map(callback)
+      |> Stream.run()
+    end)
+
+    nil
+  end
+
+
+  @spec search_stream(binary, any, any) :: nil
+  def search_stream(query, user_id, callback) do
+    sanitized = LikeInjection.like_sanitize(query)
+    Logger.debug("Query: #{query}, sanitized: #{sanitized}")
+    parameter = "%#{sanitized}%"
+
+    Logger.debug("Query: `#{query}`, sanitized: `#{sanitized}`, parameter: `#{parameter}`")
+
+    query =
+      from(s in Snippet,
+        where: ilike(s.content, ^parameter) and s.user_id == ^user_id,
+        or_where: ilike(s.content, ^parameter) and s.private == false,
+        order_by: [desc: s.inserted_at]
+      )
+
+    stream = Repo.stream(query)
+
+    Repo.transaction(fn ->
+      stream
+      |> Stream.chunk_every(10)
+      |> Stream.map(callback)
+      |> Stream.run()
+    end)
+
+    nil
+  end
+
   #############################################################################
   # Insert
 
