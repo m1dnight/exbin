@@ -76,7 +76,7 @@ defmodule ExbinWeb.SnippetController do
   def list(conn, _params) do
     snippets =
       if Map.get(conn.assigns, :current_user, nil) != nil and Map.get(conn.assigns, :current_user).admin == true do
-        Exbin.Snippets.list_snippets()
+        Exbin.Snippets.list_snippets(limit: 500)
       else
         Exbin.Snippets.list_public_snippets()
       end
