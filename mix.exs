@@ -62,7 +62,8 @@ defmodule Exbin.MixProject do
       {:gen_smtp, "~> 1.0"},
       {:sizeable, "~> 1.0"},
       {:cachex, "~> 3.4"},
-      {:hammer, "~> 6.0"}
+      {:hammer, "~> 6.0"},
+      {:hammer_plug, "~> 2.1"}
     ]
   end
 

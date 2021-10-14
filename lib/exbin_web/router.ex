@@ -15,7 +15,6 @@ defmodule ExbinWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug ExbinWeb.ApiAuth, exclude: []
   end
 
   pipeline :custom_files do
@@ -39,7 +38,7 @@ defmodule ExbinWeb.Router do
     pipe_through :api
 
     post "/new", APIController, :new
-    get "/:name", APIController, :show
+    get "/show/:name", APIController, :show
   end
 
   scope "/snippet", ExbinWeb do
