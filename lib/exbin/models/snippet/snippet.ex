@@ -5,7 +5,7 @@ defmodule Exbin.Snippet do
   schema "snippets" do
     field(:name, :string)
     # empty default to create empty snippets.
-    field(:content, :string, default: "")
+    field(:content, :binary, default: "")
     field(:viewcount, :integer, default: 0)
     field(:private, :boolean, default: true)
     field(:ephemeral, :boolean, default: false)

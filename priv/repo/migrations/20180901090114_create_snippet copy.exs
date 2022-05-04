@@ -3,7 +3,7 @@ defmodule Exbin.Repo.Migrations.CreateSnippet do
 
   def change do
     create table(:snippets) do
-      add(:content, :text)
+      add(:content, :binary)
       add(:name, :string, primary_key: true)
       add(:viewcount, :integer, default: 0)
       add(:private, :boolean, default: true)
