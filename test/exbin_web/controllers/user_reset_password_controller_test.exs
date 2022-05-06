@@ -99,7 +99,7 @@ defmodule ExbinWeb.UserResetPasswordControllerTest do
         })
 
       response = html_response(conn, 200)
-      assert response =~ "Reset password"
+      assert response =~ "Reset Password"
       assert response =~ "should be at least 12 character(s)"
       assert response =~ "does not match password"
     end

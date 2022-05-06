@@ -11,7 +11,7 @@ defmodule Exbin.SnippetTest do
   test "errors if name is not unique" do
     insert!(:snippet, %{name: "DupeSnippet"})
     assert %Snippet{name: "DupeSnippet"} = Repo.one(Snippet)
-    dupe_changeset = Snippet.changeset(%Snippet{}, %{name: "DupeSnippet"})
+    dupe_changeset = Snippet.changeset(%Snippet{}, %{name: "DupeSnippet", content: "not empty"})
     {:error, error_cs} = Repo.insert(dupe_changeset)
     assert %{name: ["has already been taken"]} = errors_on(error_cs)
   end
