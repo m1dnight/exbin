@@ -17,53 +17,53 @@ defmodule Exbin.StatsTest do
   describe "average_length/0" do
     test "returns 0.0 if no snippets in DB" do
       assert Repo.all(Snippet) == []
-      assert Stats.average_length() == 0.0
+      assert Stats.average_length_() == 0.0
     end
 
     test "returns correct average as a decimal" do
       insert!(:snippet, %{content: "12345"})
       insert!(:snippet, %{content: "1234567890"})
-      assert Stats.average_length() == 7.5
+      assert Stats.average_length_() == 7.5
     end
   end
 
   describe "count_snippets/0" do
     test "returns 0 if no snippets in DB" do
       assert Repo.all(Snippet) == []
-      assert Stats.count_snippets() == 0
+      assert Stats.count_snippets_() == 0
     end
 
     test "returns correct number of snippets in DB as integer" do
       insert!(:snippet)
       insert!(:snippet)
       insert!(:snippet)
-      assert Stats.count_snippets() == 3
+      assert Stats.count_snippets_() == 3
     end
   end
 
   describe "count_public_private/0" do
     test "returns correct 0 counts if no snippets in DB" do
       assert Repo.all(Snippet) == []
-      assert %{private: 0, public: 0} == Stats.count_public_private()
+      assert %{private: 0, public: 0} == Stats.count_public_private_()
     end
 
     test "returns correct counts when only private snippets exist" do
       insert!(:snippet)
       insert!(:snippet)
-      assert %{private: 2, public: 0} == Stats.count_public_private()
+      assert %{private: 2, public: 0} == Stats.count_public_private_()
     end
 
     test "returns correct counts when only public snippets exist" do
       insert!(:snippet, %{private: false})
       insert!(:snippet, %{private: false})
-      assert %{private: 0, public: 2} == Stats.count_public_private()
+      assert %{private: 0, public: 2} == Stats.count_public_private_()
     end
 
     test "returns correct counts when both private and public snippets exist" do
       insert!(:snippet, %{private: true})
       insert!(:snippet, %{private: false})
       insert!(:snippet, %{private: false})
-      assert %{private: 1, public: 2} == Stats.count_public_private()
+      assert %{private: 1, public: 2} == Stats.count_public_private_()
     end
   end
 
