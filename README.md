@@ -130,6 +130,14 @@ Any layout errors that come from using sizes other than 30x30 are your problem. 
 There is a JSON API available. If your install has an API key set (the `API_KEY` environment variable), it is required to post through the API. If it is not set, the API can be freely used. 
 The payload of the API is JSON, and expects at least the content of the snippet.
 
+The `api/new` endpoint expects a JSON payload with the keys `content`, `private`, and `ephemeral`. For example: 
+
+```
+{"content": "this is the content", 
+ "private": true, 
+ "ephemeral": false
+}
+```
 
 An example request for a snippet without authentication looks like this.
 
@@ -143,6 +151,14 @@ To use an authenticated endpoint simply add another field to the JSON payload wi
 ```
 $ curl -XPOST -H "Content-type: application/json" -d '{"content": "this is the content", "private": true, "ephemeral": false, "token": "supersecret"}' 'https://exbin.call-cc.be/api/new'
 {"content":"this is the content","created":"2021-10-01T20:32:38.702101Z","name":"RegelatedDoublemindedness","url":"https://exbin.call-cc.be/RegelatedDoublemindedness"}
+```
+
+A snippet can be requested by name using the `api/new` endpoint. No parameters should be given. 
+An example curl request looks like this.
+
+```
+ curl 'https://exbin.call-cc.be/api/show/CoppingSuctions'
+ {"content":"this is the content","created":"2022-05-06T08:40:17.769579Z","name":"CoppingSuctions","url":"https://exbin.call-cc.be/api/show/CoppingSuctions"}
 ```
 
 # Things To Do 
