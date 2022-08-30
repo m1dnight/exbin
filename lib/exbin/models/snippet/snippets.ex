@@ -85,8 +85,8 @@ defmodule Exbin.Snippets do
 
     query =
       from(s in Snippet,
-        where: ilike(s.content, ^parameter) and s.user_id == ^user_id,
-        or_where: ilike(s.content, ^parameter) and s.private == false,
+        where: fragment("convert_from(content, 'utf-8') ilike ?", ^parameter) and s.user_id == ^user_id,
+        or_where: fragment("convert_from(content, 'utf-8') ilike ?", ^parameter) and s.private == false,
         order_by: [desc: s.inserted_at]
       )
 
