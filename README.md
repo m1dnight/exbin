@@ -24,8 +24,8 @@ The easiest way to run your own instance of Exbin is by running it in a Docker c
 
 | Environment var     | Description                                                                                                        | Default             |
 |---------------------|--------------------------------------------------------------------------------------------------------------------|---------------------|
-| `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret` or `openssl rand 64 | openssl enc -A -base64`.  | Required            |
-| `SECRET_SALT`       | Secret hash to encrypt traffic. GGenerate with `mix phx.gen.secret` or `openssl rand 64 | openssl enc -A -base64`. | Required            |
+| `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret` or `openssl rand 64 \| openssl enc -A -base64`. | Required            |
+| `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret` or `openssl rand 64 \| openssl enc -A -base64`. | Required            |
 | `DATABASE_HOST`     | Host for database.                                                                                                 | Required            |
 | `DATABASE_DB`       | Name of the database.                                                                                              | Required            |
 | `DATABASE_USER`     | Username for Postgres instance.                                                                                    | Required            |
