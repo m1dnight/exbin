@@ -11,7 +11,7 @@ services:
     volumes:
       - ./rel/overlays/config.exs:/app/prod/config.exs
     ports:
-      - 4000:4000
+      - 5000:5000
       - 9999:9999
     networks:
       - internal
