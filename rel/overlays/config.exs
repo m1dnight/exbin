@@ -85,12 +85,12 @@ mailing = :local
 mailing = :internet
 
 if mailing == :internet do
-  config :exbin, Exbin.Mailer,
+    config :exbin, Exbin.Mailer,
     adapter: Swoosh.Adapters.SMTP,
-    relay: "smtp-broadcasts.postmarkapp.cod",
-    username: "PM-B-broadcast-DJe-g3boYnl-f22mHKA8M",
-    password: "hMVBuM5CA_S4lezd1StmBpkM-3_qG9QgchrQ",
-    from: "christophe@call-cc.be",
+    relay: "smtp.com",
+    username: "exbin",
+    password: "exbin",
+    from: "exbin@exbin.exbin",
     ssl: false,
     tls: true,
     auth: :always,
