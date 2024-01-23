@@ -40,7 +40,7 @@ RUN mix release
 
 FROM elixir:1.15-slim AS app
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales erlang-crypto
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales
 
 # Set the locale
 # Set the locale

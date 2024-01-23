@@ -4,11 +4,10 @@ defmodule ExbinWeb.APIController do
   action_fallback ExbinWeb.FallbackController
 
   plug Hammer.Plug,
-    [rate_limit: {"new_snippet", 60_000, 2},
-    by: :ip]
-    when action == :new
+       [rate_limit: {"new_snippet", 60_000, 2}, by: :ip]
+       when action == :new
 
-    plug ExbinWeb.ApiAuth when action == :new
+  plug ExbinWeb.ApiAuth when action == :new
 
   def show(conn, %{"name" => name}) do
     with {:ok, snippet} <- Exbin.Snippets.get_by_name(name) do

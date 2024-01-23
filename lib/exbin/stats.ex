@@ -113,8 +113,6 @@ defmodule Exbin.Stats do
     end
   end
 
-
-
   def count_public_private() do
     case Cachex.get(@cache, :count_public_private) do
       {:ok, nil} ->

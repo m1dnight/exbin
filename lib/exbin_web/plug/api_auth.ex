@@ -5,7 +5,7 @@ defmodule ExbinWeb.ApiAuth do
     opts
   end
 
-  def call(conn, opts) do
+  def call(conn, _opts) do
     token = Map.get(conn.body_params, "token", nil)
 
     if valid_token?(token) do

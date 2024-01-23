@@ -12,7 +12,7 @@ defmodule Exbin.InitialUser do
 
   # https://dev.to/diogoko/random-strings-in-elixir-e8i
   defp insert_first_user() do
-    pass = for _ <- 1..20, into: "", do: <<Enum.random('0123456789abcdef')>>
+    pass = for _ <- 1..20, into: "", do: <<Enum.random(~c"0123456789abcdef")>>
 
     user_data = %{
       email: "admin@exbin.call-cc.be",

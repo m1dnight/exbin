@@ -7,14 +7,15 @@ defmodule Exbin.MixProject do
       version: "0.1.8",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       default_release: :prod,
       releases: [
         prod: [
-          overlays: "rel/overlays"
+          overlays: "rel/overlays",
+          config_providers: [{Config.Reader, {:system, "RELEASE_ROOT", "/config.exs"}}]
         ]
       ]
     ]

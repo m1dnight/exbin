@@ -36,7 +36,7 @@ defmodule Exbin.Netcat do
     # Register the client, and ensure it's not spamming.
     {:ok, {client_ip, _port}} = :inet.peername(client)
 
-    case Hammer.check_rate("#{inspect client_ip}", 60_000 * 60 * 2, 2) do
+    case Hammer.check_rate("#{inspect(client_ip)}", 60_000 * 60 * 2, 2) do
       {:allow, _count} ->
         Task.async(fn -> serve(client) end)
         GenServer.cast(self(), :accept)

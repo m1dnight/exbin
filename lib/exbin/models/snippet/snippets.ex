@@ -74,7 +74,6 @@ defmodule Exbin.Snippets do
     nil
   end
 
-
   @spec search_stream(binary, any, any) :: nil
   def search_stream(query, user_id, callback) do
     sanitized = LikeInjection.like_sanitize(query)

@@ -2,7 +2,6 @@ defmodule Exbin.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
-  import Supervisor.Spec
   use Application
 
   def start(_type, _args) do

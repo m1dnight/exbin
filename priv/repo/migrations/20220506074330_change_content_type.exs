@@ -19,6 +19,7 @@ defmodule Exbin.Repo.Migrations.ChangeContentType do
     end;
     $$ language plpgsql;
     """
+
     execute """
     ALTER TABLE snippets
     ALTER COLUMN content TYPE text
@@ -26,6 +27,7 @@ defmodule Exbin.Repo.Migrations.ChangeContentType do
     """
   end
 end
+
 # Raw SQL:
 # select * from snippets;
 
