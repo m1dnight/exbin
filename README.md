@@ -21,70 +21,9 @@ I work on this project from time to time, so the development pace is slow. If yo
 # Installation 
 
 The easiest way to run your own instance of Exbin is by running it in a Docker container.
+Make a copy of the configuration file in `rel/overlays/config.exs`. The file contains documentation on how to fill it out. 
+Mount this file in the docker container to configure your instance.
 
-| Environment var     | Description                                                                                                        | Default             |
-|---------------------|--------------------------------------------------------------------------------------------------------------------|---------------------|
-| `SECRET_KEY_BASE`   | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret` or `openssl rand 64 \| openssl enc -A -base64`. | Required            |
-| `SECRET_SALT`       | Secret hash to encrypt traffic. Generate with `mix phx.gen.secret` or `openssl rand 64 \| openssl enc -A -base64`. | Required            |
-| `DATABASE_HOST`     | Host for database.                                                                                                 | Required            |
-| `DATABASE_DB`       | Name of the database.                                                                                              | Required            |
-| `DATABASE_USER`     | Username for Postgres instance.                                                                                    | Required            |
-| `DATABASE_PASSWORD` | Password for Postgres user.                                                                                        | Required            |
-| `POOL_SIZE`         | Concurrent database connections.                                                                                   | `10`                |
-| `TZ`                | TZ database name                                                                                                   | Required            |
-| `EPHEMERAL_AGE`     | Ephemeral age of snippets in minutes.                                                                              | `60`                |
-| `HTTP_PORT`         | Port for HTTP endpoint.                                                                                            | `4000`              |
-| `TCP_PORT`          | Port for the TCP endpoint.                                                                                         | Required            |
-| `TCP_HOST`          | IP to bind on for TCP socket.                                                                                      | Required            |
-| `MAX_SIZE`          | Maximum size in bytes for the TCP endpoint.                                                                        | Required            |
-| `DEFAULT_VIEW`      | Standard view for snippets. (Supported values are 'code', 'reader', or 'raw')                                      | Required            |
-| `BASE_URL`          | Base URL for this instance. Necessary behind a reverse proxy. E.g., `https://example.com`.                         | Required            |
-| `HOST`              | Hostname for this instance. E.g., `example.com`.                                                                   | Required            |
-| `API_KEY`           | Password token for the API. If not set, the API is publicly available.                                             | Optional            |
-| `BRAND`             | Name of the Exbin instance. Shown in bottom right corner when creating a snippet.                                  | `Exbin`             |
-| `CUSTOM_LOGO_PATH`  | The full path on the host machine to your custom logo. E.g. "/srv/exbin/my_logo.png"                               | Optional            |
-| `CUSTOM_LOGO_SIZE`  | The pixel dimensions of your logo, which is assumed to be square. Ignored if no logo set.                          | `30`                |
-| `SMTP_RELAY`        | SMTP relay for the mailer.                                                                                         | Required            |
-| `SMTP_USER`         | SMTP username for the mailer.                                                                                      | Required            |
-| `SMTP_PASSWORD`     | SMTP password for the mailer.                                                                                      | Required            |
-| `SMTP_PORT`         | SMTP port for the mailer.                                                                                          | Required            |
-| `SMTP_FROM`         | SMTP sender address for the mailer.                                                                                | Required            |
-| `HTTPS`             | Boolean indicating this app will be served over HTTPS (e.g., reverse proxy)                                        | `true`              |
-| `DEBUG`             | Enable debug logging. Set to "true" to enable.                                                                     | `""`                |
-
-
-Create an .env file and give a value to all these environment variables. You can leave the ones with default values as is, if you want.
-An example is shown below.
-
-```
-SECRET_KEY_BASE=TUvAjMKpIXf+ik05cgmjErbtWVUBmKX70TCtg9ToU3ZC8gdNQoYnCrLAljBuHvKU 
-SECRET_SALT=Qrw8mzDAAdvouNi6EvP/vEBwgPw0lCXh2dCANXKbW0HnQElvhB8nETC/q/L+zxxa 
-DATABASE_HOST=db 
-DATABASE_DB=exbin
-DATABASE_USER=postgres
-DATABASE_PASSWORD=postgres 
-POOL_SIZE=10 
-TZ=Europe/Brussels 
-EPHEMERAL_AGE=60
-HTTP_PORT=5000
-TCP_PORT=9999
-TCP_HOST=0.0.0.0
-MAX_SIZE=2048
-DEFAULT_VIEW=code 
-BASE_URL=https://example.com
-HOST=example.com 
-DATABASE_DATA=/tmp/exbindata
-API_KEY=mysupersecretkey
-BRAND=Exbin
-CUSTOM_LOGO_PATH=/exbin_branding/my_cool_logo.png
-CUSTOM_LOGO_SIZE=50
-SMTP_USER=test@example.com
-SMTP_PASSWORD=supersecretyes
-SMTP_PORT=465
-SMTP_FROM=ebin@example.com
-SMTP_RELAY=mail.example.com
-HTTPS=true
-```
 
 Copy the `docker-compose.yaml` file, and change accordingly. Finally, run it with `docker-compose up`.
 

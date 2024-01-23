@@ -8,35 +8,11 @@ services:
   exbin:
     restart: always
     image: m1dnight/exbin:latest
-    environment:
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - SECRET_SALT=${SECRET_SALT}
-      - DATABASE_HOST=${DATABASE_HOST}
-      - DATABASE_DB=${DATABASE_DB}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - POOL_SIZE=${POOL_SIZE}
-      - TZ=${TZ}
-      - EPHEMERAL_AGE=${EPHEMERAL_AGE}
-      - HTTP_PORT=${HTTP_PORT}
-      - TCP_PORT=${TCP_PORT}
-      - TCP_HOST=${TCP_HOST}
-      - MAX_SIZE=${MAX_SIZE}
-      - DEFAULT_VIEW=${DEFAULT_VIEW}
-      - BASE_URL=${BASE_URL}
-      - HOST=${HOST}
-      - API_KEY=${API_KEY}
-      - BRAND=${BRAND}
-      - SMTP_RELAY=${SMTP_RELAY}
-      - SMTP_USER=${SMTP_USER}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - SMTP_PORT=${SMTP_PORT}
-      - SMTP_FROM=${SMTP_FROM}
-      - HTTPS=${HTTPS}     
-      - DEBUG=${DEBUG} 
+    volumes:
+      - ./rel/overlays/config.exs:/app/prod/config.exs
     ports:
-      - ${HTTP_PORT}:${HTTP_PORT}
-      - ${TCP_PORT}:${TCP_PORT}
+      - 4000:4000
+      - 9999:9999
     networks:
       - internal
     depends_on:
@@ -46,11 +22,11 @@ services:
     restart: always
     image: postgres
     volumes:
-      - '${DATABASE_DATA}:/var/lib/postgresql/data'
+      - ./.data/:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_DB}
-      - TZ=${TZ}
-      - PGTZ=${TZ}
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=exbin_dev
+      - TZ=Europe/Brussels
+      - PGTZ=Europe/Brussels
     networks:
       - internal
