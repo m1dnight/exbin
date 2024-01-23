@@ -1,6 +1,6 @@
 ################################################################################
 # Build Image
-FROM elixir:1.12-slim as build
+FROM elixir:1.15-slim as build
 LABEL maintainer "Christophe De Troyer <christophe@call-cc.be>"
 
 # Install compile-time dependencies
