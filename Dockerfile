@@ -38,9 +38,9 @@ RUN mix release
 ################################################################################
 # Release Image
 
-FROM debian:stable-slim AS app
+FROM elixir:1.15-slim AS app
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales erlang-crypto
 
 # Set the locale
 # Set the locale
@@ -63,5 +63,4 @@ RUN chown -R nobody: /app
 USER nobody
 
 ENV HOME=/app
-CMD ["bash", "/app/entrypoint.sh"]
-# CMD ["sleep", "1h"]
+CMD /bin/bash /app/entrypoint.sh
