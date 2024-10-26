@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html class="h-full" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · Phoenix Framework">
+    <.live_title suffix="Exbin">
       <%= assigns[:page_title] || "Exbin" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white">
-    <%= @inner_content %>
+  <body class="h-full flex flex-col">
+    <nav class="nav" id="nav">
+      <a href="#menu-item-1">New</a>
+      <a href="#menu-item-2">List</a>
+      <a href="#menu-item-3">About</a>
+      <a href="javascript:void(0);" id="menu-toggle">
+        <div class="menu-toggle__bar1"></div>
+        <div class="menu-toggle__bar2"></div>
+        <div class="menu-toggle__bar3"></div>
+      </a>
+    </nav>
+    <div class="grow">
+      <%= @inner_content %>
+    </div>
   </body>
 </html>

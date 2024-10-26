@@ -2,4 +2,65 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* This file is for your main application CSS */
+.snippet-area {
+  border: 0;
+  resize: none;
+}
+/* For best practice, move CSS below to an external CSS file. */
+.nav {
+  overflow: hidden;
+}
+.nav a {
+  float: left;
+  margin: 10px;
+  display: block;
+}
+.nav #menu-toggle {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  /* .nav a:not(:first-child) {
+    display: none;
+  } */
+  .nav a {
+    display: none;
+  }
+
+  .nav a#menu-toggle {
+    float: right;
+    display: block;
+  }
+}
+@media screen and (max-width: 600px) {
+  .nav.nav--open {
+    position: relative;
+  }
+  .nav.nav--open #menu-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .nav.nav--open a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+.menu-toggle__bar1,
+.menu-toggle__bar2,
+.menu-toggle__bar3 {
+  width: 21px;
+  height: 3px;
+  background-color: #000000;
+  margin: 4px 0;
+  transition: 0.3s;
+}
+.menu-toggle--open .menu-toggle__bar1 {
+  transform: translate(0, 7px) rotate(-45deg);
+}
+.menu-toggle--open .menu-toggle__bar2 {
+  opacity: 0;
+}
+.menu-toggle--open .menu-toggle__bar3 {
+  transform: translate(0, -7px) rotate(45deg);
+}

@@ -17,7 +17,8 @@ defmodule ExbinWeb.Router do
   scope "/", ExbinWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", PageController, :index
+    post "/", PageController, :create
   end
 
   # Other scopes may use custom stacks.
