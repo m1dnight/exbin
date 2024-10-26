@@ -2,24 +2,21 @@ defmodule Exbin.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+
   use Application
 
+  @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Exbin.Repo,
-      # Start the Telemetry supervisor
       ExbinWeb.Telemetry,
-      # Start the PubSub system
+      {DNSCluster, query: Application.get_env(:exbin, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Exbin.PubSub},
-      # Start the Endpoint (http/https)
-      ExbinWeb.Endpoint,
-      # Start a worker by calling: Exbin.
-      Exbin.Scrubber,
-      # Start the socket server.
-      Exbin.Netcat,
-      # STatistics Cache
-      {Cachex, name: :stats_cache}
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Exbin.Finch},
+      # Start a worker by calling: Exbin.Worker.start_link(arg)
+      # {Exbin.Worker, arg},
+      # Start to serve requests, typically the last entry
+      ExbinWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -30,6 +27,7 @@ defmodule Exbin.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     ExbinWeb.Endpoint.config_change(changed, removed)
     :ok

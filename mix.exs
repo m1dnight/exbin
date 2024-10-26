@@ -4,20 +4,12 @@ defmodule Exbin.MixProject do
   def project do
     [
       app: :exbin,
-      version: "0.1.8",
-      elixir: "~> 1.12",
+      version: "0.1.0",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      default_release: :prod,
-      releases: [
-        prod: [
-          overlays: "rel/overlays",
-          config_providers: [{Config.Reader, {:system, "RELEASE_ROOT", "/config.exs"}}]
-        ]
-      ]
+      deps: deps()
     ]
   end
 
@@ -27,7 +19,7 @@ defmodule Exbin.MixProject do
   def application do
     [
       mod: {Exbin.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ex_rated, :swoosh, :gen_smtp]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -40,31 +32,30 @@ defmodule Exbin.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 2.0"},
-      {:phoenix, "~> 1.5.9"},
-      {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix, "~> 1.7.14"},
+      {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.4"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
-      {:horsestaplebattery, "~> 0.1.0"},
-      {:timex, "~> 3.7"},
-      {:parent, "~> 0.12.0"},
-      {:ex_rated, "~> 2.0"},
-      {:phoenix_live_view, "~> 0.15.7"},
-      {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false},
+      # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
+      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
+      {:floki, ">= 0.30.0", only: :test},
+      {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      {:heroicons,
+       github: "tailwindlabs/heroicons",
+       tag: "v2.1.1",
+       sparse: "optimized",
+       app: false,
+       compile: false,
+       depth: 1},
       {:swoosh, "~> 1.5"},
-      {:gen_smtp, "~> 1.0"},
-      {:sizeable, "~> 1.0"},
-      {:cachex, "~> 3.4"},
-      {:hammer, "~> 6.0"},
-      {:hammer_plug, "~> 2.1"}
+      {:finch, "~> 0.13"},
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_poller, "~> 1.0"},
+      {:gettext, "~> 0.20"},
+      {:jason, "~> 1.2"},
+      {:dns_cluster, "~> 0.1.1"},
+      {:bandit, "~> 1.5"}
     ]
   end
 
@@ -76,10 +67,14 @@ defmodule Exbin.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      setup: ["deps.get", "assets.setup", "assets.build"],
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.build": ["tailwind exbin", "esbuild exbin"],
+      "assets.deploy": [
+        "tailwind exbin --minify",
+        "esbuild exbin --minify",
+        "phx.digest"
+      ]
     ]
   end
 end

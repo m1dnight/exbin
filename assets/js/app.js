@@ -1,72 +1,44 @@
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
+// If you want to use Phoenix channels, run `mix help phx.gen.channel`
+// to get started and then uncomment the line below.
+// import "./user_socket.js"
+
+// You can include dependencies in two ways.
 //
-// Import dependencies
+// The simplest option is to put them in assets/vendor and
+// import them using relative paths:
+//
+//     import "../vendor/some-package.js"
+//
+// Alternatively, you can `npm install some-package --prefix assets` and import
+// them using a path starting with the package name:
+//
+//     import "some-package"
 //
 
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
-import "../css/app.scss"
-
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
-//
-// Import deps with the dep name or local files with a relative path, for example:
-//
-import { Socket } from "phoenix"
-//     import socket from "./socket"
-//
+// Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
+// Establish Phoenix Socket and LiveView configuration.
+import {Socket} from "phoenix"
+import {LiveSocket} from "phoenix_live_view"
+import topbar from "../vendor/topbar"
 
-// Highlight.js 
-const hljs = require("highlight.js");
-window.hljs = hljs;
-hljs.highlightAll();
-
-// Linenumbers for code.
-require('highlightjs-line-numbers.js');
-hljs.initLineNumbersOnLoad();
-
-import { Iconify } from "@iconify/iconify";
-// import "bookmark_lines.js"
-require("./bookmark_lines.js")
-
-
-// This is for chart.js 3, but it doesn't give charts of the same height, for some reason.
-import { Chart } from "chart.js/dist/chart.js";
-// import {Chart} from "chart.js/dist/Chart.bundle.js";
-
-require("./statistics.js");
-
-
-
-let hooks = {}
-hooks.StatusHooks = {
-    disconnected() {
-        document.getElementById("connected").style.display = "none";
-        document.getElementById("disconnected").style.display = "flex";
-        console.log(new Date())
-        console.log("disconnected")
-    },
-    reconnected() {
-        document.getElementById("connected").style.display = "flex";
-        document.getElementById("disconnected").style.display = "none";
-        console.log(new Date())
-        console.log("reconnected")
-    },
-    mounted() {
-        document.getElementById("connected").style.display = "flex";
-        document.getElementById("disconnected").style.display = "none";
-        console.log(new Date())
-        console.log("connected")
-    }
-}
-
-import LiveSocket from "phoenix_live_view"
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: hooks })
+let liveSocket = new LiveSocket("/live", Socket, {
+  longPollFallbackMs: 2500,
+  params: {_csrf_token: csrfToken}
+})
+
+// Show progress bar on live navigation and form submits
+topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
+window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
+window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
+
+// connect if there are any LiveViews on the page
 liveSocket.connect()
+
+// expose liveSocket on window for web console debug logs and latency simulation:
+// >> liveSocket.enableDebug()
+// >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
+// >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+

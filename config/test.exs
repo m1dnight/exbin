@@ -1,34 +1,24 @@
-use Mix.Config
-
-# Only in tests, remove the complexity from the password hashing algorithm
-config :bcrypt_elixir, :log_rounds, 1
-
-# Configure your database
-#
-# The MIX_TEST_PARTITION environment variable can be used
-# to provide built-in test partitioning in CI environment.
-# Run `mix help test` for more information.
-config :exbin, Exbin.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "exbin_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+import Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :exbin, ExbinWeb.Endpoint,
-  http: [port: 4002],
+  http: [ip: {127, 0, 0, 1}, port: 4002],
+  secret_key_base: "EGE1RGftH1VbtnuFkt3tUpm//s3EcbfIBn3ErsrTgvyxa6ZBKsipGCETE0/taKHJ",
   server: false
 
-# Allow TCP server to start in test env by running on a different port.
-# This is a quick hack. We could also alter the supervisor to only run
-# run it in specific environments.
-config :exbin,
-  tcp_port: 9998
+# In test we don't send emails
+config :exbin, Exbin.Mailer, adapter: Swoosh.Adapters.Test
 
-# In this env Clock freezing is allowed
-config :exbin, Exbin.Clock, freezable: true
+# Disable swoosh api client as it is only required for production adapters
+config :swoosh, :api_client, false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
+
+# Initialize plugs at runtime for faster test compilation
+config :phoenix, :plug_init_mode, :runtime
+
+# Enable helpful, but potentially expensive runtime checks
+config :phoenix_live_view,
+  enable_expensive_runtime_checks: true
