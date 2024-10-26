@@ -85,7 +85,7 @@ mailing = :local
 mailing = :internet
 
 if mailing == :internet do
-    config :exbin, Exbin.Mailer,
+  config :exbin, Exbin.Mailer,
     adapter: Swoosh.Adapters.SMTP,
     relay: "smtp.com",
     username: "exbin",
