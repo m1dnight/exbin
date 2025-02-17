@@ -61,8 +61,16 @@ defmodule Exbin.Netcat do
 
       data ->
         Logger.debug("Received #{byte_size(data)} bytes.")
-        {:ok, snippet} = Exbin.Snippets.insert(%{"content" => data, "private" => "true"})
-        :gen_tcp.send(client_socket, "#{Application.get_env(:exbin, :base_url)}/r/#{snippet.name}\n")
+
+        reply =
+          if is_http_request?(data) do
+            reply_to_http(data)
+          else
+            {:ok, snippet} = Exbin.Snippets.insert(%{"content" => data, "private" => "true"})
+            "#{Application.get_env(:exbin, :base_url)}/r/#{snippet.name}\n"
+          end
+
+        :gen_tcp.send(client_socket, reply)
     end
 
     :gen_tcp.close(client_socket)
@@ -73,7 +81,7 @@ defmodule Exbin.Netcat do
   end
 
   defp do_rcv(socket, bytes, count) do
-    case :gen_tcp.recv(socket, 0, 5000) do
+    case :gen_tcp.recv(socket, 0, 1000) do
       {:ok, fresh_bytes} ->
         do_rcv(socket, bytes <> fresh_bytes, count - byte_size(fresh_bytes))
 
@@ -85,5 +93,22 @@ defmodule Exbin.Netcat do
         IO.puts("An error while receiving bytes: #{inspect(e)}")
         bytes
     end
+  end
+
+  defp is_http_request?(data) do
+    Regex.match?(~r/GET|POST|PUT|DELETE|PATCH|OPTIONS|HEAD|TRACE|CONNECT/, data)
+  end
+
+  defp reply_to_http(request) do
+    bomb = Application.app_dir(:exbin, "/priv/10G.gzip")
+    filesize = File.stat!(bomb)
+
+    """
+    HTTP/1.1 200 OK\r
+    Content-Type: text/html; charset=UTF-8\r
+    Content-Length: #{filesize.size}\r
+    Content-Encoding: gzip\r
+    \r
+    """ <> File.read!(bomb)
   end
 end
