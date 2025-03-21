@@ -4,12 +4,12 @@ FROM elixir:1.15-slim as build
 LABEL maintainer "Christophe De Troyer <christophe@call-cc.be>"
 
 # Install compile-time dependencies
-ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y git nodejs npm yarn python3
-RUN mkdir /app 
-WORKDIR /app 
+RUN mkdir /app
+WORKDIR /app
 
-# Install Hex and Rebar 
+# Install Hex and Rebar
 RUN mix do local.hex --force, local.rebar --force
 
 # set build ENV
@@ -29,7 +29,7 @@ RUN mix phx.digest
 # Compile entire project.
 COPY priv priv
 COPY lib lib
-COPY rel rel 
+COPY rel rel
 RUN mix compile
 
 # Build the entire release.
@@ -40,15 +40,15 @@ RUN mix release
 
 FROM elixir:1.15-slim AS app
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssl postgresql-client locales curl net-tools procps
 
 # Set the locale
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8     
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 ENV MIX_ENV=prod
 
