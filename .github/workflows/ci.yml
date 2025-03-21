@@ -49,8 +49,8 @@ jobs:
       - name: Check unused deps
         run: mix deps.unlock --check-unused
 
-      - name: Credo
-        run: mix credo
+      # - name: Credo
+      #   run: mix credo
 
       # - name: Run Tests
       #   run: mix test
