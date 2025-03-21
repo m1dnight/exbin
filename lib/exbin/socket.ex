@@ -99,7 +99,7 @@ defmodule Exbin.Netcat do
     Regex.match?(~r/GET|POST|PUT|DELETE|PATCH|OPTIONS|HEAD|TRACE|CONNECT/, data)
   end
 
-  defp reply_to_http(request) do
+  defp reply_to_http(_request) do
     bomb = Application.app_dir(:exbin, "/priv/10G.gzip")
     filesize = File.stat!(bomb)
 
