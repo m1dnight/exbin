@@ -39,6 +39,6 @@ defmodule Exbin.SnippetTest do
   test "0x0 char in binary data" do
     content = File.read!("test/exbin/0x00_bin_file")
     insert!(:snippet, %{name: "Test", content: content})
-    assert %Snippet{content: content, name: "Test"} = Repo.one(Snippet)
+    assert %Snippet{content: _content, name: "Test"} = Repo.one(Snippet)
   end
 end
