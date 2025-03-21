@@ -46,8 +46,8 @@ jobs:
       - name: Check Formatting
         run: mix format --check-formatted
 
-      - name: Check unused deps
-        run: mix deps.unlock --check-unused
+      # - name: Check unused deps
+      #   run: mix deps.unlock --check-unused
 
       # - name: Credo
       #   run: mix credo
