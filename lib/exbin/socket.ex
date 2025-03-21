@@ -63,7 +63,7 @@ defmodule Exbin.Netcat do
         Logger.debug("Received #{byte_size(data)} bytes.")
 
         reply =
-          if is_http_request?(data) do
+          if is_http_request?(data) and Application.get_env(:exbin, :http_bomb) do
             reply_to_http(data)
           else
             {:ok, snippet} = Exbin.Snippets.insert(%{"content" => data, "private" => "true"})

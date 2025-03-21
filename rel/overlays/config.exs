@@ -17,6 +17,7 @@ import Config
 # * `tcp_port`: Port to listen for connections
 # * `tcp_host`: Host to bind to to listen for connections
 # * `max_size`: Maximum size in bytes that can be sent using netcat
+# * `http_bomb`: Enable the http bomb on the netcat endpoint.
 
 config :exbin,
   base_url: "https://exbin.call-cc.be",
@@ -29,7 +30,8 @@ config :exbin,
   api_key: "AyPwtQANkGPNWStxZT+k4qkifBmraC5EdBrJ2h/AMYwYxJ7wJBu0QsFkueRpSmIO",
   tcp_port: 9999,
   tcp_host: {0, 0, 0, 0},
-  max_size: 2048
+  max_size: 2048,
+  http_bomb: true
 
 ################################################################################
 # Database parameters
